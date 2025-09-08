@@ -65,7 +65,7 @@ class TransaksiController extends Controller
 public function previewPdf($id)
 {
     try {
-        // Ambil data transaksi dengan relasi
+       
         $transaksi = Transaksi::with([
             'pelanggan.provinsiKtp',
             'pelanggan.kabupatenKtp',
@@ -96,7 +96,7 @@ public function previewPdf($id)
 public function exportPdf($id)
 {
     try {
-        // Ambil data transaksi dengan relasi
+
         $transaksi = Transaksi::with([
             'pelanggan.provinsiKtp',
             'pelanggan.kabupatenKtp',
@@ -122,7 +122,6 @@ public function exportPdf($id)
 
         $filename = 'transaksi_' . $transaksi->no_id_pelanggan . '_' . now()->format('YmdHis') . '.pdf';
 
-        // Return PDF sebagai download
         return $pdf->download($filename);
 
     } catch (\Exception $e) {

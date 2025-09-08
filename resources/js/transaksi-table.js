@@ -25,7 +25,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // 🔽 Handler untuk select action
     $(document).on("change", ".action-select", function () {
         let action = $(this).val();
         let editUrl = $(this).data("edit");
@@ -66,7 +65,6 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         }
 
-        // reset kembali ke default setelah action dipilih
         $(this).val("");
     });
 });
