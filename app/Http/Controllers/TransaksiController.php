@@ -44,7 +44,7 @@ class TransaksiController extends Controller
                 ->addColumn('actions', function ($row) {
                 $editUrl = route('transaksi.edit', $row->id);
                 $deleteUrl = route('transaksi.destroy', $row->id);
-                $pdfUrl = route('transaksi.export-pdf', $row->id);
+                $pdfUrl = route('transaksi.preview', $row->id);
 
                  return '
                     <select class="form-select form-select-sm action-select" data-id="'.$row->id.'" data-edit="'.$editUrl.'" data-pdf="'.$pdfUrl.'" data-delete="'.$deleteUrl.'">
@@ -61,44 +61,74 @@ class TransaksiController extends Controller
         }
     }
 
-    public function exportPdf($id)
-    {
-        try {
-            // Ambil data transaksi dengan relasi
-            $transaksi = Transaksi::with([
-                'pelanggan.provinsiKtp',
-                'pelanggan.kabupatenKtp',
-                'pelanggan.kecamatanKtp',
-                'pelanggan.kelurahanKtp',
-                'pelanggan.provinsiInstalasi',
-                'pelanggan.kabupatenInstalasi',
-                'pelanggan.kecamatanInstalasi',
-                'pelanggan.kelurahanInstalasi',
-                'paket',
-                'promosi',
-                'bandwidth'
-            ])->findOrFail($id);
 
-            // Data untuk PDF
-            $data = [
-                'transaksi' => $transaksi,
-                'title' => 'Data Transaksi - ' . ($transaksi->pelanggan->nama_lengkap ?? 'Unknown'),
-                'generated_at' => now()->format('d F Y H:i:s')
-            ];
+public function previewPdf($id)
+{
+    try {
+        // Ambil data transaksi dengan relasi
+        $transaksi = Transaksi::with([
+            'pelanggan.provinsiKtp',
+            'pelanggan.kabupatenKtp',
+            'pelanggan.kecamatanKtp',
+            'pelanggan.kelurahanKtp',
+            'pelanggan.provinsiInstalasi',
+            'pelanggan.kabupatenInstalasi',
+            'pelanggan.kecamatanInstalasi',
+            'pelanggan.kelurahanInstalasi',
+            'paket',
+            'promosi',
+            'bandwidth'
+        ])->findOrFail($id);
 
-            $pdf = Pdf::loadView('transaksi.pdf', $data);
-            $pdf->setPaper('A4', 'portrait');
+        $data = [
+            'transaksi'   => $transaksi,
+            'title'       => 'Preview Formulir Berlangganan',
+            'generated_at'=> now()->format('d F Y H:i:s')
+        ];
 
-            $filename = 'transaksi_' . $transaksi->no_id_pelanggan . '_' . now()->format('YmdHis') . '.pdf';
+        return view('transaksi.pdf', $data);
 
-            // Return PDF sebagai download
-            return $pdf->download($filename);
-
-        } catch (\Exception $e) {
-            return back()->with('error', 'Gagal mengexport PDF: ' . $e->getMessage());
-        }
+    } catch (\Exception $e) {
+        return back()->with('error', 'Gagal menampilkan preview PDF: ' . $e->getMessage());
     }
+}
 
+public function exportPdf($id)
+{
+    try {
+        // Ambil data transaksi dengan relasi
+        $transaksi = Transaksi::with([
+            'pelanggan.provinsiKtp',
+            'pelanggan.kabupatenKtp',
+            'pelanggan.kecamatanKtp',
+            'pelanggan.kelurahanKtp',
+            'pelanggan.provinsiInstalasi',
+            'pelanggan.kabupatenInstalasi',
+            'pelanggan.kecamatanInstalasi',
+            'pelanggan.kelurahanInstalasi',
+            'paket',
+            'promosi',
+            'bandwidth'
+        ])->findOrFail($id);
+
+        $data = [
+            'transaksi'   => $transaksi,
+            'title'       => 'Data Transaksi - ' . ($transaksi->pelanggan->nama_lengkap ?? 'Unknown'),
+            'generated_at'=> now()->format('d F Y H:i:s'),
+              'isPdf'       => true,
+        ];
+
+        $pdf = Pdf::loadView('transaksi.pdf', $data)->setPaper('A4', 'portrait');
+
+        $filename = 'transaksi_' . $transaksi->no_id_pelanggan . '_' . now()->format('YmdHis') . '.pdf';
+
+        // Return PDF sebagai download
+        return $pdf->download($filename);
+
+    } catch (\Exception $e) {
+        return back()->with('error', 'Gagal mengexport PDF: ' . $e->getMessage());
+    }
+}
 
     public function create()
     {

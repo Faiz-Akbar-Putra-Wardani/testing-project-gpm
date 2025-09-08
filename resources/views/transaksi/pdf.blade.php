@@ -232,6 +232,12 @@
   </style>
 </head>
 <body>
+   @if(empty($isPdf))
+    <a href="{{ route('transaksi.export-pdf', $transaksi->id) }}"
+       class="btn btn-sm btn-outline-danger">
+        <i class="bi bi-download"></i> Download PDF
+    </a>
+@endif
 <div class="a4">
 
   <!-- Compact header -->
@@ -253,8 +259,8 @@
       <td class="input-cell">
         <input type="text" style="width: 60%;" value="{{ $transaksi->pelanggan->nama_lengkap ?? "" }}">
        <span class="gender-status">
-            L <input class="small-checkbox" type="checkbox" {{ ($transaksi->pelanggan->jenis_kelamin ?? "") == "Laki-laki" ? "checked" : "" }}>
-            P <input class="small-checkbox" type="checkbox" {{ ($transaksi->pelanggan->jenis_kelamin ?? "") == "Perempuan" ? "checked" : "" }}>
+            L <input class="small-checkbox" type="checkbox" {{ ($transaksi->pelanggan->jenis_kelamin ?? "") == "L" ? "checked" : "" }}>
+            P <input class="small-checkbox" type="checkbox" {{ ($transaksi->pelanggan->jenis_kelamin ?? "") == "P" ? "checked" : "" }}>
 
             <input class="small-checkbox" type="checkbox" {{ ($transaksi->pelanggan->status_pernikahan ?? "") == "Menikah" ? "checked" : "" }}> Menikah
             <input class="small-checkbox" type="checkbox" {{ ($transaksi->pelanggan->status_pernikahan ?? "") == "Belum Menikah" ? "checked" : "" }}> Belum Menikah

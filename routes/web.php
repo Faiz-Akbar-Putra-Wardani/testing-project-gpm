@@ -35,6 +35,7 @@ Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
  Route::get('/transaksi/data', [TransaksiController::class, 'getData'])->name('transaksi.getData');
 
  Route::resource('transaksi', TransaksiController::class);
+ Route::get('/transaksi/{id}/preview', [TransaksiController::class, 'previewPdf'])->name('transaksi.preview');
  Route::get('/transaksi/{id}/export-pdf', [TransaksiController::class, 'exportPdf'])->name('transaksi.export-pdf');
 
 });
