@@ -24,7 +24,6 @@
       overflow: hidden; /* Prevent overflow */
     }
 
-    /* Simplified table styling for better PDF compatibility */
     table {
       width: 100%;
       border-collapse: collapse;
@@ -32,8 +31,8 @@
     }
 
     td, th {
-      border: 1px solid #000; /* Thinner borders */
-      padding: 2px 4px; /* Much smaller padding */
+      border: 1px solid #000;
+      padding: 2px 4px;
       vertical-align: middle;
       font-size: 10px;
     }
@@ -43,23 +42,21 @@
     }
 
     .title {
-      font-size: 14px; /* Reduced from 16px */
+      font-size: 14px;
       font-weight: bold;
       text-align: center;
       margin: 5px 0;
     }
 
-    /* Simplified input styling */
     input[type="text"] {
       border: none;
       outline: none;
       width: 100%;
-      height: 16px; /* Reduced height */
+      height: 16px;
       box-sizing: border-box;
       font-size: 10px;
     }
 
-    /* Improved checkbox styling for better alignment */
     input[type="checkbox"] {
       width: 12px;
       height: 12px;
@@ -69,7 +66,6 @@
       top: -1px;
     }
 
-    /* Better label styling for checkbox groups */
     label {
       display: inline-block;
       margin-right: 15px;
@@ -79,7 +75,6 @@
       white-space: nowrap;
     }
 
-    /* Specific styling for checkbox rows to ensure proper alignment */
     .checkbox-row {
       display: block;
       line-height: 1.4;
@@ -91,27 +86,27 @@
       vertical-align: top;
     }
 
-    /* Simplified layout without flexbox */
+    /* Bagian kiri (label) tanpa border */
     .label {
-      width: 180px; /* Reduced width */
+      width: 180px;
       font-weight: bold;
       padding: 3px;
-      border-right: 1px solid #000;
+      border: none !important; /* buang border kiri */
       vertical-align: top;
     }
 
+    /* Bagian kanan tetap pakai border */
     .input-cell {
       padding: 3px;
       vertical-align: middle;
+      border: 1px solid #000;
     }
 
-    /* Replace flexbox with simple table layout */
     .gender-status {
       float: right;
       font-size: 9px;
     }
 
-    /* Improved gender status checkbox alignment */
     .gender-status input[type="checkbox"] {
       margin: 0 2px;
       vertical-align: baseline;
@@ -133,19 +128,24 @@
       border-left: none;
     }
 
-    /* Compact box styling */
     .box {
       border: 1px solid #000;
-      padding: 5px; /* Reduced padding */
-      margin: 3px 0; /* Reduced margin */
+      padding: 5px;
+      margin: 3px 0;
       font-size: 10px;
     }
 
-    .section {
-      margin-bottom: 8px; /* Reduced spacing */
+      .box1 {
+      border: 1px solid #000;
+      padding: 10px;
+      margin: 3px 0;
+      font-size: 13px;
     }
 
-    /* Removed conflicting label styling from section */
+    .section {
+      margin-bottom: 8px;
+    }
+
     .section label {
       margin-right: 15px;
       font-size: 9px;
@@ -161,10 +161,9 @@
     .dots {
       border-bottom: 1px dotted #000;
       display: inline-block;
-      min-width: 80px; /* Reduced width */
+      min-width: 80px;
     }
 
-    /* Simplified two-column layout for payment section */
     .payment-section {
       display: table;
       width: 100%;
@@ -188,7 +187,6 @@
       vertical-align: top;
     }
 
-    /* Improved payment option styling for better checkbox alignment */
     .payment-option {
       margin: 3px 0;
       font-size: 9px;
@@ -209,10 +207,9 @@
     .dashed-line {
       border-bottom: 1px dashed #000;
       display: inline-block;
-      min-width: 60px; /* Reduced width */
+      min-width: 60px;
     }
 
-    /* Print-specific optimizations */
     @page {
       size: A4;
       margin: 0.5cm;
@@ -221,7 +218,7 @@
     @media print {
       body {
         background: none;
-        font-size: 9px; /* Even smaller for print */
+        font-size: 9px;
       }
       .a4 {
         box-shadow: none;
@@ -240,7 +237,7 @@
 @endif
 <div class="a4">
 
-  <!-- Compact header -->
+  <!-- Header -->
   <table style="margin-bottom: 5px;">
     <tr>
       <td class="no-border" style="width:40%;"><strong style="font-size:16px;">GPM</strong></td>
@@ -252,33 +249,32 @@
     </tr>
   </table>
 
-  <!-- Compact data pelanggan section -->
+  <!-- Data pelanggan -->
   <table style="margin-bottom: 5px;">
     <tr>
       <td class="label">Nama Lengkap sesuai KTP</td>
       <td class="input-cell">
-        <input type="text" style="width: 60%;" value="{{ $transaksi->pelanggan->nama_lengkap ?? "" }}">
+       <span style="width:60%; line-height:20px;">{{ $transaksi->pelanggan->nama_lengkap ?? '' }}</span>
        <span class="gender-status">
-            L <input class="small-checkbox" type="checkbox" {{ ($transaksi->pelanggan->jenis_kelamin ?? "") == "L" ? "checked" : "" }}>
+            L <input style="margin-top:5px;" class="small-checkbox" type="checkbox" {{ ($transaksi->pelanggan->jenis_kelamin ?? "") == "L" ? "checked" : "" }}>
             P <input class="small-checkbox" type="checkbox" {{ ($transaksi->pelanggan->jenis_kelamin ?? "") == "P" ? "checked" : "" }}>
 
             <input class="small-checkbox" type="checkbox" {{ ($transaksi->pelanggan->status_pernikahan ?? "") == "Menikah" ? "checked" : "" }}> Menikah
             <input class="small-checkbox" type="checkbox" {{ ($transaksi->pelanggan->status_pernikahan ?? "") == "Belum Menikah" ? "checked" : "" }}> Belum Menikah
         </span>
-
       </td>
     </tr>
     <tr>
       <td class="label">Alamat Instalasi</td>
-      <td class="input-cell"><input type="text" value="{{ $transaksi->pelanggan->alamat_instalasi ?? "" }}"></td>
+      <td class="input-cell"><span style="width:60%; line-height:20px;">{{ $transaksi->pelanggan->alamat_instalasi ?? '' }}</span></td>
     </tr>
     <tr>
       <td class="label">Kota</td>
       <td class="input-cell">
         <div class="three-col">
-          <div><input type="text" value="{{ $transaksi->pelanggan->kabupatenInstalasi->name ?? "" }}"></div>
-          <div>Propinsi: <input type="text" style="width:60px;" value="{{ $transaksi->pelanggan->provinsiInstalasi->name ?? "" }}"></div>
-          <div>Kode Pos: <input type="text" style="width:60px;" value="{{ $transaksi->pelanggan->kodepos_instalasi ?? "" }}"></div>
+          <span style="width:60%; line-height:20px;">{{ $transaksi->pelanggan->kabupatenInstalasi->name ?? '' }}</span>
+          <div>Propinsi: <span style="width:60%; line-height:20px;">{{ $transaksi->pelanggan->provinsiInstalasi->name ?? '' }}</span></div>
+          <div>Kode Pos: <span style="width:60%; line-height:20px;">{{ $transaksi->pelanggan->kodepos_instalasi ?? '' }}</span></div>
         </div>
       </td>
     </tr>
@@ -286,29 +282,28 @@
       <td class="label">Nomor Telepon</td>
       <td class="input-cell">
         <div class="three-col">
-          <div><input type="text" value="{{ $transaksi->pelanggan->nomor_telepon ?? "" }}"></div>
-          <div>No Fax: <input type="text" style="width:60px;" value="{{ $transaksi->pelanggan->no_fax ?? '' }}"></div>
-          <div>No Ponsel: <input type="text" style="width:60px;" value="{{ $transaksi->pelanggan->nomor_ponsel ?? "" }}" ></div>
+          <span style="width:60%; line-height:20px;">{{ $transaksi->pelanggan->nomor_telepon ?? '' }}</span>
+          <div>No Fax: <span style="width:60%; line-height:20px;">{{ $transaksi->pelanggan->no_fax ?? '' }}</span></div>
+          <div>No Ponsel: <span style="width:60%; line-height:20px;">{{ $transaksi->pelanggan->nomor_ponsel ?? '' }}</span></div>
         </div>
       </td>
     </tr>
-    <tr><td class="label">Nomor KTP</td><td class="input-cell"><input type="text" value={{ $transaksi->pelanggan->no_ktp ?? "" }}></td></tr>
-    <tr><td class="label">Tempat/Tgl Lahir</td><td class="input-cell"><input type="text" value="{{ ($transaksi->pelanggan->tempat_lahir ?? '') . '/' . (\Carbon\Carbon::parse($transaksi->pelanggan->tanggal_lahir)->format('d/m/Y') ?? '') }}"></td></tr>
-    <tr><td class="label">Alamat sesuai KTP</td><td class="input-cell"><input type="text" value="{{ $transaksi->pelanggan->alamat_ktp ?? '' }}" ></td></tr>
+    <tr><td class="label">Nomor KTP</td><td class="input-cell"><span style="width:60%; line-height:20px;">{{ $transaksi->pelanggan->no_ktp ?? '' }}</span></td></tr>
+    <tr><td class="label">Tempat/Tgl Lahir</td><td class="input-cell"><span style="width:60%; line-height:20px;">{{ ($transaksi->pelanggan->tempat_lahir ?? '') . ' / ' . (\Carbon\Carbon::parse($transaksi->pelanggan->tanggal_lahir)->format('d/m/Y') ?? '') }}</span></td></tr>
+    <tr><td class="label">Alamat sesuai KTP</td><td class="input-cell"><span style="width:60%; line-height:20px;">{{ $transaksi->pelanggan->alamat_ktp ?? '' }}</span></td></tr>
     <tr>
       <td class="label">Kota</td>
       <td class="input-cell">
         <div class="three-col">
-          <div><input type="text" value="{{ $transaksi->pelanggan->kabupatenKtp->name ?? '' }}"></div>
-          <div>Propinsi: <input type="text" style="width:60px;" value="{{ $transaksi->pelanggan->provinsiKtp->name ?? '' }}"></div>
-          <div>Kode Pos: <input type="text" style="width:60px;" value="{{ $transaksi->pelanggan->kodepos_ktp ?? '' }}"></div>
+          <span style="width:60%; line-height:20px;">{{ $transaksi->pelanggan->kabupatenKtp->name ?? '' }}</span>
+          <div>Propinsi: <span style="width:60%; line-height:20px;">{{ $transaksi->pelanggan->provinsiKtp->name ?? '' }}</span></div>
+          <div>Kode Pos: <span style="width:60%; line-height:20px;">{{ $transaksi->pelanggan->kodepos_ktp ?? '' }}</span></div>
         </div>
       </td>
     </tr>
     <tr>
       <td class="label">Pekerjaan</td>
       <td class="input-cell">
-        <!-- Wrapped checkboxes in checkbox-row div for better alignment -->
         <div class="checkbox-row">
           <label><input type="checkbox" {{ ($transaksi->pelanggan->pekerjaan ?? '') == 'Wiraswasta' ? 'checked' : '' }}> Wiraswasta</label>
           <label><input type="checkbox"{{ ($transaksi->pelanggan->pekerjaan ?? '') == 'Karyawan' ? 'checked' : '' }}> Karyawan</label>
@@ -320,7 +315,6 @@
     <tr>
       <td class="label">Jenis Tempat Tinggal</td>
       <td class="input-cell">
-        <!-- Wrapped checkboxes in checkbox-row div for better alignment -->
         <div class="checkbox-row">
           <label><input type="checkbox"  {{ ($transaksi->pelanggan->jenis_tempat_tinggal ?? '') == 'Rumah Tinggal' ? 'checked' : '' }}> Rumah Tinggal</label>
           <label><input type="checkbox" {{ ($transaksi->pelanggan->jenis_tempat_tinggal ?? '') == 'Apartemen' ? 'checked' : '' }}> Apartemen</label>
@@ -330,86 +324,78 @@
     </tr>
   </table>
 
-  <!-- Compact paket section -->
-  <div class="box">
+  <!-- Paket -->
+  <table>
+  <div class="box1">
     <div class="section">
       <strong>Kebutuhan Bandwidth</strong>
-      <!-- Improved checkbox layout in bandwidth section -->
-      <label><input type="checkbox" {{ ($transaksi->bandwidth->nilai ?? '') == '5 Mbps' ? 'checked' : '' }}> 5 Mbps</label>
+      <label><input style="margin-left:40px;" type="checkbox" {{ ($transaksi->bandwidth->nilai ?? '') == '5 Mbps' ? 'checked' : '' }}> 5 Mbps</label>
       <label><input type="checkbox" {{ ($transaksi->bandwidth->nilai ?? '') == '10 Mbps' ? 'checked' : '' }}> 10 Mbps</label>
       <label><input type="checkbox" {{ ($transaksi->bandwidth->nilai ?? '') == '20 Mbps' ? 'checked' : '' }}> 20 Mbps</label>
-      <span style="float:right;">Lainnya <span class="dots">{{ ($transaksi->bandwidth_manual ?? '') != '' ? $transaksi->bandwidth_manual : '' }}</span></span>
+      <span style="margin-left:40px;">Lainnya <span class="dots">{{ ($transaksi->bandwidth_manual ?? '') != '' ? $transaksi->bandwidth_manual : '' }}</span></span>
     </div>
-    <div class="line"></div>
+    <div class="line"style="margin-top:30px;"></div>
     <div class="section">
       <strong>Paket Internet</strong>
-      <!-- Improved checkbox layout in internet package section -->
-      <label><input type="checkbox" {{ ($transaksi->paket->paket_internet ?? '') == 'Silver' ? 'checked' : '' }}> Silver</label>
+      <label><input style="margin-left:50px;" type="checkbox" {{ ($transaksi->paket->paket_internet ?? '') == 'Silver' ? 'checked' : '' }}> Silver</label>
       <label><input type="checkbox" {{ ($transaksi->paket->paket_interent ?? '') == 'Gold' ? 'checked' : '' }}> Gold</label>
       <label><input type="checkbox" {{ ($transaksi->paket->paket_internet ?? '') == 'Platinum' ? 'checked' : '' }}> Platinum</label>
-      <span style="float:right;">Lainnya <span class="dots">{{ ($transaksi->paket_internet_custom ?? '') != '' ? $transaksi->paket_internet_custom : '' }}</span></span>
+      <span style="margin-left:105px;">Lainnya <span class="dots">{{ ($transaksi->paket_internet_custom ?? '') != '' ? $transaksi->paket_internet_custom : '' }}</span></span>
     </div>
-    <div class="line"></div>
+    <div class="line"style="margin-top:30px;"></div>
     <div class="section">
       <strong>Pilihan Paket Internet</strong>
-      Nama Paket: <span class="dots" style="width:120px;">{{ $transaksi->paket->nama_paket ?? $transaksi->paket_internet_custom ?? '' }}</span>
-      Harga: Rp <span class="dots" style="width:100px;">{{ number_format($transaksi->paket->harga ?? $transaksi->paket_internet_harga_custom ?? 0, 0, ',', '.') }}</span>
+      <span style="margin-left:40px;"> Nama Paket: <span class="dots" style="width:120px;">{{ $transaksi->paket->nama_paket ?? $transaksi->paket_internet_custom ?? '' }}</span></span>
+      <span style="margin-left:40px;"> Harga: Rp <span class="dots" style="width:100px;">{{ number_format($transaksi->paket->harga ?? $transaksi->paket_internet_harga_custom ?? 0, 0, ',', '.') }}</span></span>
     </div>
+    <div class=""style="margin-top:30px;"></div>
   </div>
 
-  <!-- Compact billing section -->
-  <div class="box">
+  <!-- Billing -->
+  <div class="box" style="margin-top:30px;">
     <div class="section">
       <strong>Metode Billing:</strong>
-      <!-- Improved checkbox layout in billing section -->
+      <div style="margin-top:8px;">
       <label><input type="checkbox" {{ ($transaksi->metode_billing ?? '') == 'Cetak' ? 'checked' : '' }}> Cetak</label>
-      <label><input type="checkbox"  {{ ($transaksi->metode_billing ?? '') == 'E-Billing' ? 'checked' : '' }}> E-Billing</label>
+      <label><input style="margin-left:300px;" type="checkbox"  {{ ($transaksi->metode_billing ?? '') == 'E-Billing' ? 'checked' : '' }}> E-Billing</label>
     </div>
+  </div>
     <div class="section">
       Alamat Penagihan: <span class="dots" style="width:150px;">{{ $transaksi->alamat_penagihan ?? '' }}</span>
-      Email: <span class="dots" style="width:120px;">{{ $transaksi->email_penagihan ?? '' }}</span>
+      <span style="margin-left:120px;"> Email: <span class="dots" style="width:120px;">{{ $transaksi->email_penagihan ?? '' }}</span></span>
     </div>
   </div>
 
-  <!-- Compact payment and total section -->
-  <div class="payment-section">
+  <!-- Payment -->
+  <div class="payment-section"style="margin-top:30px;">
     <div class="payment-left">
       <div style="font-weight:bold; margin-bottom:5px;">Pilihan Cara Pembayaran:</div>
-
-<div class="payment-option">
-  <input type="checkbox" {{ ($transaksi->metode_pembayaran ?? '') == 'Transfer' ? 'checked' : '' }}>
-  Transfer
-  <span style="font-size:8px;">*Melampirkan foto copy kartu kredit</span>
-</div>
-
-    <div class="payment-option">
-    <input type="checkbox" {{ ($transaksi->metode_pembayaran ?? '') == 'Auto Debit Kartu Kredit' ? 'checked' : '' }}>
-    Auto Debit Kartu Kredit
-
-    <input type="checkbox" {{ !in_array(($transaksi->metode_pembayaran ?? ''), ['Transfer','Auto Debit Kartu Kredit','BCA Card','Visa Card','Master Card']) ? 'checked' : '' }}>
-    Lainnya
-    </div>
-
-    <div class="payment-option" style="margin-left:15px;">
-    <input type="checkbox" {{ ($transaksi->metode_pembayaran ?? '') == 'BCA Card' ? 'checked' : '' }}>
-    BCA Card *
-
-    <input type="checkbox" {{ ($transaksi->metode_pembayaran ?? '') == 'Visa Card' ? 'checked' : '' }}>
-    Visa Card
-    </div>
-
-    <div class="payment-option" style="margin-left:15px;">
-    <input type="checkbox" {{ ($transaksi->metode_pembayaran ?? '') == 'Master Card' ? 'checked' : '' }}>
-    Master Card
-    </div>
-
+      <div class="payment-option">
+        <input type="checkbox" {{ ($transaksi->metode_pembayaran ?? '') == 'Transfer' ? 'checked' : '' }}>
+        Transfer
+        <span style="font-size:8px;">*Melampirkan foto copy kartu kredit</span>
+      </div>
+      <div class="payment-option">
+        <input type="checkbox" {{ ($transaksi->metode_pembayaran ?? '') == 'Auto Debit Kartu Kredit' ? 'checked' : '' }}>
+        Auto Debit Kartu Kredit
+        <input type="checkbox" {{ !in_array(($transaksi->metode_pembayaran ?? ''), ['Transfer','Auto Debit Kartu Kredit','BCA Card','Visa Card','Master Card']) ? 'checked' : '' }}>
+        Lainnya
+      </div>
+      <div class="payment-option" style="margin-left:15px;">
+        <input type="checkbox" {{ ($transaksi->metode_pembayaran ?? '') == 'BCA Card' ? 'checked' : '' }}>
+        BCA Card *
+        <input type="checkbox" {{ ($transaksi->metode_pembayaran ?? '') == 'Visa Card' ? 'checked' : '' }}>
+        Visa Card
+      </div>
+      <div class="payment-option" style="margin-left:15px;">
+        <input type="checkbox" {{ ($transaksi->metode_pembayaran ?? '') == 'Master Card' ? 'checked' : '' }}>
+        Master Card
+      </div>
       <div style="margin:3px 0;">Nomor Kartu Kredit: <span class="dashed-line" style="width:100px;">{{ $transaksi->nomor_kartu_kredit ?? '' }}</span></div>
       <div style="margin:3px 0;">Masa berlaku kartu: <span class="dashed-line" style="width:100px;">{{ $transaksi->masa_berlaku_kartu ?? '' }}</span></div>
       <div style="margin:5px 0;">
-        <div><strong>Kode Promosi:</strong> <span class="dots" style="width:120px;">{{ $transaksi->promosi->kode_promosi ?? '' }}</span>
-        </div>
-        <div><strong>Program Promosi:</strong> <span class="dots" style="width:100px;">{{ $transaksi->promosi->nama_program_promosi ?? '' }}</span>
-        </div>
+        <div><strong>Kode Promosi:</strong> <span class="dots" style="width:120px;">{{ $transaksi->promosi->kode_promosi ?? '' }}</span></div>
+        <div><strong>Program Promosi:</strong> <span class="dots" style="width:100px;">{{ $transaksi->promosi->nama_program_promosi ?? '' }}</span></div>
         <div><strong>Periode:</strong> <span class="dots" style="width:80px;">{{ $transaksi->promosi->tanggal_mulai ?? '' }}</span> s/d <span class="dots" style="width:80px;">{{ $transaksi->promosi->tanggal_berakhir ?? '' }}</span></div>
         <div><strong>Note:</strong> <span class="dots" style="width:150px;">{{ $transaksi->promosi->note ?? '' }}</span></div>
       </div>
@@ -418,25 +404,20 @@
     <div class="payment-right">
       <div style="font-weight:bold; margin-bottom:5px;">Total Biaya Berlangganan Per Bulan:</div>
       <div style="font-size:8px; margin-bottom:5px;">*Kosongkan jika tidak ada</div>
-
       <div class="total-line">Biaya Registrasi = Rp <span class="dashed-line">{{ number_format($transaksi->biaya_registrasi ?? 0, 0, ',', '.') }}</span></div>
       <div style="font-size:8px;">(untuk biaya awal saja)</div>
-
       <div class="total-line">Biaya Paket Internet = Rp <span class="dashed-line">{{ number_format($transaksi->biaya_paket_internet ?? 0, 0, ',', '.') }}</span></div>
       <div style="font-size:8px;">(Untuk paket perbulan)</div>
-
       <div class="total-line">Biaya Maintenance = Rp <span class="dashed-line">{{ number_format($transaksi->biaya_maintenance ?? 0, 0, ',', '.') }}</span></div>
       <div style="font-size:8px;">(Untuk Biaya Pemeliharaan jika ada)</div>
-
       <div class="total-line">PPN 10% = Rp <span class="dashed-line">{{ number_format($transaksi->ppn_nominal ?? 0, 0, ',', '.') }}</span></div>
-
       <div style="border-top:1px solid #000; margin:5px 0; padding-top:3px;">
         <div class="total-line"><strong>Total = Rp <span class="dashed-line">{{ number_format($transaksi->total_biaya_per_bulan ?? 0, 0, ',', '.') }}</span></strong></div>
       </div>
     </div>
   </div>
 
-  <!-- Compact footer -->
+  <!-- Footer -->
   <div class="footer-section">
     <div class="footer-col">
       <div>Customer Service:</div>
@@ -461,8 +442,6 @@
       <div>Nama dan Tanda Tangan</div>
     </div>
   </div>
-
 </div>
 </body>
 </html>
-
