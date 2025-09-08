@@ -1,0 +1,82 @@
+
+// 1. toggle input
+        document.addEventListener("DOMContentLoaded", function () {
+
+        function toggleInput(selectId, inputIds) {
+        const select = document.getElementById(selectId);
+        if (!select) return;
+
+        const inputs = Array.isArray(inputIds)
+            ? inputIds.map(id => document.getElementById(id)).filter(Boolean)
+            : [document.getElementById(inputIds)].filter(Boolean);
+
+        function update() {
+            if (select.value === "Lainnya") {
+            inputs.forEach(input => {
+                input.style.display = "block";
+                input.removeAttribute("disabled");
+            });
+            } else {
+            inputs.forEach(input => {
+                input.style.display = "none";
+                input.setAttribute("disabled", "disabled");
+            });
+            }
+        }
+
+        update();
+        select.addEventListener("change", update);
+
+        }
+        toggleInput("pekerjaan", "pekerjaan_lainnya");
+        toggleInput("jenis_tempat_tinggal", "jenis_tempat_tinggal_lainnya");
+        toggleInput("paket_internet_id", ["paket_internet_custom", "paket_internet_harga_custom"]);
+        toggleInput("bandwidth_id", "bandwidth_manual");
+
+
+
+  // 2. Auto-fill Promosi
+        const promosiSelect = document.getElementById("promosi_id");
+        const promosiFields = document.getElementById("promosi_fields");
+
+        if (promosiSelect) {
+        promosiSelect.addEventListener("change", function () {
+            const selected = promosiSelect.options[promosiSelect.selectedIndex];
+
+            if (promosiSelect.value) {
+
+            promosiFields.style.display = "block";
+
+            document.getElementById("kode_promosi").value = selected.dataset.kode || "";
+            document.getElementById("periode_mulai").value = selected.dataset.mulai || "";
+            document.getElementById("periode_selesai").value = selected.dataset.selesai || "";
+            document.getElementById("note").value = selected.dataset.note || "";
+            } else {
+
+            promosiFields.style.display = "none";
+
+            document.getElementById("kode_promosi").value = "";
+            document.getElementById("periode_mulai").value = "";
+            document.getElementById("periode_selesai").value = "";
+            document.getElementById("note").value = "";
+            }
+        });
+
+        promosiSelect.dispatchEvent(new Event("change"));
+        }
+
+        // 3. button sumbit
+         const formActions = document.getElementById("formActions");
+            const transaksiTab = document.getElementById("transaksiTab");
+
+            transaksiTab.addEventListener("shown.bs.tab", function (event) {
+                if (event.target.id === "pembayaran-tab") {
+                    formActions.style.display = "block";
+                } else {
+                    formActions.style.display = "none";
+                }
+    });
+
+
+
+});
