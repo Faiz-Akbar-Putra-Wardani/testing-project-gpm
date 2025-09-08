@@ -25,37 +25,48 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    //  Delete Transaksi
-    $(document).on('click', '.btn-delete', function() {
-        const url = $(this).data('url');
+    // 🔽 Handler untuk select action
+    $(document).on("change", ".action-select", function () {
+        let action = $(this).val();
+        let editUrl = $(this).data("edit");
+        let pdfUrl = $(this).data("pdf");
+        let deleteUrl = $(this).data("delete");
 
-        Swal.fire({
-            title: "Hapus Transaksi?",
-            text: "Data transaksi akan dihapus permanen!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonText: "Ya, Hapus!",
-            cancelButtonText: "Batal"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    data: {
-                        _method: 'DELETE',
-                        _token: $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function() {
-                        Swal.fire("Terhapus!", "Transaksi berhasil dihapus.", "success");
-                        if (transaksiTable) transaksiTable.ajax.reload(null, false);
-                    },
-                    error: function(xhr) {
-                        Swal.fire("Gagal!", "Terjadi kesalahan saat menghapus.", "error");
-                        console.error(xhr.responseText);
-                    }
-                });
-            }
-        });
+        if (action === "edit") {
+            window.location.href = editUrl;
+        } else if (action === "pdf") {
+            window.open(pdfUrl, "_blank");
+        } else if (action === "delete") {
+            Swal.fire({
+                title: "Hapus Transaksi?",
+                text: "Data transaksi akan dihapus permanen!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Ya, Hapus!",
+                cancelButtonText: "Batal"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: deleteUrl,
+                        type: "POST",
+                        data: {
+                            _method: "DELETE",
+                            _token: $('meta[name="csrf-token"]').attr("content"),
+                        },
+                        success: function () {
+                            Swal.fire("Terhapus!", "Transaksi berhasil dihapus.", "success");
+                            if (transaksiTable) transaksiTable.ajax.reload(null, false);
+                        },
+                        error: function (xhr) {
+                            Swal.fire("Gagal!", "Terjadi kesalahan saat menghapus.", "error");
+                            console.error(xhr.responseText);
+                        },
+                    });
+                }
+            });
+        }
+
+        // reset kembali ke default setelah action dipilih
+        $(this).val("");
     });
-
 });

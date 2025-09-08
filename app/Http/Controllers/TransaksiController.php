@@ -46,19 +46,13 @@ class TransaksiController extends Controller
                 $deleteUrl = route('transaksi.destroy', $row->id);
                 $pdfUrl = route('transaksi.export-pdf', $row->id);
 
-                return '
-                    <div class="d-flex justify-content-center gap-2">
-                        <a href="'.$editUrl.'" class="btn btn-sm btn-warning rounded-pill d-flex align-items-center">
-                            <i class="bi bi-pencil-square me-1"></i> Edit
-                        </a>
-                         <a href="'.$pdfUrl.'" class="btn btn-sm btn-info rounded-pill d-flex align-items-center" target="_blank">
-                            <i class="bi bi-file-earmark-pdf me-1"></i> PDF
-                        </a>
-                        <button type="button" class="btn btn-sm btn-danger rounded-pill d-flex align-items-center btn-delete"
-                            data-url="'.$deleteUrl.'">
-                            <i class="bi bi-trash me-1"></i> Delete
-                        </button>
-                    </div>
+                 return '
+                    <select class="form-select form-select-sm action-select" data-id="'.$row->id.'" data-edit="'.$editUrl.'" data-pdf="'.$pdfUrl.'" data-delete="'.$deleteUrl.'">
+                        <option value="">-- Pilih Aksi --</option>
+                        <option value="edit">✏️ Edit</option>
+                        <option value="pdf">📄 PDF</option>
+                        <option value="delete">🗑️ Delete</option>
+                    </select>
                 ';
             })
 
