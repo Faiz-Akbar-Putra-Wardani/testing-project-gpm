@@ -31,12 +31,12 @@ return new class extends Migration
             $table->string('nomor_kartu_kredit', 50);
             $table->string('masa_berlaku_kartu', 10);
 
-            $table->decimal('biaya_registrasi', 10, 2)->default(0);
-            $table->decimal('biaya_paket_internet', 10, 2)->default(0);
-            $table->decimal('biaya_maintenance', 10, 2)->default(0);
+            $table->decimal('biaya_registrasi', 15, 2)->default(0);
+            $table->decimal('biaya_paket_internet', 15, 2)->default(0);
+            $table->decimal('biaya_maintenance', 15, 2)->default(0);
             $table->decimal('ppn_persen', 5, 2)->default(10.00);
-            $table->decimal('ppn_nominal', 10, 2)->default(0);
-            $table->decimal('total_biaya_per_bulan', 10, 2);
+            $table->decimal('ppn_nominal', 15, 2)->default(0);
+            $table->decimal('total_biaya_per_bulan', 15, 2);
 
             $table->timestamps();
         });
