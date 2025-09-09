@@ -1,266 +1,337 @@
 <!DOCTYPE html>
 <html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <title>Formulir Berlangganan</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      font-size: 12px;
-      margin: 0;
-      padding: 0;
-      background: #f2f2f2;
-    }
-    .a4 {
-      width: 21cm;
-      min-height: 29.7cm;
-      margin: auto;
-      background: #fff;
-      padding: 1cm;
-      box-sizing: border-box;
-      box-shadow: 0 0 5px rgba(0,0,0,0.3);
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    td, th {
-      border: 2px solid #000;
-      padding: 0;
-      vertical-align: middle;
-    }
-    .no-border {
-      border: none !important;
-    }
-    .title {
-      font-size: 16px;
-      font-weight: bold;
-      text-align: center;
-    }
-    .small-checkbox {
-      width: 14px;
-      height: 14px;
-      vertical-align: middle;
-    }
-    td.label {
-      width: 220px;
-      font-weight: 700;
-      padding: 6px;
-      border-top: none;
-      border-left: none;
-      border-bottom: none;
-      border-right: 2px solid #000;
-      box-sizing: border-box;
-    }
-    td.input-cell {
-      padding: 0;
-      box-sizing: border-box;
-    }
-    .split {
-      display: flex;
-      align-items: stretch;
-      min-height: 34px;
-      width: 100%;
-    }
-    .split > .left {
-      flex: 1;
-      padding: 6px;
-      box-sizing: border-box;
-    }
-    .split > .right {
-      border-left: 2px solid #000;
-      padding: 6px;
-      min-width: 280px;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      box-sizing: border-box;
-    }
-    .opts {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    .two-cols {
-      display: flex;
-      gap: 0;
-      align-items: stretch;
-    }
-    .two-cols > .c1,
-    .two-cols > .c2,
-    .two-cols > .c3 {
-      padding: 6px;
-      box-sizing: border-box;
-    }
-    .two-cols > .c2 { border-left: 2px solid #000; width: 200px; }
-    .two-cols > .c3 { border-left: 2px solid #000; width: 200px; }
-    .dots { border-bottom: 1px dotted #000; display: inline-block; min-width: 120px; }
-    .dashed { border-bottom: 1px dashed #000; display: inline-block; min-width: 120px; }
-    .small { font-size: 10px; color: #555; }
-    .footer { margin-top: 20px; font-size: 11px; }
-    .signature { text-align: center; height: 80px; vertical-align: bottom; }
-
-    /* --- STYLE REVISI BANDWIDTH SAMPE METODE BILLING --- */
-    .box {
-      border: 1px solid #000;
-      padding: 10px 15px;
-      margin: 15px 0;
-    }
-    .section {
-      margin-bottom: 50px;
-    }
-    .section3 { margin-bottom: 15px; }
-    .section4 { margin-bottom: 20px; }
-    .section label { margin-right: 20px; }
-    .line { border-top: 1px solid #000; margin: 10px 0; }
-    .full-dots {
-      border-bottom: 1px dotted #000;
-      display: inline-block;
-      width: 100%;
-    }
-    .row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
-    }
-    .row .col { flex: 1; }
-    .lainnya {
-      float: right;
-      margin-top: 30px;
-    }
-
-    /* Style untuk section pembayaran baru - JARAK DIRAPATKAN */
-    .form-wrapper {
-      width: 100%;
-      margin-top: 5px;
-      display: flex;
-      gap: 3px;
-    }
-    .left-section {
-      width: 50%;
-    }
-    .right-section {
-      width: 50%;
-    }
-    .payment-table {
-      margin-bottom: 8px;
-    }
-    .payment-table td {
-      border: 2px solid #000;
-      border-right: none;
-      padding: 8px;
-    }
-    .promotion-table {
-      margin-top: 0;
-    }
-    .promotion-table td {
-      border: 2px solid #000;
-      border-right: none;
-      padding: 8px;
-      padding-left: 3px;
-    }
-    .checkbox {
-      display: inline-block;
-      width: 12px;
-      height: 12px;
-      border: 1px solid #000;
-      margin-right: 5px;
-      vertical-align: middle;
-    }
-    .dashed-line {
-      border-bottom: 1px dashed #000;
-      display: inline-block;
-      min-width: 200px;
-      margin-left: 8px;
-    }
-    .dotted-line {
-      border-bottom: 1px dotted #000;
-      display: inline-block;
-      min-width: 200px;
-      margin-left: 5px;
-    }
-    .small-text {
-      font-size: 9px;
-      color: #666;
-    }
-    .right-column-full {
-      border: 2px solid #000;
-      padding: 11px;
-      height: 310px;
-      margin-left: -4px
-    }
-    .total-section {
-      margin: 8px 0;
-    }
-    .total-line {
-      display: flex;
-      justify-content: space-between;
-      margin: 3px 0;
-    }
-
-    /* Footer styles */
-    .footer-wrapper {
-      margin-top: 5px;
-      width: 100%;
-      display: flex;
-    }
-    .footer-cs {
-      padding: 10px;
-      width: 25%;
-      vertical-align: top;
-    }
-    .footer-pelanggan {
-      padding: 10px;
-      width: 37.5%;
-      text-align: center;
-      vertical-align: top;
-    }
-    .footer-pt {
-      padding: 10px;
-      width: 37.5%;
-      text-align: center;
-      vertical-align: top;
-    }
-
-    .footer-cs div:last-child {
-      border: 1px solid #000;
-      padding: 10px;
-      font-size: 10px;
-    }
-
-    @page { size: A4; margin: 0; }
-    @media print {
-      body { background: none; }
-      .a4 { box-shadow: none; margin: 0; }
-      .no-print {
-        display: none !important;
+  <head>
+    <meta charset="UTF-8" />
+    <title>Formulir Berlangganan</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        font-size: 12px;
+        margin: 0;
+        padding: 0;
+        background: #f2f2f2;
       }
-    }
-  </style>
-</head>
-<body>
-<div class="a4">
+      .a4 {
+        width: 21cm;
+        min-height: 29.7cm;
+        margin: auto;
+        background: #fff;
+        padding: 1cm;
+        box-sizing: border-box;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      td,
+      th {
+        border: 2px solid #000;
+        padding: 0;
+        vertical-align: middle;
+      }
+      .no-border {
+        border: none !important;
+      }
+      .title {
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+      }
+      .small-checkbox {
+        width: 14px;
+        height: 14px;
+        vertical-align: middle;
+      }
+      td.label {
+        width: 220px;
+        font-weight: 700;
+        padding: 6px;
+        border-top: none;
+        border-left: none;
+        border-bottom: none;
+        border-right: 2px solid #000;
+        box-sizing: border-box;
+      }
+      td.input-cell {
+        padding: 0;
+        box-sizing: border-box;
+      }
+      .split {
+        display: flex;
+        align-items: stretch;
+        min-height: 34px;
+        width: 100%;
+      }
+      .split > .left {
+        flex: 1;
+        padding: 6px;
+        box-sizing: border-box;
+      }
+      .split > .right {
+        border-left: 2px solid #000;
+        padding: 6px;
+        min-width: 280px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        box-sizing: border-box;
+      }
+      .opts {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .two-cols {
+        display: flex;
+        gap: 0;
+        align-items: stretch;
+      }
+      .two-cols > .c1,
+      .two-cols > .c2,
+      .two-cols > .c3 {
+        padding: 6px;
+        box-sizing: border-box;
+      }
+      .two-cols > .c2 {
+        border-left: 2px solid #000;
+        width: 200px;
+      }
+      .two-cols > .c3 {
+        border-left: 2px solid #000;
+        width: 200px;
+      }
+      .dots {
+        border-bottom: 1px dotted #000;
+        display: inline-block;
+        min-width: 120px;
+      }
+      .dashed {
+        border-bottom: 1px dashed #000;
+        display: inline-block;
+        min-width: 120px;
+      }
+      .small {
+        font-size: 10px;
+        color: #555;
+      }
+      .footer {
+        margin-top: 20px;
+        font-size: 11px;
+      }
+      .signature {
+        text-align: center;
+        height: 80px;
+        vertical-align: bottom;
+      }
 
-  <!-- HEADER -->
-  <table>
-    <tr>
-      <td class="no-border" style="width:50%;"><strong style="font-size:20px;">GPM</strong></td>
-      <td class="no-border" style="width:25%; text-align:right;">Tanggal Daftar: {{ $transaksi->tanggal_daftar ? \Carbon\Carbon::parse($transaksi->tanggal_daftar)->format('d/m/Y') : '_/_/20....' }}</td>
-      <td class="no-border" style="width:25%; text-align:right;">No ID: {{ $transaksi->no_id_pelanggan ?? '____' }}</td>
-      <a href="javascript:window.print();" class="no-print">Print</a>
-    </tr>
-    <tr>
-      <td colspan="3" class="no-border title">FORMULIR BERLANGGANAN</td>
-    </tr>
-  </table>
+      /* --- Tambahan untuk tanggal daftar --- */
+      .date-box {
+        display: inline-block;
+        border: 1px solid #000;
+        padding: 3px 6px;
+        min-width: 100px;
+        text-align: center;
+        margin-left: 5px;
+      }
 
-  <!-- DATA PELANGGAN -->
+      /* --- STYLE REVISI BANDWIDTH SAMPE METODE BILLING --- */
+      .box {
+        border: 1px solid #000;
+        padding: 10px 15px;
+        margin: 15px 0;
+      }
+      .section {
+        margin-bottom: 50px;
+      }
+      .section3 {
+        margin-bottom: 15px;
+      }
+      .section4 {
+        margin-bottom: 20px;
+      }
+      .section label {
+        margin-right: 20px;
+      }
+      .line {
+        border-top: 1px solid #000;
+        margin: 10px 0;
+      }
+      .full-dots {
+        border-bottom: 1px dotted #000;
+        display: inline-block;
+        width: 100%;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+      }
+      .row .col {
+        flex: 1;
+      }
+      .lainnya {
+        float: right;
+        margin-top: 30px;
+      }
+
+      /* Style untuk section pembayaran baru - JARAK DIRAPATKAN */
+      .form-wrapper {
+        width: 100%;
+        margin-top: 5px;
+        display: flex;
+        gap: 3px;
+      }
+      .left-section {
+        width: 50%;
+      }
+      .right-section {
+        width: 50%;
+      }
+      .payment-table {
+        margin-bottom: 8px;
+      }
+      .payment-table td {
+        border: 2px solid #000;
+        border-right: none;
+        padding: 8px;
+      }
+      .promotion-table {
+        margin-top: 0;
+      }
+      .promotion-table td {
+        border: 2px solid #000;
+        border-right: none;
+        padding: 8px;
+        padding-left: 3px;
+      }
+      .checkbox {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        border: 1px solid #000;
+        margin-right: 5px;
+        vertical-align: middle;
+      }
+      .dashed-line {
+        border-bottom: 1px dashed #000;
+        display: inline-block;
+        min-width: 200px;
+        margin-left: 8px;
+      }
+      .dotted-line {
+        border-bottom: 1px dotted #000;
+        display: inline-block;
+        min-width: 200px;
+        margin-left: 5px;
+      }
+      .small-text {
+        font-size: 9px;
+        color: #666;
+      }
+      .right-column-full {
+        border: 2px solid #000;
+        padding: 11px;
+        height: 310px;
+        margin-left: -4px;
+      }
+      .total-section {
+        margin: 8px 0;
+      }
+      .total-line {
+        display: flex;
+        justify-content: space-between;
+        margin: 3px 0;
+      }
+
+      /* Footer styles */
+      .footer-wrapper {
+        margin-top: 5px;
+        width: 100%;
+        display: flex;
+      }
+      .footer-cs {
+        padding: 10px;
+        width: 25%;
+        vertical-align: top;
+      }
+      .footer-pelanggan {
+        padding: 10px;
+        width: 37.5%;
+        text-align: center;
+        vertical-align: top;
+      }
+      .footer-pt {
+        padding: 10px;
+        width: 37.5%;
+        text-align: center;
+        vertical-align: top;
+      }
+
+      .footer-cs div:last-child {
+        border: 1px solid #000;
+        padding: 10px;
+        font-size: 10px;
+      }
+
+      @page {
+        size: A4;
+        margin: 0;
+      }
+      @media print {
+        body {
+          background: none;
+        }
+        .a4 {
+          box-shadow: none;
+          margin: 0;
+        }
+        .no-print {
+          display: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="a4">
+      <!-- HEADER -->
+      <table>
+        <tr>
+          <td class="no-border" style="width: 50%">
+            <strong style="font-size: 20px">GPM</strong>
+          </td>
+          <td class="no-border" style="width:25%; text-align:right;">
+  <span class="date-box">
+    Tanggal Daftar: 
+    {{ $transaksi->tanggal_daftar ? \Carbon\Carbon::parse($transaksi->tanggal_daftar)->format('d/m/Y') : '_/_/20....' }}
+  </span>
+</td>
+
+
+          <a href="javascript:window.print();" class="no-print">Print</a>
+        </tr>
+        <tr>
+          <td colspan="3" class="no-border title">FORMULIR BERLANGGANAN</td>
+        </tr>
+      </table>
+
+      <!-- DATA PELANGGAN -->
   <table>
+    <tr style="margin-bottom: 10px;">
+      <td class="no-border" style="width:70%; font-weight:bold; font-size:14px; padding:10px 0;">DATA PELANGGAN</td>
+      <td class="no-border" style="width:20%; font-weight:bold; text-align:right; padding:10px 5px 10px 0;">NO ID:</td>
+      <td style="width:20%; padding:6px;">
+        {{ $transaksi->no_id_pelanggan ?? '' }}
+      </td>
+    </tr>
+    <tr style="height: 10px;">
+      <td class="no-border" colspan="3"></td>
+    </tr>
     <tr>
       <td class="label">Nama Lengkap sesuai KTP</td>
-      <td class="input-cell">
+      <td class="input-cell" colspan="2">
         <div class="split">
           <div class="left">{{ $transaksi->pelanggan->nama_lengkap ?? '' }}</div>
           <div class="right">
@@ -276,11 +347,11 @@
     </tr>
     <tr>
       <td class="label">Alamat Instalasi</td>
-      <td class="input-cell"><div style="padding:6px;">{{ $transaksi->pelanggan->alamat_instalasi ?? '' }}</div></td>
+      <td class="input-cell" colspan="2"><div style="padding:6px;">{{ $transaksi->pelanggan->alamat_instalasi ?? '' }}</div></td>
     </tr>
     <tr>
       <td class="label">Kota</td>
-      <td class="input-cell">
+      <td class="input-cell" colspan="2">
         <div class="two-cols">
           <div class="c1">{{ $transaksi->pelanggan->kabupatenInstalasi->name ?? '' }}</div>
           <div class="c2">Propinsi: {{ $transaksi->pelanggan->provinsiInstalasi->name ?? '' }}</div>
@@ -290,7 +361,7 @@
     </tr>
     <tr>
       <td class="label">Nomor Telepon</td>
-      <td class="input-cell">
+      <td class="input-cell" colspan="2">
         <div class="two-cols">
           <div class="c1">{{ $transaksi->pelanggan->nomor_telepon ?? '' }}</div>
           <div class="c2">No Fax: {{ $transaksi->pelanggan->no_fax ?? '' }}</div>
@@ -300,19 +371,19 @@
     </tr>
     <tr>
       <td class="label">Nomor KTP</td>
-      <td class="input-cell"><div style="padding:6px;">{{ $transaksi->pelanggan->no_ktp ?? '' }}</div></td>
+      <td class="input-cell" colspan="2"><div style="padding:6px;">{{ $transaksi->pelanggan->no_ktp ?? '' }}</div></td>
     </tr>
     <tr>
       <td class="label">Tempat/Tgl Lahir</td>
-      <td class="input-cell"><div style="padding:6px;">{{ ($transaksi->pelanggan->tempat_lahir ?? '') . ($transaksi->pelanggan->tanggal_lahir ? ', ' . \Carbon\Carbon::parse($transaksi->pelanggan->tanggal_lahir)->format('d/m/Y') : '') }}</div></td>
+      <td class="input-cell" colspan="2"><div style="padding:6px;">{{ ($transaksi->pelanggan->tempat_lahir ?? '') . ($transaksi->pelanggan->tanggal_lahir ? ', ' . \Carbon\Carbon::parse($transaksi->pelanggan->tanggal_lahir)->format('d/m/Y') : '') }}</div></td>
     </tr>
     <tr>
       <td class="label">Alamat sesuai KTP</td>
-      <td class="input-cell"><div style="padding:6px;">{{ $transaksi->pelanggan->alamat_ktp ?? '' }}</div></td>
+      <td class="input-cell" colspan="2"><div style="padding:6px;">{{ $transaksi->pelanggan->alamat_ktp ?? '' }}</div></td>
     </tr>
     <tr>
       <td class="label">Kota</td>
-      <td class="input-cell">
+      <td class="input-cell" colspan="2">
         <div class="two-cols">
           <div class="c1">{{ $transaksi->pelanggan->kabupatenKtp->name ?? '' }}</div>
           <div class="c2">Propinsi: {{ $transaksi->pelanggan->provinsiKtp->name ?? '' }}</div>
@@ -322,7 +393,7 @@
     </tr>
     <tr>
       <td class="label">Pekerjaan</td>
-      <td class="input-cell">
+      <td class="input-cell" colspan="2">
         <div style="padding:6px;">
           <label><input class="small-checkbox" type="checkbox" {{ ($transaksi->pelanggan->pekerjaan ?? '') == 'Wiraswasta' ? 'checked' : '' }} disabled> Wiraswasta</label>&nbsp;&nbsp;
           <label><input class="small-checkbox" type="checkbox" {{ ($transaksi->pelanggan->pekerjaan ?? '') == 'Karyawan' ? 'checked' : '' }} disabled> Karyawan</label>&nbsp;&nbsp;
@@ -333,7 +404,7 @@
     </tr>
     <tr>
       <td class="label">Jenis Tempat Tinggal</td>
-      <td class="input-cell">
+      <td class="input-cell" colspan="2">
         <div style="padding:6px;">
           <label><input class="small-checkbox" type="checkbox" {{ ($transaksi->pelanggan->jenis_tempat_tinggal ?? '') == 'Rumah Tinggal' ? 'checked' : '' }} disabled> Rumah Tinggal</label>&nbsp;&nbsp;
           <label><input class="small-checkbox" type="checkbox" {{ ($transaksi->pelanggan->jenis_tempat_tinggal ?? '') == 'Apartemen' ? 'checked' : '' }} disabled> Apartemen</label>&nbsp;&nbsp;
@@ -543,7 +614,6 @@
       </div>
     </div>
   </div>
-
-</div>
-</body>
+    </div>
+  </body>
 </html>
