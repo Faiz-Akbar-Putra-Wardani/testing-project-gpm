@@ -446,7 +446,7 @@
       <div class="col" style="text-align:left;"><label><input type="checkbox" {{ ($transaksi->metode_billing ?? '') == 'E-Billing' ? 'checked' : '' }} disabled> E-Billing</label></div>
     </div>
     <div class="section4 row">
-      <div class="col">Alamat Penagihan: <span class="dots" style="width: 200px;">{{ $transaksi->alamat_penagihan ?? '' }}</span></div>
+      <div class="col">Alamat Penagihan: <span class="dots" style="width: 210px;">{{ $transaksi->alamat_penagihan ?? '' }}</span></div>
       <div class="col" style="text-align:left;">Email: <span class="dots" style="width: 250px;">{{ $transaksi->email_penagihan ?? '' }}</span></div>
     </div>
   </div>
