@@ -43,6 +43,33 @@
         height: 14px;
         vertical-align: middle;
       }
+      input[type="checkbox"] {
+        background-color: white !important;
+        accent-color: white;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        border: 1px solid #000;
+        width: 12px;
+        height: 12px;
+        display: inline-block;
+        position: relative;
+        background: white;
+      }
+      
+      input[type="checkbox"]:checked {
+        background-color: white !important;
+      }
+      
+      input[type="checkbox"]:checked::before {
+        content: '✓';
+        position: absolute;
+        left: 1px;
+        top: -2px;
+        font-size: 10px;
+        color: black;
+        font-weight: bold;
+      }
       td.label {
         width: 220px;
         font-weight: 700;
@@ -233,8 +260,8 @@
       }
       .right-column-full {
         border: 2px solid #000;
-        padding: 11px;
-        height: 310px;
+        padding: 17px;
+        height: 317px;
         margin-left: -4px;
       }
       .total-section {
@@ -333,7 +360,7 @@
       <td class="label">Nama Lengkap sesuai KTP</td>
       <td class="input-cell" colspan="2">
         <div class="split">
-          <div class="left">{{ $transaksi->pelanggan->nama_lengkap ?? '' }}</div>
+          <div class="left">{{ $transaksi->pelanggan->nama_lengkap ?? "" }}</div>
           <div class="right">
             <div class="opts">
               <label>L <input class="small-checkbox" type="checkbox" {{ ($transaksi->pelanggan->jenis_kelamin ?? '') == 'L' ? 'checked' : '' }} disabled></label>
@@ -464,7 +491,7 @@
             <!-- Baris pertama -->
             <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
               <div>
-                <span class="checkbox {{ ($transaksi->metode_pembayaran ?? '') == 'Transfer' ? 'checked' : '' }}"></span> Transfer
+                <label><input type="checkbox" {{ ($transaksi->metode_pembayaran ?? '') == 'Transfer' ? 'checked' : '' }} disabled>Transfer</label>
               </div>
               <div class="small-text" style="margin-left: auto;">
                 *Melampirkan foto copy kartu kredit
@@ -473,24 +500,24 @@
 
             <!-- Baris kedua -->
             <div style="margin-bottom: 5px;">
-              <span class="checkbox {{ ($transaksi->metode_pembayaran ?? '') == 'Auto Debit Kartu Kredit' ? 'checked' : '' }}"></span> Auto Debit Kartu Kredit
+              <label><input type="checkbox" {{ ($transaksi->metode_pembayaran ?? '') == 'Auto Debit Kartu Kredit' ? 'checked' : '' }} disabled>Auto Debit Kartu Kredit</label>
               <span style="margin-left: 63px;">
-                <span class="checkbox {{ !in_array($transaksi->metode_pembayaran ?? '', ['Transfer', 'Auto Debit Kartu Kredit', 'BCA Card', 'Visa Card', 'Master Card']) && $transaksi->metode_pembayaran ? 'checked' : '' }}"></span> Lainnya
+                <label><input type="checkbox" {{ !in_array($transaksi->metode_pembayaran ?? '', ['Transfer', 'Auto Debit Kartu Kredit', 'BCA Card', 'Visa Card', 'Master Card']) && $transaksi->metode_pembayaran ? 'checked' : '' }} disabled>Lainnya</label>
               </span>
             </div>
 
             <!-- Baris ketiga -->
             <div style="margin-bottom: 5px; margin-left: 20px;">
-              <span class="checkbox {{ ($transaksi->metode_pembayaran ?? '') == 'BCA Card' ? 'checked' : '' }}"></span> BCA Card
+              <label><input type="checkbox" {{ ($transaksi->metode_pembayaran ?? '') == 'BCA Card' ? 'checked' : '' }} disabled>BCA Card</label>
               <span style="margin-left: 30px;">*</span>
               <span style="margin-left: 12px;">
-                <span class="checkbox {{ ($transaksi->metode_pembayaran ?? '') == 'Visa Card' ? 'checked' : '' }}"></span> Visa Card
+                <label><input type="checkbox" {{ ($transaksi->metode_pembayaran ?? '') == 'Visa Card' ? 'checked' : '' }} disabled>Visa Card</label>
               </span>
             </div>
 
             <!-- Baris keempat -->
             <div style="margin-left: 20px; margin-bottom: 10px;">
-              <span class="checkbox {{ ($transaksi->metode_pembayaran ?? '') == 'Master Card' ? 'checked' : '' }}"></span> Master Card
+              <label><input type="checkbox"{{ ($transaksi->metode_pembayaran ?? '') == 'Master Card' ? 'checked' : '' }} disabled>Master Card</label>
             </div>
 
             <!-- Field input -->
@@ -514,25 +541,25 @@
         <tr>
           <td>
             <div style="margin-bottom: 8px;">
-              <div><span style="font-weight: bold;">Kode Promosi</span><span style="margin-left: 28px; font-weight: bold;">:</span></div>
-              <span class="dotted-line" style="min-width: 340px;">{{ $transaksi->promosi->kode_promosi ?? '' }}</span>
+              <div><span style="font-weight: bold;">Kode Promosi</span><span style="margin-left: 28px; font-weight: bold;">:</span><span style="margin-left: 10px;">{{ $transaksi->promosi->kode_promosi ?? '' }}</span></div>
+              <span class="dotted-line" style="min-width: 340px;" ></span>
             </div>
 
             <div style="margin-bottom: 8px;">
-              <div><span style="font-weight: bold;">Program Promosi</span><span style="margin-left: 9px; font-weight: bold;">:</span></div>
-              <span class="dotted-line" style="min-width: 340px;">{{ $transaksi->promosi->program_promosi ?? '' }}</span>
+              <div><span style="font-weight: bold;">Program Promosi</span><span style="margin-left: 9px; font-weight: bold;">:</span><span style="margin-left: 10px;">{{ $transaksi->promosi->nama_program_promosi ?? '' }}</span></div>
+              <span class="dotted-line" style="min-width: 340px;"></span>
             </div>
 
             <div style="margin-bottom: 8px;">
-              <div><span style="font-weight: bold;">Periode</span><span style="margin-left: 65px; font-weight: bold;">:</span></div>
+              <div><span style="font-weight: bold;">Periode</span><span style="margin-left: 65px; font-weight: bold;">:</span><span style="margin-left: 10px;">{{ $transaksi->promosi ? (\Carbon\Carbon::parse($transaksi->promosi->periode_mulai)->format('d/m/Y') . ' s/d ' . \Carbon\Carbon::parse($transaksi->promosi->periode_selesai)->format('d/m/Y')) : '' }}</span></div>
               <div style="margin-top: 3px; position: relative;">
-                <span class="dotted-line" style="min-width: 340px;">{{ $transaksi->promosi ? (\Carbon\Carbon::parse($transaksi->promosi->periode_mulai)->format('d/m/Y') . ' s/d ' . \Carbon\Carbon::parse($transaksi->promosi->periode_selesai)->format('d/m/Y')) : '' }}</span>
+                <span class="dotted-line" style="min-width: 340px;"></span>
               </div>
             </div>
 
             <div style="margin-bottom: 5px;">
-              <div><span style="font-weight: bold;">Note</span><span style="margin-left: 83px; font-weight: bold;">:</span></div>
-              <span class="dotted-line" style="min-width: 340px;">{{ $transaksi->promosi->note ?? '' }}</span>
+              <div><span style="font-weight: bold;">Note</span><span style="margin-left: 83px; font-weight: bold;">:</span><span style="margin-left: 10px;">{{ $transaksi->promosi->note ?? '' }}</span></div>
+              <span class="dotted-line" style="min-width: 340px;"></span>
             </div>
           </td>
         </tr>
@@ -542,7 +569,7 @@
     <!-- SECTION KANAN - TOTAL BIAYA -->
     <div class="right-section">
       <div class="right-column-full">
-        <div style="font-weight: bold; margin-top: 20px; margin-bottom: 10px;">Total Biaya Berlangganan Per Bulan: <span class="small-text" style="margin-left: 10px;">*Kosongkan jika tidak ada</span></div>
+        <div style="font-weight: bold; margin-top: 13px; margin-bottom: 10px;">Total Biaya Berlangganan Per Bulan: <span class="small-text" style="margin-left: -1px;">*Kosongkan jika tidak ada</span></div>
 
         <div class="total-section">
           <div class="total-line">
@@ -585,14 +612,14 @@
   <!-- SECTION BAWAH - CUSTOMER SERVICE DAN TANDA TANGAN -->
   <div class="footer-wrapper">
     <!-- Customer Service -->
-    <div class="footer-cs">
-      <div style="margin-bottom: 3px;">Customer Service:</div>
-      <div style="margin-bottom: 15px;">0853-5254-5016</div>
-      <div style="border: 1px solid #000; padding: 10px; font-size: 10px;">
+     <div style="padding: 10px; width: 25%; vertical-align: top;">
+        <div style="margin-bottom: 3px;">Customer Service:</div>
+        <div style="margin-bottom: 15px;">0853-5254-5016</div>
+        <div style="border: 1px solid #000; padding: 10px; font-size: 10px;">
         <div style="font-weight: bold; margin-bottom: 3px;">Lembar 1: Customer Service</div>
         <div style="font-weight: bold; margin-bottom: 3px;">Lembar 2: Pelanggan</div>
         <div style="font-weight: bold; margin-bottom: 3px;">Lembar 3: Arsip Office</div>
-      </div>
+        </div>
     </div>
 
     <!-- Pelanggan -->
