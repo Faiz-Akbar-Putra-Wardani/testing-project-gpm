@@ -160,7 +160,7 @@ public function previewPdf($id)
 
                 // Hitung PPN nominal & total
                 $ppnPersen = 10;
-                $ppnNominal = ($biayaPaket + $biayaMaintenance) * ($ppnPersen / 100);
+                $ppnNominal = ($biayaRegistrasi +$biayaPaket + $biayaMaintenance) * ($ppnPersen / 100);
                 $total = $biayaRegistrasi + $biayaPaket + $biayaMaintenance + $ppnNominal;
 
                 // Paket internet

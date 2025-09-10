@@ -40,7 +40,7 @@
   </div>
 
   <div class="col-md-3 mb-3">
-    <label for="promosi_id" class="form-label">Promosi <span class="text-danger">*</span></label>
+    <label for="promosi_id" class="form-label">Promosi</label>
     <select class="form-select" id="promosi_id" name="promosi_id">
       <option value="">-- Pilih Promosi --</option>
       @foreach($promosi as $promo)

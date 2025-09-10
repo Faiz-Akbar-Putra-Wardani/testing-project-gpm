@@ -55,7 +55,7 @@
 
 <div class="row">
  <div class="col-md-3 mb-3">
-    <label for="total_biaya_per_bulan" class="form-label">Total Biaya Per Bulan <span class="text-danger">*</span></label>
+    <label for="total_biaya_per_bulan" class="form-label">Grand Total <span class="text-danger">*</span></label>
     <input type="number" step="0.01" id="total_biaya_per_bulan" name="total_biaya_per_bulan"
            value="{{ old('total_biaya_per_bulan', $transaksi->total_biaya_per_bulan ?? 0) }}"
            class="form-control d-none" readonly>

@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const reg = parseFloat(biayaRegistrasi?.value) || 0;
         const paket = parseFloat(biayaPaket?.value) || 0;
         const maint = parseFloat(biayaMaintenance?.value) || 0;
-        const ppn = (paket + maint) * 0.1;
+        const ppn = (reg + paket + maint) * 0.1;
         const total = reg + paket + maint + ppn;
 
         if (ppnNominal) ppnNominal.value = ppn.toFixed(0);
