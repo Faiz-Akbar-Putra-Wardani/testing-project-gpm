@@ -43,7 +43,7 @@ class StoreTransaksi extends FormRequest
                 'jenis_tempat_tinggal'  => 'required|string|max:100',
                 'tempat_tinggal_lainnya'=> 'nullable|string|max:100',
 
-                'nomor_telepon'         => 'required|string|max:20',
+                'nomor_telepon'         => 'nullable|string|max:20',
                 'nomor_ponsel'          => 'required|string|max:20',
                 'no_fax'                => 'nullable|string|max:20',
 
@@ -104,7 +104,6 @@ class StoreTransaksi extends FormRequest
 
                 'pekerjaan.required'     => 'Pekerjaan wajib diisi.',
                 'jenis_tempat_tinggal.required' => 'Jenis tempat tinggal wajib dipilih.',
-                'nomor_telepon.required' => 'Nomor telepon wajib diisi.',
                 'nomor_ponsel.required'  => 'Nomor ponsel wajib diisi.',
 
                 // Data Transaksi

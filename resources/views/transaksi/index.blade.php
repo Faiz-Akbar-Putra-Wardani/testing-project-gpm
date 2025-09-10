@@ -17,25 +17,29 @@
             </a>
           </div>
 
-          <div class="card-body table-responsive p-3">
-            <table id="transaksi-table" class="table table-hover table-bordered text-center align-middle" data-url={{ route('transaksi.getData') }}>
-              <thead class="table-light">
-                <tr>
-                  <th class="text-center">No</th>
-                  <th class="text-center">No KTP</th>
-                  <th class="text-center">Nama Lengkap</th>
-                  <th class="text-center">Alamat KTP</th>
-                  <th class="text-center">Alamat Instalasi</th>
-                  <th class="text-center">Paket Internet</th>
-                  <th class="text-center">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-
-              </tbody>
-            </table>
-          </div>
+                <div class="card-body p-3">
+             <div class="table-responsive">
+                <table id="transaksi-table"
+                    class="table table-hover table-bordered text-center align-middle nowrap w-100"
+                    data-url="{{ route('transaksi.getData') }}">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="text-center">No</th>
+                            <th class="text-center">No KTP</th>
+                            <th class="text-center">Nama Lengkap</th>
+                            <th class="text-center">Alamat KTP</th>
+                            <th class="text-center">Alamat Instalasi</th>
+                            <th class="text-center">Paket Internet</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                      <tbody>
+                     </tbody>
+                </table>
+            </div>
         </div>
+
+
       </div>
     </div>
   </div>

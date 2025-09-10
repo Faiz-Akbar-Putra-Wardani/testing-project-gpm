@@ -36,7 +36,7 @@ return new class extends Migration
 
         $table->string('pekerjaan', 100);
         $table->string('jenis_tempat_tinggal', 100);
-        $table->string('nomor_telepon', 20);
+        $table->string('nomor_telepon', 20)->nullable();
         $table->string('nomor_ponsel', 20);
         $table->string('no_fax', 20)->nullable();
 

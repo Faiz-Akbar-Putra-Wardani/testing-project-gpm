@@ -8,7 +8,12 @@ document.addEventListener("DOMContentLoaded", function () {
     if ($("#transaksi-table").length) {
         let url = $("#transaksi-table").data("url");
 
+        if ($.fn.DataTable.isDataTable("#transaksi-table")) {
+            $("#transaksi-table").DataTable().clear().destroy();
+        }
+
         transaksiTable = $("#transaksi-table").DataTable({
+            destroy: true,
             processing: true,
             serverSide: true,
             ajax: url,
@@ -21,10 +26,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 { data: "paket_internet", name: "paket.paket_internet" },
                 { data: "actions", name: "actions", orderable: false, searchable: false },
             ],
-            responsive: true,
+            responsive: false,
         });
     }
 
+    // Handler action
     $(document).on("change", ".action-select", function () {
         let action = $(this).val();
         let editUrl = $(this).data("edit");

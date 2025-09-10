@@ -35,21 +35,29 @@
 
                 <div class="tab-pane fade show active" id="pelanggan" role="tabpanel">
                   @include('transaksi.tabs.pelanggan')
+                  <div class="text-end mt-3">
+                    <button type="button" class="btn btn-primary rounded-pill nextBtn" data-next="#transaksi">Next</button>
+                  </div>
                 </div>
 
                 <div class="tab-pane fade" id="transaksi" role="tabpanel">
                   @include('transaksi.tabs.transaksi')
+                  <div class="d-flex justify-content-between mt-3">
+                    <button type="button" class="btn btn-secondary rounded-pill prevBtn" data-prev="#pelanggan">Back</button>
+                    <button type="button" class="btn btn-primary rounded-pill nextBtn" data-next="#pembayaran">Next</button>
+                  </div>
                 </div>
 
                 <div class="tab-pane fade" id="pembayaran" role="tabpanel">
                   @include('transaksi.tabs.pembayaran')
+                  <div class="d-flex justify-content-between mt-3">
+                  </div>
                 </div>
               </div> <!-- end .tab-content -->
-
               <div class="mt-3 text-end" id="formActions" style="display: none;">
-                <button type="reset" class="btn btn-secondary rounded-pill">Reset</button>
-                <button type="submit" class="btn btn-primary rounded-pill" id="btnSubmit">Simpan</button>
-              </div>
+              <button type="button" class="btn btn-secondary rounded-pill prevBtn" data-prev="#transaksi">Back</button>
+              <button type="reset" class="btn btn-secondary rounded-pill">Reset</button>
+              <button type="submit" class="btn btn-primary rounded-pill" id="btnSubmit">Simpan</button>
             </form>
           </div>
         </div>
@@ -60,7 +68,4 @@
 </div>
 
 
-{{-- @push('scripts')
-<script src="{{ asset('assets/js/transaksi.js') }}"></script>
-@endpush --}}
 @endsection

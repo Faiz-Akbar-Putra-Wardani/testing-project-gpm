@@ -51,7 +51,7 @@ class UpdateTransaksi extends FormRequest
             'pekerjaan_lainnya'     => 'nullable|string|max:100',
             'jenis_tempat_tinggal'  => 'sometimes|string|max:100',
             'tempat_tinggal_lainnya'=> 'nullable|string|max:100',
-            'nomor_telepon'         => 'sometimes|string|max:20',
+            'nomor_telepon'         => 'nullable|string|max:20',
             'nomor_ponsel'          => 'sometimes|string|max:20',
             'no_fax'                => 'nullable|string|max:20',
 

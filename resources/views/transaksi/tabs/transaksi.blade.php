@@ -1,19 +1,19 @@
 <h6 class="mb-3">Data Transaksi</h6>
 <div class="row">
   <div class="col-md-3 mb-3">
-    <label for="no_id_pelanggan" class="form-label">No ID Pelanggan</label>
+    <label for="no_id_pelanggan" class="form-label">No ID Pelanggan <span class="text-danger">*</span></label>
     <input type="text" class="form-control" id="no_id_pelanggan" name="no_id_pelanggan"
       value="{{ old('no_id_pelanggan', $transaksi->no_id_pelanggan ?? '') }}">
   </div>
 
   <div class="col-md-3 mb-3">
-    <label for="tanggal_daftar" class="form-label">Tanggal Daftar</label>
+    <label for="tanggal_daftar" class="form-label">Tanggal Daftar <span class="text-danger">*</span></label>
     <input type="date" class="form-control" id="tanggal_daftar" name="tanggal_daftar"
       value="{{ old('tanggal_daftar', $transaksi->tanggal_daftar ?? '') }}">
   </div>
 
   <div class="col-md-3 mb-3">
-    <label for="paket_internet_id" class="form-label">Paket Internet</label>
+    <label for="paket_internet_id" class="form-label">Paket Internet <span class="text-danger">*</span></label>
     <select class="form-select" id="paket_internet_id" name="paket_internet_id">
       <option value="">-- Pilih Paket --</option>
       @foreach($paketInternet as $paket)
@@ -40,7 +40,7 @@
   </div>
 
   <div class="col-md-3 mb-3">
-    <label for="promosi_id" class="form-label">Promosi</label>
+    <label for="promosi_id" class="form-label">Promosi <span class="text-danger">*</span></label>
     <select class="form-select" id="promosi_id" name="promosi_id">
       <option value="">-- Pilih Promosi --</option>
       @foreach($promosi as $promo)
@@ -83,7 +83,7 @@
 
 <div class="row">
   <div class="col-md-3 mb-3">
-    <label for="bandwidth_id" class="form-label">Bandwidth</label>
+    <label for="bandwidth_id" class="form-label">Bandwidth <span class="text-danger">*</span></label>
     <select class="form-select" id="bandwidth_id" name="bandwidth_id">
       <option value="">-- Pilih Bandwidth --</option>
       @foreach($bandwidths as $bw)
@@ -104,7 +104,7 @@
   </div>
 
   <div class="col-md-3 mb-3">
-    <label for="metode_billing" class="form-label">Metode Billing</label>
+    <label for="metode_billing" class="form-label">Metode Billing <span class="text-danger">*</span></label>
     <select class="form-select" id="metode_billing" name="metode_billing">
       <option value="">-- Pilih --</option>
       <option value="Cetak" {{ old('metode_billing', $transaksi->metode_billing ?? '') == 'Cetak' ? 'selected' : '' }}>Cetak</option>
@@ -113,12 +113,12 @@
   </div>
 
   <div class="col-md-3 mb-3">
-    <label for="alamat_penagihan" class="form-label">Alamat Penagihan</label>
+    <label for="alamat_penagihan" class="form-label">Alamat Penagihan <span class="text-danger">*</span></label>
     <textarea class="form-control" id="alamat_penagihan" name="alamat_penagihan" rows="2">{{ old('alamat_penagihan', $transaksi->alamat_penagihan ?? '') }}</textarea>
   </div>
 
   <div class="col-md-3 mb-3">
-    <label for="email_penagihan" class="form-label">Email Penagihan</label>
+    <label for="email_penagihan" class="form-label">Email Penagihan <span class="text-danger">*</span></label>
     <input type="email" class="form-control" id="email_penagihan" name="email_penagihan"
       value="{{ old('email_penagihan', $transaksi->email_penagihan ?? '') }}">
   </div>

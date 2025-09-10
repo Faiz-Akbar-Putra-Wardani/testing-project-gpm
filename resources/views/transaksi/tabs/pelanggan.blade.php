@@ -1,22 +1,22 @@
 <h6 class="mb-3">Data Pelanggan</h6>
 <div class="row">
   <div class="col-md-3 mb-3">
-    <label for="no_ktp" class="form-label">No. KTP</label>
+    <label for="no_ktp" class="form-label">No. KTP <span class="text-danger">*</span></label>
     <input type="text" class="form-control" id="no_ktp" name="no_ktp"
       value="{{ old('no_ktp', $transaksi->pelanggan->no_ktp ?? '') }}">
   </div>
   <div class="col-md-3 mb-3">
-    <label for="nama_lengkap" class="form-label">Nama Lengkap</label>
+    <label for="nama_lengkap" class="form-label">Nama Lengkap <span class="text-danger">*</span></label>
     <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap"
       value="{{ old('nama_lengkap', $transaksi->pelanggan->nama_lengkap ?? '') }}">
   </div>
   <div class="col-md-3 mb-3">
-    <label for="tempat_lahir" class="form-label">Tempat Lahir</label>
+    <label for="tempat_lahir" class="form-label">Tempat Lahir <span class="text-danger">*</span></label>
     <input type="text" class="form-control" id="tempat_lahir" name="tempat_lahir"
       value="{{ old('tempat_lahir', $transaksi->pelanggan->tempat_lahir ?? '') }}">
   </div>
   <div class="col-md-3 mb-3">
-    <label for="tanggal_lahir" class="form-label">Tanggal Lahir</label>
+    <label for="tanggal_lahir" class="form-label">Tanggal Lahir <span class="text-danger">*</span></label>
     <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir"
       value="{{ old('tanggal_lahir', $transaksi->pelanggan->tanggal_lahir ?? '') }}">
   </div>
@@ -24,7 +24,7 @@
 
 <div class="row">
   <div class="col-md-3 mb-3">
-    <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
+    <label for="jenis_kelamin" class="form-label">Jenis Kelamin <span class="text-danger">*</span></label>
     <select class="form-select" id="jenis_kelamin" name="jenis_kelamin">
       <option value="">-- Pilih --</option>
       <option value="L" {{ old('jenis_kelamin', $transaksi->pelanggan->jenis_kelamin ?? '') == 'L' ? 'selected' : '' }}>Laki-laki</option>
@@ -32,7 +32,7 @@
     </select>
   </div>
   <div class="col-md-3 mb-3">
-    <label for="status_pernikahan" class="form-label">Status Pernikahan</label>
+    <label for="status_pernikahan" class="form-label">Status Pernikahan <span class="text-danger">*</span></label>
     <select class="form-select" id="status_pernikahan" name="status_pernikahan">
       <option value="">-- Pilih --</option>
       <option value="Belum Menikah" {{ old('status_pernikahan', $transaksi->pelanggan->status_pernikahan ?? '') == 'Belum Menikah' ? 'selected' : '' }}>Belum Menikah</option>
@@ -40,7 +40,7 @@
     </select>
   </div>
   <div class="col-md-3 mb-3">
-    <label for="pekerjaan" class="form-label">Pekerjaan</label>
+    <label for="pekerjaan" class="form-label">Pekerjaan <span class="text-danger">*</span></label>
     <select class="form-select" id="pekerjaan" name="pekerjaan">
       <option value="">-- Pilih --</option>
       @foreach ($pekerjaanOptions as $pekerjaan)
@@ -55,7 +55,7 @@
       value="{{ old('pekerjaan_lainnya', $transaksi->pelanggan->pekerjaan_lainnya ?? '') }}">
   </div>
   <div class="col-md-3 mb-3">
-    <label for="jenis_tempat_tinggal" class="form-label">Jenis Tempat Tinggal</label>
+    <label for="jenis_tempat_tinggal" class="form-label">Jenis Tempat Tinggal <span class="text-danger">*</span></label>
     <select class="form-select" id="jenis_tempat_tinggal" name="jenis_tempat_tinggal">
       <option value="">-- Pilih --</option>
       @foreach ($tempatTinggalOptions as $tempatTinggal)
@@ -74,7 +74,7 @@
 <h6 class="mb-3">Alamat KTP</h6>
 <div class="row">
   <div class="col-md-3 mb-3">
-    <label for="provinsi_ktp_id" class="form-label">Provinsi</label>
+    <label for="provinsi_ktp_id" class="form-label">Provinsi <span class="text-danger">*</span></label>
     <select class="form-select select2" id="provinsi_ktp_id" name="provinsi_ktp_id">
       <option value="">-- Pilih Provinsi --</option>
       @foreach($provinsi as $p)
@@ -86,15 +86,15 @@
     </select>
   </div>
   <div class="col-md-3 mb-3">
-        <label for="kabupaten_ktp_id" class="form-label">Kabupaten</label>
+        <label for="kabupaten_ktp_id" class="form-label">Kabupaten <span class="text-danger">*</span></label>
         <select class="form-select select2" id="kabupaten_ktp_id" name="kabupaten_ktp_id"></select>
     </div>
     <div class="col-md-3 mb-3">
-        <label for="kecamatan_ktp_id" class="form-label">Kecamatan</label>
+        <label for="kecamatan_ktp_id" class="form-label">Kecamatan <span class="text-danger">*</span></label>
         <select class="form-select select2" id="kecamatan_ktp_id" name="kecamatan_ktp_id"></select>
     </div>
     <div class="col-md-3 mb-3">
-        <label for="kelurahan_ktp_id" class="form-label">Kelurahan</label>
+        <label for="kelurahan_ktp_id" class="form-label">Kelurahan <span class="text-danger">*</span></label>
         <select class="form-select select2" id="kelurahan_ktp_id" name="kelurahan_ktp_id"></select>
     </div>
     <div class="col-md-3 mb-3">
@@ -105,14 +105,14 @@
     </div>
 
 <div class="mb-3">
-  <label for="alamat_ktp" class="form-label">Detail Alamat KTP</label>
+  <label for="alamat_ktp" class="form-label">Detail Alamat KTP <span class="text-danger">*</span></label>
   <textarea class="form-control" id="alamat_ktp" name="alamat_ktp" rows="2">{{ old('alamat_ktp', $transaksi->pelanggan->alamat_ktp ?? '') }}</textarea>
 </div>
 
 <h6 class="mb-3">Alamat Instalasi</h6>
 <div class="row">
   <div class="col-md-3 mb-3">
-    <label for="provinsi_instalasi_id" class="form-label">Provinsi</label>
+    <label for="provinsi_instalasi_id" class="form-label">Provinsi <span class="text-danger">*</span></label>
     <select class="form-select select2" id="provinsi_instalasi_id" name="provinsi_instalasi_id">
       <option value="">-- Pilih Provinsi --</option>
       @foreach($provinsi as $p)
@@ -124,34 +124,36 @@
     </select>
   </div>
   <div class="col-md-3 mb-3">
-    <label for="kabupaten_instalasi_id" class="form-label">Kabupaten</label>
+    <label for="kabupaten_instalasi_id" class="form-label">Kabupaten <span class="text-danger">*</span></label>
     <select class="form-select select2" id="kabupaten_instalasi_id" name="kabupaten_instalasi_id"></select>
   </div>
   <div class="col-md-3 mb-3">
-    <label for="kecamatan_instalasi_id" class="form-label">Kecamatan</label>
+    <label for="kecamatan_instalasi_id" class="form-label">Kecamatan <span class="text-danger">*</span></label>
     <select class="form-select select2" id="kecamatan_instalasi_id" name="kecamatan_instalasi_id"></select>
   </div>
   <div class="col-md-3 mb-3">
-    <label for="kelurahan_instalasi_id" class="form-label">Kelurahan</label>
+    <label for="kelurahan_instalasi_id" class="form-label">Kelurahan <span class="text-danger">*</span></label>
     <select class="form-select select2" id="kelurahan_instalasi_id" name="kelurahan_instalasi_id"></select>
   </div>
 
 <div class="mb-3">
-  <label for="alamat_instalasi" class="form-label">Detail Alamat Instalasi</label>
+  <label for="alamat_instalasi" class="form-label">Detail Alamat Instalasi <span class="text-danger">*</span></label>
   <textarea class="form-control" id="alamat_instalasi" name="alamat_instalasi" rows="2">{{ old('alamat_instalasi', $transaksi->pelanggan->alamat_instalasi ?? '') }}</textarea>
 </div>
 
 <div class="row">
   <div class="col-md-3 mb-3">
-    <label for="nomor_telepon" class="form-label">No Telepon</label>
-    <input type="text" class="form-control" id="nomor_telepon" name="nomor_telepon"
-      value="{{ old('nomor_telepon', $transaksi->pelanggan->nomor_telepon ?? '') }}">
-  </div>
-  <div class="col-md-3 mb-3">
-    <label for="nomor_ponsel" class="form-label">No Ponsel</label>
+    <label for="nomor_ponsel" class="form-label">No Ponsel <span class="text-danger">*</span></label>
     <input type="text" class="form-control" id="nomor_ponsel" name="nomor_ponsel"
       value="{{ old('nomor_ponsel', $transaksi->pelanggan->nomor_ponsel ?? '') }}">
   </div>
+
+  <div class="col-md-3 mb-3">
+    <label for="nomor_telepon" class="form-label">No Telepon </label>
+    <input type="text" class="form-control" id="nomor_telepon" name="nomor_telepon"
+      value="{{ old('nomor_telepon', $transaksi->pelanggan->nomor_telepon ?? '') }}">
+  </div>
+
   <div class="col-md-3 mb-3">
     <label for="no_fax" class="form-label">No Fax</label>
     <input type="text" class="form-control" id="no_fax" name="no_fax"
