@@ -74,6 +74,11 @@
                 </li>
                 @endrole
 
+                 <li class="pc-item pc-caption">
+                    <label>Lainnya</label>
+                    <i class="ti ti-news"></i>
+                </li>
+
             <li class="pc-item">
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
