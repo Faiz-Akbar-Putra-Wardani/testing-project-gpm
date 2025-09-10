@@ -56,6 +56,19 @@ class Pelanggan extends Model
         ];
     }
 
+    public static function generatePelangganId()
+    {
+        $lastPelanggan = self::orderBy('id', 'desc')->first();
+        if ($lastPelanggan) {
+            $lastNumber = (int) substr($lastPelanggan->id_pelanggan, 5);
+            $newNumber = $lastNumber + 1;
+        } else {
+            $newNumber = 1;
+        }
+        return 'IDGPM' . str_pad($newNumber, 5, '0', STR_PAD_LEFT);
+    }
+
+
     public function provinsiKtp()
     {
         return $this->belongsTo(Provinsi::class, 'provinsi_ktp_id');

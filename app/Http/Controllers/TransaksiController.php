@@ -107,107 +107,88 @@ public function previewPdf($id)
         $pekerjaanOptions = Pelanggan::pekerjaanOptions();
         $tempatTinggalOptions = Pelanggan::tempatTinggalOptions();
         $methodPembayaranOptions = Transaksi::metodePembayaranOptions();
+        $generatedId = Pelanggan::generatePelangganId();
 
         return view('transaksi.create', compact(
             'provinsi', 'kabupaten', 'kecamatan', 'kelurahan',
-            'paketInternet', 'promosi', 'bandwidths', 'pekerjaanOptions', 'tempatTinggalOptions', 'methodPembayaranOptions'
+            'paketInternet', 'promosi', 'bandwidths', 'pekerjaanOptions', 'tempatTinggalOptions', 'methodPembayaranOptions', 'generatedId'
         ));
     }
 
-        public function store(StoreTransaksi $request)
-    {
-        try {
-            DB::transaction(function () use ($request) {
+    public function store(StoreTransaksi $request)
+{
+    try {
+        DB::transaction(function () use ($request) {
 
-                // Pekerjaan dan jenis tempat tinggal
-                $pekerjaan = $request->pekerjaan === 'Lainnya' ? $request->pekerjaan_lainnya : $request->pekerjaan;
-                $jenis_tempat_tinggal = $request->jenis_tempat_tinggal === 'Lainnya' ? $request->jenis_tempat_tinggal_lainnya : $request->jenis_tempat_tinggal;
+            // Tentukan pekerjaan & jenis tempat tinggal
+            $pekerjaan = $request->pekerjaan === 'Lainnya' ? $request->pekerjaan_lainnya : $request->pekerjaan;
+            $jenis_tempat_tinggal = $request->jenis_tempat_tinggal === 'Lainnya' ? $request->jenis_tempat_tinggal_lainnya : $request->jenis_tempat_tinggal;
 
-                // Cek apakah pelanggan sudah ada berdasarkan no_ktp
-                $pelanggan = Pelanggan::firstOrCreate(
-                    ['no_ktp' => $request->no_ktp],
-                    [
-                        'nama_lengkap'          => $request->nama_lengkap,
-                        'tempat_lahir'          => $request->tempat_lahir,
-                        'tanggal_lahir'         => $request->tanggal_lahir,
-                        'jenis_kelamin'         => $request->jenis_kelamin,
-                        'status_pernikahan'     => $request->status_pernikahan,
-                        'alamat_ktp'            => $request->alamat_ktp,
-                        'provinsi_ktp_id'       => $request->provinsi_ktp_id,
-                        'kabupaten_ktp_id'      => $request->kabupaten_ktp_id,
-                        'kecamatan_ktp_id'      => $request->kecamatan_ktp_id,
-                        'kelurahan_ktp_id'      => $request->kelurahan_ktp_id,
-                        'kodepos_ktp'           => $request->kodepos_ktp,
-                        'alamat_instalasi'      => $request->alamat_instalasi,
-                        'provinsi_instalasi_id' => $request->provinsi_instalasi_id,
-                        'kabupaten_instalasi_id'=> $request->kabupaten_instalasi_id,
-                        'kecamatan_instalasi_id'=> $request->kecamatan_instalasi_id,
-                        'kelurahan_instalasi_id'=> $request->kelurahan_instalasi_id,
-                        'kodepos_instalasi'     => $request->kodepos_instalasi,
-                        'pekerjaan'             => $pekerjaan,
-                        'jenis_tempat_tinggal'  => $jenis_tempat_tinggal,
-                        'nomor_telepon'         => $request->nomor_telepon,
-                        'nomor_ponsel'          => $request->nomor_ponsel,
-                        'no_fax'                => $request->no_fax,
-                    ]
-                );
+            // Cek atau buat pelanggan
+            $pelanggan = Pelanggan::firstOrCreate(
+                ['no_ktp' => $request->no_ktp],
+                array_merge(
+                    ['no_id_pelanggan' => Pelanggan::generatePelangganId()],
+                    $request->only([
+                        'nama_lengkap', 'tempat_lahir', 'tanggal_lahir', 'jenis_kelamin',
+                        'status_pernikahan', 'alamat_ktp', 'provinsi_ktp_id', 'kabupaten_ktp_id',
+                        'kecamatan_ktp_id', 'kelurahan_ktp_id', 'kodepos_ktp', 'alamat_instalasi',
+                        'provinsi_instalasi_id', 'kabupaten_instalasi_id', 'kecamatan_instalasi_id',
+                        'kelurahan_instalasi_id', 'kodepos_instalasi', 'nomor_telepon', 'nomor_ponsel', 'no_fax'
+                    ]),
+                    ['pekerjaan' => $pekerjaan, 'jenis_tempat_tinggal' => $jenis_tempat_tinggal]
+                )
+            );
 
-                // Bersihkan input rupiah
-                $biayaRegistrasi  = (float) preg_replace('/[^0-9]/', '', $request->biaya_registrasi);
-                $biayaPaket       = (float) preg_replace('/[^0-9]/', '', $request->biaya_paket_internet);
-                $biayaMaintenance = (float) preg_replace('/[^0-9]/', '', $request->biaya_maintenance);
+            // Bersihkan input rupiah
+            $biayaRegistrasi  = (float) preg_replace('/[^0-9]/', '', $request->biaya_registrasi);
+            $biayaPaket       = (float) preg_replace('/[^0-9]/', '', $request->biaya_paket_internet);
+            $biayaMaintenance = (float) preg_replace('/[^0-9]/', '', $request->biaya_maintenance);
 
-                // Hitung PPN nominal & total
-                $ppnPersen = 10;
-                $ppnNominal = ($biayaRegistrasi +$biayaPaket + $biayaMaintenance) * ($ppnPersen / 100);
-                $total = $biayaRegistrasi + $biayaPaket + $biayaMaintenance + $ppnNominal;
+            // Hitung PPN & total
+            $ppnPersen = 10;
+            $ppnNominal = ($biayaRegistrasi + $biayaPaket + $biayaMaintenance) * ($ppnPersen / 100);
+            $total = $biayaRegistrasi + $biayaPaket + $biayaMaintenance + $ppnNominal;
 
-                // Paket internet
-                if ($request->paket_internet_id !== 'Lainnya') {
-                    $paketInternetId = $request->paket_internet_id;
-                    $paketInternetCustom = null;
-                    $paketInternetHargaCustom = null;
-                } else {
-                    $paketInternetId = null;
-                    $paketInternetCustom = $request->paket_internet_custom;
-                    $paketInternetHargaCustom = (float) preg_replace('/[^0-9]/', '', $request->paket_internet_harga_custom);
-                }
+            // Tentukan paket & bandwidth
+            $paketInternetId = $request->paket_internet_id !== 'Lainnya' ? $request->paket_internet_id : null;
+            $paketInternetCustom = $request->paket_internet_id === 'Lainnya' ? $request->paket_internet_custom : null;
+            $paketInternetHargaCustom = $request->paket_internet_id === 'Lainnya' ? (float) preg_replace('/[^0-9]/', '', $request->paket_internet_harga_custom) : null;
 
-                // Bandwidth
-                $bandwidthId = $request->bandwidth_id !== 'Lainnya' ? $request->bandwidth_id : null;
-                $bandwidthManual = $request->bandwidth_id === 'Lainnya' ? $request->bandwidth_manual : null;
+            $bandwidthId = $request->bandwidth_id !== 'Lainnya' ? $request->bandwidth_id : null;
+            $bandwidthManual = $request->bandwidth_id === 'Lainnya' ? $request->bandwidth_manual : null;
 
-                // Simpan transaksi
-                Transaksi::create([
-                    'no_id_pelanggan'              => $request->no_id_pelanggan,
-                    'tanggal_daftar'               => $request->tanggal_daftar,
-                    'pelanggan_id'                 => $pelanggan->id,
-                    'paket_internet_id'            => $paketInternetId,
-                    'paket_internet_custom'        => $paketInternetCustom,
-                    'paket_internet_harga_custom'  => $paketInternetHargaCustom,
-                    'promosi_id'                   => $request->promosi_id,
-                    'bandwidth_id'                 => $bandwidthId,
-                    'bandwidth_manual'             => $bandwidthManual,
-                    'metode_billing'               => $request->metode_billing,
-                    'alamat_penagihan'             => $request->alamat_penagihan,
-                    'email_penagihan'              => $request->email_penagihan,
-                    'metode_pembayaran'            => $request->metode_pembayaran,
-                    'nomor_kartu_kredit'           => $request->nomor_kartu_kredit,
-                    'masa_berlaku_kartu'           => $request->masa_berlaku_kartu,
-                    'biaya_registrasi'             => $biayaRegistrasi,
-                    'biaya_paket_internet'         => $biayaPaket,
-                    'biaya_maintenance'            => $biayaMaintenance,
-                    'ppn_persen'                   => $ppnPersen,
-                    'ppn_nominal'                  => $ppnNominal,
-                    'total_biaya_per_bulan'        => $total,
-                ]);
-            });
+            // Simpan transaksi
+            Transaksi::create(array_merge(
+                $request->only([
+                    'tanggal_daftar', 'promosi_id', 'metode_billing', 'alamat_penagihan',
+                    'email_penagihan', 'metode_pembayaran', 'nomor_kartu_kredit', 'masa_berlaku_kartu'
+                ]),
+                [
+                    'no_id_pelanggan' => $pelanggan->no_id_pelanggan,
+                    'pelanggan_id' => $pelanggan->id,
+                    'paket_internet_id' => $paketInternetId,
+                    'paket_internet_custom' => $paketInternetCustom,
+                    'paket_internet_harga_custom' => $paketInternetHargaCustom,
+                    'bandwidth_id' => $bandwidthId,
+                    'bandwidth_manual' => $bandwidthManual,
+                    'biaya_registrasi' => $biayaRegistrasi,
+                    'biaya_paket_internet' => $biayaPaket,
+                    'biaya_maintenance' => $biayaMaintenance,
+                    'ppn_persen' => $ppnPersen,
+                    'ppn_nominal' => $ppnNominal,
+                    'total_biaya_per_bulan' => $total,
+                ]
+            ));
 
-            return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil dibuat!');
-        } catch (\Throwable $th) {
-            return back()->withInput()->with('error', 'Gagal menyimpan transaksi: ' . $th->getMessage());
-        }
+        });
+
+        return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil dibuat!');
+    } catch (\Throwable $th) {
+        return back()->withInput()->with('error', 'Gagal menyimpan transaksi: ' . $th->getMessage());
     }
+}
+
 
 
     public function show($id)

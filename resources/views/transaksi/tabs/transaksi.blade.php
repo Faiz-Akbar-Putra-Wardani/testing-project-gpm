@@ -1,9 +1,11 @@
 <h6 class="mb-3">Data Transaksi</h6>
 <div class="row">
+ {{-- No ID Pelanggan --}}
   <div class="col-md-3 mb-3">
     <label for="no_id_pelanggan" class="form-label">No ID Pelanggan <span class="text-danger">*</span></label>
     <input type="text" class="form-control" id="no_id_pelanggan" name="no_id_pelanggan"
-      value="{{ old('no_id_pelanggan', $transaksi->no_id_pelanggan ?? '') }}">
+     value="{{ old('no_id_pelanggan', $transaksi->no_id_pelanggan ?? $generatedId) }}"
+      readonly>
   </div>
 
   <div class="col-md-3 mb-3">
@@ -15,28 +17,30 @@
   <div class="col-md-3 mb-3">
     <label for="paket_internet_id" class="form-label">Paket Internet <span class="text-danger">*</span></label>
     <select class="form-select" id="paket_internet_id" name="paket_internet_id">
-      <option value="">-- Pilih Paket --</option>
-      @foreach($paketInternet as $paket)
-        <option value="{{ $paket->id }}"
-          {{ old('paket_internet_id', $transaksi->paket_internet_id ?? '') == $paket->id ? 'selected' : '' }}>
-          {{ $paket->paket_internet }}
+        <option value="">-- Pilih Paket --</option>
+        @foreach($paketInternet as $paket)
+            <option value="{{ $paket->id }}"
+            {{ old('paket_internet_id', $transaksi->paket_internet_id ?? '') == $paket->id ? 'selected' : '' }}>
+            {{ $paket->paket_internet }}
+            </option>
+        @endforeach
+        <option value="Lainnya"
+            {{ old('paket_internet_id', $transaksi->paket_internet_id ?? '') == 'Lainnya' ? 'selected' : '' }}>
+            Lainnya
         </option>
-      @endforeach
-      <option value="Lainnya"
-        {{ old('paket_internet_id', $transaksi->paket_internet_id ?? '') == 'Lainnya' ? 'selected' : '' }}>
-        Lainnya
-      </option>
-    </select>
+        </select>
+
 
     <input type="text" class="form-control mt-2" id="paket_internet_custom" name="paket_internet_custom"
-      placeholder="nama paket"
-      value="{{ old('paket_internet_custom', $transaksi->paket_internet_custom ?? '') }}"
-      style="display: none;" disabled>
+    placeholder="nama paket"
+    value="{{ old('paket_internet_custom', $transaksi->paket_internet_custom ?? '') }}"
+    style="display: none;" disabled>
 
     <input type="number" step="0.01" class="form-control mt-2" id="paket_internet_harga_custom" name="paket_internet_harga_custom"
-      placeholder="Isi harga paket custom"
-      value="{{ old('paket_internet_harga_custom', $transaksi->paket_internet_harga_custom ?? '') }}"
-      style="display: none;" disabled>
+    placeholder="Isi harga paket custom"
+    value="{{ old('paket_internet_harga_custom', $transaksi->paket_internet_harga_custom ?? '') }}"
+    style="display: none;" disabled>
+
   </div>
 
   <div class="col-md-3 mb-3">
