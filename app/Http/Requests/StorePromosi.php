@@ -24,7 +24,7 @@ class StorePromosi extends FormRequest
      public function rules(): array
     {
         return [
-            'kode_promosi' => 'nullable|string|max:50|unique:promosis,kode_promosi',
+            'kode_promosi' => 'required|string|max:50|unique:promosis,kode_promosi',
             'nama_program_promosi' => 'nullable|string|max:255',
             'periode_mulai' => 'nullable|date',
             'periode_selesai' => 'nullable|date|after_or_equal:periode_mulai',
