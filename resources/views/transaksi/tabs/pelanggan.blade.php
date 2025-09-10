@@ -111,6 +111,14 @@
 
 <h6 class="mb-3">Alamat Instalasi</h6>
 <div class="row">
+<div class="mb-3">
+    <button type="button" id="copy_ktp" class="btn btn-primary btn-sm d-flex align-items-center justify-content-center w-100 w-md-auto">
+        <i class="ti ti-copy me-2"></i>
+        <span class="d-none d-md-inline">Sama seperti KTP</span>
+        <span class="d-inline d-md-none">Salin KTP</span>
+    </button>
+    <small class="text-muted d-block mt-1">Klik jika alamat KTP dan alamat instalasi sama</small>
+</div>
   <div class="col-md-3 mb-3">
     <label for="provinsi_instalasi_id" class="form-label">Provinsi <span class="text-danger">*</span></label>
     <select class="form-select select2" id="provinsi_instalasi_id" name="provinsi_instalasi_id">

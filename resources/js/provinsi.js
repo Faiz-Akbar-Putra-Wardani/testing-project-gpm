@@ -168,4 +168,32 @@ $(function () {
             }
         });
     }
+
+    // Tambahkan ini di dalam $(function() { ... }) setelah semua setDisabled dan event change selesai
+$('#copy_ktp').click(function() {
+    // Copy provinsi
+    let provKtp = $('#provinsi_ktp_id').val();
+    $('#provinsi_instalasi_id').val(provKtp).trigger('change');
+
+    // Setelah provinsi ter-load kabupaten
+    if(provKtp){
+        loadKabupaten(provKtp, '#kabupaten_instalasi_id', $('#kabupaten_ktp_id').val(), function(kabId){
+            if(kabId){
+                loadKecamatan(kabId, '#kecamatan_instalasi_id', $('#kecamatan_ktp_id').val(), function(kecId){
+                    if(kecId){
+                        loadKelurahan(kecId, '#kelurahan_instalasi_id', $('#kelurahan_ktp_id').val());
+                    }
+                });
+            }
+        });
+    }
+
+    // Copy alamat detail
+    $('#alamat_instalasi').val($('#alamat_ktp').val());
+
+    // Copy kode pos
+    $('#nkodepos_instalasi').val($('#nkodepos_ktp').val());
+});
+
+
 });
