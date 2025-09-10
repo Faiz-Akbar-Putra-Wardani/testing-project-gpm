@@ -10,7 +10,7 @@
 
         <div class="modal-body">
           <div class="mb-3">
-            <label for="kode_promosi" class="form-label">Kode Promosi</label>
+            <label for="kode_promosi" class="form-label">Kode Promosi<span class="text-danger">*</span></label>
             <input type="text" class="form-control" id="kode_promosi" name="kode_promosi" value="{{ old('kode_promosi') }}">
             @error('kode_promosi')
               <small class="text-danger">{{ $message }}</small>
@@ -18,7 +18,7 @@
           </div>
 
           <div class="mb-3">
-            <label for="nama_program_promosi" class="form-label">Nama Program</label>
+            <label for="nama_program_promosi" class="form-label">Nama Program<span class="text-danger">*</span></label>
             <input type="text" class="form-control" id="nama_program_promosi" name="nama_program_promosi" value="{{ old('nama_program_promosi') }}">
             @error('nama_program_promosi')
               <small class="text-danger">{{ $message }}</small>
@@ -27,14 +27,14 @@
 
           <div class="row">
             <div class="col-md-6 mb-3">
-              <label for="periode_mulai" class="form-label">Periode Mulai</label>
+              <label for="periode_mulai" class="form-label">Periode Mulai<span class="text-danger">*</span></label>
               <input type="date" class="form-control" id="periode_mulai" name="periode_mulai" value="{{ old('periode_mulai') }}">
               @error('periode_mulai')
                 <small class="text-danger">{{ $message }}</small>
               @enderror
             </div>
             <div class="col-md-6 mb-3">
-              <label for="periode_selesai" class="form-label">Periode Selesai</label>
+              <label for="periode_selesai" class="form-label">Periode Selesai<span class="text-danger">*</span></label>
               <input type="date" class="form-control" id="periode_selesai" name="periode_selesai" value="{{ old('periode_selesai') }}">
               @error('periode_selesai')
                 <small class="text-danger">{{ $message }}</small>

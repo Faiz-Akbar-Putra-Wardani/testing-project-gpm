@@ -83,6 +83,67 @@ class UpdateTransaksi extends FormRequest
         ];
     }
 
+    public function messages(): array
+        {
+            return [
+                // Data Pelanggan
+                'no_ktp.required'     => 'Nomor KTP wajib diisi.',
+                'no_ktp.size'         => 'Nomor KTP harus 16 digit.',
+                'no_ktp.unique'       => 'Nomor KTP sudah terdaftar.',
+
+                'nama_lengkap.required'   => 'Nama lengkap wajib diisi.',
+                'tempat_lahir.required'   => 'Tempat lahir wajib diisi.',
+                'tanggal_lahir.required'  => 'Tanggal lahir wajib diisi.',
+                'jenis_kelamin.required'  => 'Jenis kelamin wajib dipilih.',
+                'status_pernikahan.required' => 'Status pernikahan wajib dipilih.',
+
+                'alamat_ktp.required'     => 'Alamat KTP wajib diisi.',
+                'provinsi_ktp_id.required'=> 'Provinsi KTP wajib dipilih.',
+                'kabupaten_ktp_id.required'=> 'Kabupaten/Kota KTP wajib dipilih.',
+                'kecamatan_ktp_id.required'=> 'Kecamatan KTP wajib dipilih.',
+                'kelurahan_ktp_id.required'=> 'Kelurahan KTP wajib dipilih.',
+
+                'alamat_instalasi.required' => 'Alamat instalasi wajib diisi.',
+                'provinsi_instalasi_id.required'=> 'Provinsi instalasi wajib dipilih.',
+                'kabupaten_instalasi_id.required'=> 'Kabupaten/Kota instalasi wajib dipilih.',
+                'kecamatan_instalasi_id.required'=> 'Kecamatan instalasi wajib dipilih.',
+                'kelurahan_instalasi_id.required'=> 'Kelurahan instalasi wajib dipilih.',
+
+                'pekerjaan.required'     => 'Pekerjaan wajib diisi.',
+                'jenis_tempat_tinggal.required' => 'Jenis tempat tinggal wajib dipilih.',
+                'nomor_ponsel.required'  => 'Nomor ponsel wajib diisi.',
+
+                // Data Transaksi
+                'no_id_pelanggan.required' => 'Nomor ID Pelanggan wajib diisi.',
+                'no_id_pelanggan.unique'   => 'Nomor ID Pelanggan sudah terdaftar.',
+                'tanggal_daftar.required'  => 'Tanggal daftar wajib diisi.',
+
+                'paket_internet_id.required' => 'Paket internet wajib dipilih.',
+                'paket_internet_custom.string' => 'Paket internet custom harus berupa teks.',
+                'paket_internet_harga_custom.numeric' => 'Harga paket internet custom harus berupa angka.',
+
+                'bandwidth_id.required'   => 'Bandwidth wajib dipilih.',
+                'bandwidth_manual.string' => 'Bandwidth manual harus berupa teks.',
+                'promosi_id.exists'       => 'Promosi yang dipilih tidak valid.',
+
+                'metode_billing.required'   => 'Metode billing wajib dipilih.',
+                'alamat_penagihan.required' => 'Alamat penagihan wajib diisi.',
+                'email_penagihan.required'  => 'Email penagihan wajib diisi.',
+                'email_penagihan.email'     => 'Email penagihan harus valid.',
+
+                'metode_pembayaran.required' => 'Metode pembayaran wajib dipilih.',
+                'nomor_kartu_kredit.string'  => 'Nomor kartu kredit harus berupa teks.',
+                'masa_berlaku_kartu.string'  => 'Masa berlaku kartu harus berupa teks.',
+
+                'biaya_registrasi.required'     => 'Biaya registrasi wajib diisi.',
+                'biaya_paket_internet.required' => 'Biaya paket internet wajib diisi.',
+                'biaya_maintenance.numeric'     => 'Biaya maintenance harus berupa angka.',
+                'ppn_nominal.required'          => 'PPN wajib diisi.',
+                'total_biaya_per_bulan.required'=> 'Total biaya per bulan wajib diisi.',
+            ];
+        }
+
+
     protected function prepareForValidation()
     {
         // Jika user pilih pekerjaan = "Lainnya"

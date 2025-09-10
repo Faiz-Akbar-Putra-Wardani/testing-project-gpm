@@ -27,15 +27,15 @@ class UpdatePromosi extends FormRequest
         $promosiId = $this->route('promosi')->id;
         return [
             'kode_promosi' => [
-                'nullable',
+                'sometimes',
                 'string',
                 'max:50',
                 Rule::unique('promosis', 'kode_promosi')->ignore($promosiId),
             ],
-            'nama_program_promosi' => 'nullable|string|max:255',
-            'periode_mulai' => 'nullable|date',
-            'periode_selesai' => 'nullable|date|after_or_equal:periode_mulai',
-            'note' => 'nullable|string',
+            'nama_program_promosi' => 'sometimes|string|max:255',
+            'periode_mulai' => 'sometimes|date',
+            'periode_selesai' => 'sometimes|date|after_or_equal:periode_mulai',
+            'note' => 'sometimes|string',
 ];
     }
 

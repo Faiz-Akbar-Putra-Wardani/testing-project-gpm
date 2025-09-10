@@ -23,9 +23,9 @@ class UpdatePaketInternet extends FormRequest
     public function rules(): array
         {
             return [
-                'nama_paket' => ['nullable', 'string', 'max:150'],
-                'paket_internet' => ['nullable', 'string', 'in:' . implode(',', PaketInternet::Paket_Internet)],
-                'harga_bulanan' => ['nullable',  'numeric', 'min:0'],
+                'nama_paket' => ['sometimes', 'string', 'max:150'],
+                'paket_internet' => ['sometimes', 'string', 'in:' . implode(',', PaketInternet::Paket_Internet)],
+                'harga_bulanan' => ['sometimes',  'numeric', 'min:0'],
                 'is_active' => ['sometimes', 'boolean'],
             ];
         }
@@ -34,7 +34,10 @@ class UpdatePaketInternet extends FormRequest
     public function messages(): array
     {
         return [
+            'nama_paket.max' => 'Nama paket tidak boleh lebih dari 150 karakter.',
 
+            'paket_internet.in' => 'Paket internet tidak valid.',
+            
             'harga_bulanan.numeric' => 'Harga bulanan harus berupa angka.',
             'harga_bulanan.min' => 'Harga bulanan tidak boleh kurang dari 0.',
 

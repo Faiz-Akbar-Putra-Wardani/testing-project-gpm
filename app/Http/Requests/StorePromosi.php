@@ -25,10 +25,10 @@ class StorePromosi extends FormRequest
     {
         return [
             'kode_promosi' => 'required|string|max:50|unique:promosis,kode_promosi',
-            'nama_program_promosi' => 'nullable|string|max:255',
-            'periode_mulai' => 'nullable|date',
-            'periode_selesai' => 'nullable|date|after_or_equal:periode_mulai',
-            'note' => 'nullable|string',
+            'nama_program_promosi' => 'required|string|max:255',
+            'periode_mulai' => 'required|date',
+            'periode_selesai' => 'required|date|after_or_equal:periode_mulai',
+            'note' => 'required|string',
         ];
     }
 

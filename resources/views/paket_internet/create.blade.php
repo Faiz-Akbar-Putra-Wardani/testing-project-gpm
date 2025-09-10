@@ -9,11 +9,11 @@
         </div>
         <div class="modal-body">
           <div class="mb-3">
-            <label for="nama_paket" class="form-label">Nama Paket</label>
-            <input type="text" class="form-control" id="nama_paket" name="nama_paket">
+            <label for="nama_paket" class="form-label">Nama Paket</span></label>
+            <input type="text" class="form-control" id="nama_paket" name="nama_paket" required>
           </div>
           <div class="mb-3">
-            <label for="paket_internet" class="form-label">Paket Internet</label>
+            <label for="paket_internet" class="form-label">Paket Internet<span class="text-danger">*</span></label>
             <select class="form-select" id="paket_internet" name="paket_internet">
                 <option value="">-- Pilih Paket (opsional) --</option>
                 @foreach ($paket_options as $paket)
@@ -23,11 +23,11 @@
             <small class="text-muted">jika ingin menambahkan custom paket, isi di nama paket</small>
             </div>
           <div class="mb-3">
-            <label for="harga_bulanan" class="form-label">Harga Bulanan</label>
+            <label for="harga_bulanan" class="form-label">Harga Bulanan<span class="text-danger">*</span></label>
             <input type="number" class="form-control" id="harga_bulanan" name="harga_bulanan">
           </div>
           <div class="mb-3">
-            <label for="is_active" class="form-label">Status</label>
+            <label for="is_active" class="form-label">Status<span class="text-danger">*</span></label>
             <select class="form-select" id="is_active" name="is_active" required>
               <option value="1">Active</option>
               <option value="0">Inactive</option>
