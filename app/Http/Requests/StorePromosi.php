@@ -28,7 +28,7 @@ class StorePromosi extends FormRequest
             'nama_program_promosi' => 'required|string|max:255',
             'periode_mulai' => 'required|date',
             'periode_selesai' => 'required|date|after_or_equal:periode_mulai',
-            'note' => 'required|string',
+            'note' => 'nullable|string',
         ];
     }
 

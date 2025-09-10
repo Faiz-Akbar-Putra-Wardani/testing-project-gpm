@@ -17,7 +17,7 @@ return new class extends Migration
         $table->string('nama_program_promosi', 255);
         $table->date('periode_mulai');
         $table->date('periode_selesai');
-        $table->text('note');
+        $table->text('note')->nullable();
         $table->timestamps();
         });
     }
