@@ -20,7 +20,6 @@
               <thead class="table-light">
                 <tr>
                   <th>No</th>
-                  <th>Nama Paket</th>
                   <th>Paket Internet</th>
                   <th>Harga Bulanan</th>
                   <th>Status</th>
@@ -31,8 +30,13 @@
                 @forelse($paket_internet as $index => $paket)
                 <tr>
                   <td>{{ $index + 1 }}</td>
-                  <td>{{ $paket->nama_paket ?? '-' }}</td>
-                  <td>{{ $paket->paket_internet ?? '-' }}</td>
+                 <td>
+                    @if($paket->nama_paket)
+                        {{ $paket->nama_paket }} - {{ $paket->paket_internet }}
+                    @else
+                        {{ $paket->paket_internet ?? '-' }}
+                    @endif
+                </td>
                   <td>Rp {{ number_format($paket->harga_bulanan,0,',','.') ?? '-' }}</td>
                   <td>
                     @if($paket->is_active)

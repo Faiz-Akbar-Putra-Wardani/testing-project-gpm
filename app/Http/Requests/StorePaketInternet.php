@@ -23,7 +23,7 @@ class StorePaketInternet extends FormRequest
     public function rules(): array
     {
         return [
-            'nama_paket' => ['required', 'string', 'max:150'],
+            'nama_paket' => ['nullable', 'string', 'max:150'],
             'paket_internet' => ['required', 'string', 'in:' .implode(',', PaketInternet::Paket_Internet)],
             'harga_bulanan' => ['required', 'numeric', 'min:0'],
             'is_active' => ['sometimes', 'boolean'],
@@ -34,8 +34,6 @@ class StorePaketInternet extends FormRequest
     public function messages()
 {
     return [
-        'nama_paket.required' => 'Nama paket harus diisi.',
-        'nama_paket.max' => 'Nama paket tidak boleh lebih dari 150 karakter.',
 
         'paket_internet.required' => 'Paket internet harus dipilih.',
         'paket_internet.in' => 'Paket internet tidak valid.',

@@ -34,10 +34,9 @@ class UpdatePaketInternet extends FormRequest
     public function messages(): array
     {
         return [
-            'nama_paket.max' => 'Nama paket tidak boleh lebih dari 150 karakter.',
 
             'paket_internet.in' => 'Paket internet tidak valid.',
-            
+
             'harga_bulanan.numeric' => 'Harga bulanan harus berupa angka.',
             'harga_bulanan.min' => 'Harga bulanan tidak boleh kurang dari 0.',
 
