@@ -35,7 +35,6 @@ class TransaksiController extends Controller
                 ->addIndexColumn()
                 ->addColumn('no_ktp', fn($row) => $row->pelanggan->no_ktp ?? '-')
                 ->addColumn('nama_lengkap', fn($row) => $row->pelanggan->nama_lengkap ?? '-')
-                ->addColumn('alamat_ktp', fn($row) => $row->pelanggan->alamat_ktp ?? '-')
                 ->addColumn('alamat_instalasi', fn($row) => $row->pelanggan->alamat_instalasi ?? '-')
                 ->addColumn('paket_internet', fn($row) =>
                     $row->paket->paket_internet
@@ -51,7 +50,7 @@ class TransaksiController extends Controller
                     <select class="form-select form-select-sm action-select" data-id="'.$row->id.'" data-edit="'.$editUrl.'" data-pdf="'.$pdfUrl.'" data-delete="'.$deleteUrl.'">
                         <option value="">-- Pilih Aksi --</option>
                         <option value="edit">✏️ Edit</option>
-                        <option value="pdf">📄 PDF</option>
+                        <option value="pdf">📄 Form</option>
                         <option value="delete">🗑️ Delete</option>
                     </select>
                 ';

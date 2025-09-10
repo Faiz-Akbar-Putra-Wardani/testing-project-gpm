@@ -27,7 +27,6 @@
                             <th class="text-center">No</th>
                             <th class="text-center">No KTP</th>
                             <th class="text-center">Nama Lengkap</th>
-                            <th class="text-center">Alamat KTP</th>
                             <th class="text-center">Alamat Instalasi</th>
                             <th class="text-center">Paket Internet</th>
                             <th class="text-center">Actions</th>

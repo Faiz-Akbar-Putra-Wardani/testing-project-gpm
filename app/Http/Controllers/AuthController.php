@@ -27,7 +27,7 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => bcrypt($request->password),
         ]);
-
+        $user->assignRole('owner');
         Auth::login($user);
         return redirect()->route('dashboard')->with('success', 'Registrasi berhasil! Selamat datang, ' . $user->name);
         } catch (\Exception $e) {
@@ -53,6 +53,7 @@ class AuthController extends Controller
         }
 
         return back()->withInput()->with('error', 'Login gagal! Silakan coba lagi.');
+
     }
 
     public function logout(Request $request)

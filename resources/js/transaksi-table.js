@@ -21,7 +21,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 { data: "DT_RowIndex", name: "DT_RowIndex", orderable: false, searchable: false },
                 { data: "no_ktp", name: "pelanggan.no_ktp" },
                 { data: "nama_lengkap", name: "pelanggan.nama_lengkap" },
-                { data: "alamat_ktp", name: "pelanggan.alamat_ktp" },
                 { data: "alamat_instalasi", name: "pelanggan.alamat_instalasi" },
                 { data: "paket_internet", name: "paket.paket_internet" },
                 { data: "actions", name: "actions", orderable: false, searchable: false },
