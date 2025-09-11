@@ -472,7 +472,7 @@
       <label><input type="checkbox" {{ ($transaksi->bandwidth->nilai ?? '') == '5 Mbps' ? 'checked' : '' }} disabled> 5 Mbps</label>
       <label><input type="checkbox" {{ ($transaksi->bandwidth->nilai ?? '') == '10 Mbps' ? 'checked' : '' }} disabled> 10 Mbps</label>
       <label><input type="checkbox" {{ ($transaksi->bandwidth->nilai ?? '') == '20 Mbps' ? 'checked' : '' }} disabled> 20 Mbps</label>
-      <div class="lainnya">Lainnya <span class="dots">{{ $transaksi->bandwidth_manual ?? '' }}</span></div>
+      <div class="lainnya">Lainnya <span class="dots">{{ $transaksi->bandwidth->nilai ?? '' }}</span></div>
     </div>
     <div class="line"></div>
     <div class="section paket-internet">
