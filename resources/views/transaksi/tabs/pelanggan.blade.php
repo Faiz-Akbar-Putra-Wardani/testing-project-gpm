@@ -50,9 +50,13 @@
         </option>
       @endforeach
     </select>
-    <input type="text" class="form-control mt-2" id="pekerjaan_lainnya" name="pekerjaan_lainnya"
-      placeholder="Isi jika Lainnya"
-      value="{{ old('pekerjaan_lainnya', $transaksi->pelanggan->pekerjaan_lainnya ?? '') }}">
+    <input type="text" class="form-control mt-2 @error('pekerjaan_lainnya') is-invalid @enderror" id="pekerjaan_lainnya" name="pekerjaan_lainnya"
+        placeholder="Isi jika Lainnya"
+        value="{{ old('pekerjaan_lainnya', $transaksi->pelanggan->pekerjaan_lainnya ?? '') }}">
+        @error('pekerjaan_lainnya')
+        <div class="invalid-feedback">{{ $message }}</div>
+        @enderror
+
   </div>
   <div class="col-md-3 mb-3">
     <label for="jenis_tempat_tinggal" class="form-label">Jenis Tempat Tinggal <span class="text-danger">*</span></label>
@@ -65,10 +69,13 @@
         </option>
       @endforeach
     </select>
-    <input type="text" class="form-control mt-2" id="jenis_tempat_tinggal_lainnya" name="jenis_tempat_tinggal_lainnya"
+    <input type="text" class="form-control mt-2 @error('tempat_tinggal_lainnya') is-invalid @enderror" id="jenis_tempat_tinggal_lainnya" name="jenis_tempat_tinggal_lainnya"
       placeholder="Isi jika Lainnya"
       value="{{ old('jenis_tempat_tinggal_lainnya', $transaksi->pelanggan->jenis_tempat_tinggal_lainnya ?? '') }}">
   </div>
+  @error('tempat_tinggal_lainnya')
+  <div class="invalid-feedback">{{ $message }}</div>
+  @enderror
 </div>
 
 <h6 class="mb-3">Alamat KTP</h6>
