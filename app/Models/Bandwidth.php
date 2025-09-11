@@ -21,6 +21,7 @@ class Bandwidth extends Model
             '5 Mbps',
             '10 Mbps',
             '20 Mbps',
+            'Lainnya',
         ];
     }
 

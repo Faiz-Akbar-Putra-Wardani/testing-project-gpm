@@ -21,19 +21,27 @@ class PaketInternetController extends Controller
         }
     }
 
-    public function store(StorePaketInternet $request)
-    {
-        try {
-            DB::transaction(function () use ($request) {
-                $validated = $request->validated();
-                PaketInternet::create($validated);
-            });
+            public function store(StorePaketInternet $request)
+        {
+            try {
+                DB::transaction(function () use ($request) {
+                    $validated = $request->validated();
 
-            return redirect()->route('paket_internet.index')->with('success', 'Paket Internet berhasil disimpan.');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+                    if ($request->paket_internet === 'Lainnya') {
+                        $validated['paket_internet'] = null;
+                        $validated['nama_paket'] = $request->nama_paket;
+                    } else {
+                        $validated['nama_paket'] = null;
+                    }
+
+                    PaketInternet::create($validated);
+                });
+
+                return redirect()->route('paket_internet.index')->with('success', 'Paket Internet berhasil disimpan.');
+            } catch (\Exception $e) {
+                return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+            }
         }
-    }
 
     public function edit(PaketInternet $paketInternet)
     {
@@ -45,19 +53,28 @@ class PaketInternetController extends Controller
         }
     }
 
-    public function update(UpdatePaketInternet $request, PaketInternet $paketInternet)
-    {
-        try {
-            DB::transaction(function () use ($request, $paketInternet) {
-                $validated = $request->validated();
-                $paketInternet->update($validated);
-            });
+            public function update(UpdatePaketInternet $request, PaketInternet $paketInternet)
+        {
+            try {
+                DB::transaction(function () use ($request, $paketInternet) {
+                    $validated = $request->validated();
 
-            return redirect()->route('paket_internet.index')->with('success', 'Paket Internet berhasil diperbarui.');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+                    if ($request->paket_internet === 'Lainnya') {
+                        $validated['paket_internet'] = null;
+                        $validated['nama_paket'] = $request->nama_paket;
+                    } else {
+                        $validated['nama_paket'] = null;
+                    }
+
+                    $paketInternet->update($validated);
+                });
+
+                return redirect()->route('paket_internet.index')->with('success', 'Paket Internet berhasil diperbarui.');
+            } catch (\Exception $e) {
+                return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+            }
         }
-    }
+
 
     public function destroy(PaketInternet $paketInternet)
     {

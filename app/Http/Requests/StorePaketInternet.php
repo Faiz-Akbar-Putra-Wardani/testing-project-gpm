@@ -20,16 +20,16 @@ class StorePaketInternet extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
-    {
-        return [
-            'nama_paket' => ['nullable', 'string', 'max:150'],
-            'paket_internet' => ['required', 'string', 'in:' .implode(',', PaketInternet::Paket_Internet)],
-            'harga_bulanan' => ['required', 'numeric', 'min:0'],
-            'is_active' => ['sometimes', 'boolean'],
+   public function rules()
+{
+    return [
+        'paket_internet' => 'required|string',
+        'nama_paket'     => 'nullable|string|required_if:paket_internet,Lainnya',
+        'harga_bulanan'  => 'required|numeric',
+        'is_active'      => 'required|boolean',
+    ];
+}
 
-        ];
-    }
 
     public function messages()
 {

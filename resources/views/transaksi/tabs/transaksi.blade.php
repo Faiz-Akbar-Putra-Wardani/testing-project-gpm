@@ -16,30 +16,33 @@
 
   <div class="col-md-3 mb-3">
     <label for="paket_internet_id" class="form-label">Paket Internet <span class="text-danger">*</span></label>
-    <select class="form-select" id="paket_internet_id" name="paket_internet_id">
-        <option value="">-- Pilih Paket --</option>
-        @foreach($paketInternet as $paket)
-            <option value="{{ $paket->id }}"
+    <select class="form-select" id="paket_internet_id" name="paket_internet_id" required>
+    <option value="">-- Pilih Paket --</option>
+    @foreach($paketInternet as $paket)
+        <option value="{{ $paket->id }}"
             {{ old('paket_internet_id', $transaksi->paket_internet_id ?? '') == $paket->id ? 'selected' : '' }}>
-            {{ $paket->paket_internet }}
-            </option>
-        @endforeach
-        <option value="Lainnya"
-            {{ old('paket_internet_id', $transaksi->paket_internet_id ?? '') == 'Lainnya' ? 'selected' : '' }}>
-            Lainnya
+            {{ $paket->nama_paket ?? $paket->paket_internet }}
         </option>
-        </select>
+    @endforeach
 
+    {{-- Opsi custom --}}
+    <option value="Lainnya"
+        {{ old('paket_internet_id', $transaksi->paket_internet_id ?? '') == 'Lainnya' ? 'selected' : '' }}>
+        Lainnya
+    </option>
+</select>
 
-    <input type="text" class="form-control mt-2" id="paket_internet_custom" name="paket_internet_custom"
-    placeholder="nama paket"
-    value="{{ old('paket_internet_custom', $transaksi->paket_internet_custom ?? '') }}"
+    {{-- input custom hanya muncul kalau pilih Lainnya --}}
+<input type="text" class="form-control mt-2" id="nama_paket" name="nama_paket"
+    placeholder="Nama Paket Custom"
+    value="{{ old('nama_paket') }}"
     style="display: none;" disabled>
 
-    <input type="number" step="0.01" class="form-control mt-2" id="paket_internet_harga_custom" name="paket_internet_harga_custom"
-    placeholder="Isi harga paket custom"
-    value="{{ old('paket_internet_harga_custom', $transaksi->paket_internet_harga_custom ?? '') }}"
+<input type="number" class="form-control mt-2" id="harga_bulanan" name="harga_bulanan"
+    placeholder="Harga Paket Custom"
+    value="{{ old('harga_bulanan') }}"
     style="display: none;" disabled>
+
 
   </div>
 
@@ -88,24 +91,23 @@
 <div class="row">
   <div class="col-md-3 mb-3">
     <label for="bandwidth_id" class="form-label">Bandwidth <span class="text-danger">*</span></label>
-    <select class="form-select" id="bandwidth_id" name="bandwidth_id">
-      <option value="">-- Pilih Bandwidth --</option>
-      @foreach($bandwidths as $bw)
-        <option value="{{ $bw->id }}"
-          {{ old('bandwidth_id', $transaksi->bandwidth_id ?? '') == $bw->id ? 'selected' : '' }}>
-          {{ $bw->nilai }}
-        </option>
-      @endforeach
-      <option value="Lainnya"
-        {{ old('bandwidth_id', $transaksi->bandwidth_id ?? '') == 'Lainnya' ? 'selected' : '' }}>
-        Lainnya
-      </option>
+    <select class="form-select" id="bandwidth_id" name="bandwidth_id" required>
+        <option value="">-- Pilih Bandwidth --</option>
+        @foreach($bandwidths as $bw)
+            <option value="{{ $bw->id }}"
+                {{ old('bandwidth_id', $transaksi->bandwidth_id ?? '') == $bw->id ? 'selected' : '' }}>
+                {{ $bw->nilai }}
+            </option>
+        @endforeach
+        <option value="Lainnya" {{ old('bandwidth_id', $transaksi->bandwidth_id ?? '') == 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
     </select>
-    <input type="text" class="form-control mt-2" id="bandwidth_manual" name="bandwidth_manual"
-      placeholder="Isi bandwidth manual"
-      value="{{ old('bandwidth_manual', $transaksi->bandwidth_manual ?? '') }}"
-      style="display: none;" disabled>
-  </div>
+    <input type="text" class="form-control mt-2" id="nilai" name="nilai"
+        placeholder="Isi bandwidth manual"
+        value="{{ old('nilai', '') }}"
+        style="{{ old('bandwidth_id') == 'Lainnya' ? '' : 'display:none;' }}"
+        {{ old('bandwidth_id') == 'Lainnya' ? '' : 'disabled' }}>
+</div>
+
 
   <div class="col-md-3 mb-3">
     <label for="metode_billing" class="form-label">Metode Billing <span class="text-danger">*</span></label>

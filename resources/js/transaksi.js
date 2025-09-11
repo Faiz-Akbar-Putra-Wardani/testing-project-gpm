@@ -47,8 +47,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     toggleInput("pekerjaan", "pekerjaan_lainnya");
     toggleInput("jenis_tempat_tinggal", "jenis_tempat_tinggal_lainnya");
-    toggleInput("paket_internet_id", ["paket_internet_custom", "paket_internet_harga_custom"]);
-    toggleInput("bandwidth_id", "bandwidth_manual");
+    toggleInput("paket_internet_id", ["nama_paket", "harga_bulanan"]);
+    toggleInput("bandwidth_id", "nilai");
 
     // === Auto-fill Promosi ===
     const promosiSelect = document.getElementById("promosi_id");

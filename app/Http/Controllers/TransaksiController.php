@@ -16,8 +16,6 @@ use App\Models\Transaksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
-use Dompdf\Dompdf;
-use Dompdf\Options;
 
 class TransaksiController extends Controller
 {
@@ -36,64 +34,55 @@ class TransaksiController extends Controller
                 ->addColumn('no_ktp', fn($row) => $row->pelanggan->no_ktp ?? '-')
                 ->addColumn('nama_lengkap', fn($row) => $row->pelanggan->nama_lengkap ?? '-')
                 ->addColumn('alamat_instalasi', fn($row) => $row->pelanggan->alamat_instalasi ?? '-')
-                ->addColumn('paket_internet', fn($row) =>
-                    $row->paket->paket_internet
-                        ? $row->paket->paket_internet
-                        : ($row->paket_internet_custom ?? '-')
-                )
+                ->addColumn('paket_internet', fn($row) => $row->paket?->nama_paket ?? '-')
                 ->addColumn('actions', function ($row) {
-                $editUrl = route('transaksi.edit', $row->id);
-                $deleteUrl = route('transaksi.destroy', $row->id);
-                $pdfUrl = route('transaksi.preview', $row->id);
+                    $editUrl = route('transaksi.edit', $row->id);
+                    $deleteUrl = route('transaksi.destroy', $row->id);
+                    $pdfUrl = route('transaksi.preview', $row->id);
 
-                 return '
-                    <select class="form-select form-select-sm action-select" data-id="'.$row->id.'" data-edit="'.$editUrl.'" data-pdf="'.$pdfUrl.'" data-delete="'.$deleteUrl.'">
-                        <option value="">-- Pilih Aksi --</option>
-                        <option value="edit">✏️ Edit</option>
-                        <option value="pdf">📄 Form</option>
-                        <option value="delete">🗑️ Delete</option>
-                    </select>
-                ';
-            })
-
+                    return '
+                        <select class="form-select form-select-sm action-select" data-id="'.$row->id.'" data-edit="'.$editUrl.'" data-pdf="'.$pdfUrl.'" data-delete="'.$deleteUrl.'">
+                            <option value="">-- Pilih Aksi --</option>
+                            <option value="edit">✏️ Edit</option>
+                            <option value="pdf">📄 Form</option>
+                            <option value="delete">🗑️ Delete</option>
+                        </select>
+                    ';
+                })
                 ->rawColumns(['actions'])
                 ->make(true);
         }
     }
 
+    public function previewPdf($id)
+    {
+        try {
+            $transaksi = Transaksi::with([
+                'pelanggan.provinsiKtp',
+                'pelanggan.kabupatenKtp',
+                'pelanggan.kecamatanKtp',
+                'pelanggan.kelurahanKtp',
+                'pelanggan.provinsiInstalasi',
+                'pelanggan.kabupatenInstalasi',
+                'pelanggan.kecamatanInstalasi',
+                'pelanggan.kelurahanInstalasi',
+                'paket',
+                'promosi',
+                'bandwidth'
+            ])->findOrFail($id);
 
-public function previewPdf($id)
-{
-    try {
+            $data = [
+                'transaksi'   => $transaksi,
+                'title'       => 'Preview Formulir Berlangganan',
+                'generated_at'=> now()->format('d F Y H:i:s'),
+                'isPdf'       => true,
+            ];
 
-        $transaksi = Transaksi::with([
-            'pelanggan.provinsiKtp',
-            'pelanggan.kabupatenKtp',
-            'pelanggan.kecamatanKtp',
-            'pelanggan.kelurahanKtp',
-            'pelanggan.provinsiInstalasi',
-            'pelanggan.kabupatenInstalasi',
-            'pelanggan.kecamatanInstalasi',
-            'pelanggan.kelurahanInstalasi',
-            'paket',
-            'promosi',
-            'bandwidth'
-        ])->findOrFail($id);
-
-        $data = [
-            'transaksi'   => $transaksi,
-            'title'       => 'Preview Formulir Berlangganan',
-            'generated_at'=> now()->format('d F Y H:i:s'),
-            'isPdf'       => true,
-        ];
-
-        return view('transaksi.pdf', $data);
-
-    } catch (\Exception $e) {
-        return back()->with('error', 'Gagal menampilkan preview PDF: ' . $e->getMessage());
+            return view('transaksi.pdf', $data);
+        } catch (\Exception $e) {
+            return back()->with('error', 'Gagal menampilkan preview PDF: ' . $e->getMessage());
+        }
     }
-}
-
 
     public function create()
     {
@@ -107,7 +96,7 @@ public function previewPdf($id)
         $pekerjaanOptions = Pelanggan::pekerjaanOptions();
         $tempatTinggalOptions = Pelanggan::tempatTinggalOptions();
         $methodPembayaranOptions = Transaksi::metodePembayaranOptions();
-        $generatedId = Pelanggan::generatePelangganId();
+        $generatedId = Transaksi::generatePelangganId();
 
         return view('transaksi.create', compact(
             'provinsi', 'kabupaten', 'kecamatan', 'kelurahan',
@@ -116,85 +105,88 @@ public function previewPdf($id)
     }
 
     public function store(StoreTransaksi $request)
-{
-    try {
-        DB::transaction(function () use ($request) {
-
-            // Tentukan pekerjaan & jenis tempat tinggal
-            $pekerjaan = $request->pekerjaan === 'Lainnya' ? $request->pekerjaan_lainnya : $request->pekerjaan;
-            $jenis_tempat_tinggal = $request->jenis_tempat_tinggal === 'Lainnya' ? $request->jenis_tempat_tinggal_lainnya : $request->jenis_tempat_tinggal;
-
-            // Cek atau buat pelanggan
-            $pelanggan = Pelanggan::firstOrCreate(
-                ['no_ktp' => $request->no_ktp],
-                array_merge(
-                    ['no_id_pelanggan' => Pelanggan::generatePelangganId()],
-                    $request->only([
-                        'nama_lengkap', 'tempat_lahir', 'tanggal_lahir', 'jenis_kelamin',
-                        'status_pernikahan', 'alamat_ktp', 'provinsi_ktp_id', 'kabupaten_ktp_id',
-                        'kecamatan_ktp_id', 'kelurahan_ktp_id', 'kodepos_ktp', 'alamat_instalasi',
-                        'provinsi_instalasi_id', 'kabupaten_instalasi_id', 'kecamatan_instalasi_id',
-                        'kelurahan_instalasi_id', 'kodepos_instalasi', 'nomor_telepon', 'nomor_ponsel', 'no_fax'
-                    ]),
-                    ['pekerjaan' => $pekerjaan, 'jenis_tempat_tinggal' => $jenis_tempat_tinggal]
-                )
-            );
-
-            // Bersihkan input rupiah
-            $biayaRegistrasi  = (float) preg_replace('/[^0-9]/', '', $request->biaya_registrasi);
-            $biayaPaket       = (float) preg_replace('/[^0-9]/', '', $request->biaya_paket_internet);
-            $biayaMaintenance = (float) preg_replace('/[^0-9]/', '', $request->biaya_maintenance);
-
-            // Hitung PPN & total
-            $ppnPersen = 10;
-            $ppnNominal = ($biayaRegistrasi + $biayaPaket + $biayaMaintenance) * ($ppnPersen / 100);
-            $total = $biayaRegistrasi + $biayaPaket + $biayaMaintenance + $ppnNominal;
-
-            // Tentukan paket & bandwidth
-            $paketInternetId = $request->paket_internet_id !== 'Lainnya' ? $request->paket_internet_id : null;
-            $paketInternetCustom = $request->paket_internet_id === 'Lainnya' ? $request->paket_internet_custom : null;
-            $paketInternetHargaCustom = $request->paket_internet_id === 'Lainnya' ? (float) preg_replace('/[^0-9]/', '', $request->paket_internet_harga_custom) : null;
-
-            $bandwidthId = $request->bandwidth_id !== 'Lainnya' ? $request->bandwidth_id : null;
-            $bandwidthManual = $request->bandwidth_id === 'Lainnya' ? $request->bandwidth_manual : null;
-
-            // Simpan transaksi
-            Transaksi::create(array_merge(
-                $request->only([
-                    'tanggal_daftar', 'promosi_id', 'metode_billing', 'alamat_penagihan',
-                    'email_penagihan', 'metode_pembayaran', 'nomor_kartu_kredit', 'masa_berlaku_kartu'
-                ]),
-                [
-                    'no_id_pelanggan' => $pelanggan->no_id_pelanggan,
-                    'pelanggan_id' => $pelanggan->id,
-                    'paket_internet_id' => $paketInternetId,
-                    'paket_internet_custom' => $paketInternetCustom,
-                    'paket_internet_harga_custom' => $paketInternetHargaCustom,
-                    'bandwidth_id' => $bandwidthId,
-                    'bandwidth_manual' => $bandwidthManual,
-                    'biaya_registrasi' => $biayaRegistrasi,
-                    'biaya_paket_internet' => $biayaPaket,
-                    'biaya_maintenance' => $biayaMaintenance,
-                    'ppn_persen' => $ppnPersen,
-                    'ppn_nominal' => $ppnNominal,
-                    'total_biaya_per_bulan' => $total,
-                ]
-            ));
-
-        });
-
-        return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil dibuat!');
-    } catch (\Throwable $th) {
-        return back()->withInput()->with('error', 'Gagal menyimpan transaksi: ' . $th->getMessage());
-    }
-}
-
-
-
-    public function show($id)
     {
-        $transaksi = Transaksi::with(['pelanggan', 'paket', 'promosi', 'bandwidth'])->findOrFail($id);
-        return view('transaksi.show', compact('transaksi'));
+        try {
+            DB::transaction(function () use ($request) {
+                // --- Pekerjaan & tempat tinggal ---
+                $pekerjaan = $request->pekerjaan === 'Lainnya' ? $request->pekerjaan_lainnya : $request->pekerjaan;
+                $jenis_tempat_tinggal = $request->jenis_tempat_tinggal === 'Lainnya' ? $request->jenis_tempat_tinggal_lainnya : $request->jenis_tempat_tinggal;
+
+                // --- Pelanggan ---
+                $pelanggan = Pelanggan::firstOrCreate(
+                    ['no_ktp' => $request->no_ktp],
+                    array_merge(
+                        $request->only([
+                            'nama_lengkap','tempat_lahir','tanggal_lahir','jenis_kelamin',
+                            'status_pernikahan','alamat_ktp','provinsi_ktp_id','kabupaten_ktp_id',
+                            'kecamatan_ktp_id','kelurahan_ktp_id','kodepos_ktp','alamat_instalasi',
+                            'provinsi_instalasi_id','kabupaten_instalasi_id','kecamatan_instalasi_id',
+                            'kelurahan_instalasi_id','kodepos_instalasi','nomor_telepon','nomor_ponsel','no_fax'
+                        ]),
+                        ['pekerjaan' => $pekerjaan, 'jenis_tempat_tinggal' => $jenis_tempat_tinggal]
+                    )
+                );
+
+                // --- Bersihkan input ---
+                $biayaRegistrasi  = (float) preg_replace('/[^0-9]/', '', $request->biaya_registrasi);
+                $biayaMaintenance = (float) preg_replace('/[^0-9]/', '', $request->biaya_maintenance);
+
+                // --- Paket ---
+                if ($request->paket_internet_id === 'Lainnya') {
+                    $paketBaru = PaketInternet::create([
+                        'nama_paket'    => $request->nama_paket,
+                        'harga_bulanan' => (float) preg_replace('/[^0-9]/', '', $request->harga_bulanan),
+                        'is_active'     => true,
+                    ]);
+                    $paketInternetId = $paketBaru->id;
+                    $biayaPaket = $paketBaru->harga_bulanan;
+                } else {
+                    $paket = PaketInternet::findOrFail($request->paket_internet_id);
+                    $paketInternetId = $paket->id;
+                    $biayaPaket = $paket->harga_bulanan;
+                }
+
+                // --- Bandwidth ---
+                if ($request->bandwidth_id === 'Lainnya') {
+                    $bandwidthBaru = Bandwidth::create([
+                        'nilai' => $request->nilai,
+                    ]);
+                    $bandwidthId = $bandwidthBaru->id;
+                } else {
+                    $bandwidth = Bandwidth::findOrFail($request->bandwidth_id);
+                    $bandwidthId = $bandwidth->id;
+                }
+
+                // --- Hitung PPN & Total ---
+                $ppnPersen = 10;
+                $ppnNominal = ($biayaRegistrasi + $biayaPaket + $biayaMaintenance) * ($ppnPersen / 100);
+                $total = $biayaRegistrasi + $biayaPaket + $biayaMaintenance + $ppnNominal;
+
+                // --- Simpan Transaksi ---
+                Transaksi::create(array_merge(
+                    $request->only([
+                        'tanggal_daftar','promosi_id','metode_billing','alamat_penagihan',
+                        'email_penagihan','metode_pembayaran','nomor_kartu_kredit','masa_berlaku_kartu'
+                    ]),
+                    [
+                        'no_id_pelanggan'        => Transaksi::generatePelangganId(),
+                        'pelanggan_id'           => $pelanggan->id,
+                        'paket_internet_id'      => $paketInternetId,
+                        'bandwidth_id'           => $bandwidthId,
+                        'biaya_registrasi'       => $biayaRegistrasi,
+                        'biaya_paket_internet'   => $biayaPaket,
+                        'biaya_maintenance'      => $biayaMaintenance,
+                        'ppn_persen'             => $ppnPersen,
+                        'ppn_nominal'            => $ppnNominal,
+                        'total_biaya_per_bulan'  => $total,
+                    ]
+                ));
+            });
+
+            return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil dibuat!');
+        } catch (\Throwable $th) {
+            return back()->withInput()->with('error', 'Gagal menyimpan transaksi: '.$th->getMessage());
+        }
     }
 
     public function edit($id)
@@ -215,132 +207,93 @@ public function previewPdf($id)
     }
 
     public function update(UpdateTransaksi $request, $id)
-    {
-        try {
-            DB::transaction(function () use ($request, $id) {
-                $transaksi = Transaksi::findOrFail($id);
+{
+    try {
+        DB::transaction(function () use ($request, $id) {
+            $transaksi = Transaksi::findOrFail($id);
 
-                // Pekerjaan dan jenis tempat tinggal
-                $pekerjaan = $request->pekerjaan === 'Lainnya' ? $request->pekerjaan_lainnya : $request->pekerjaan;
-                $jenis_tempat_tinggal = $request->jenis_tempat_tinggal === 'Lainnya' ? $request->jenis_tempat_tinggal_lainnya : $request->jenis_tempat_tinggal;
+            // --- Pekerjaan & tempat tinggal ---
+            $pekerjaan = $request->pekerjaan === 'Lainnya' ? $request->pekerjaan_lainnya : $request->pekerjaan;
+            $jenis_tempat_tinggal = $request->jenis_tempat_tinggal === 'Lainnya' ? $request->tempat_tinggal_lainnya : $request->jenis_tempat_tinggal;
 
-                // Cek apakah no_ktp diganti
-                if ($request->no_ktp !== $transaksi->pelanggan->no_ktp) {
-                    // Cari pelanggan dengan KTP baru
-                    $pelanggan = Pelanggan::firstOrCreate(
-                        ['no_ktp' => $request->no_ktp],
-                        [
-                            'nama_lengkap'          => $request->nama_lengkap,
-                            'tempat_lahir'          => $request->tempat_lahir,
-                            'tanggal_lahir'         => $request->tanggal_lahir,
-                            'jenis_kelamin'         => $request->jenis_kelamin,
-                            'status_pernikahan'     => $request->status_pernikahan,
-                            'alamat_ktp'            => $request->alamat_ktp,
-                            'provinsi_ktp_id'       => $request->provinsi_ktp_id,
-                            'kabupaten_ktp_id'      => $request->kabupaten_ktp_id,
-                            'kecamatan_ktp_id'      => $request->kecamatan_ktp_id,
-                            'kelurahan_ktp_id'      => $request->kelurahan_ktp_id,
-                            'kodepos_ktp'           => $request->kodepos_ktp,
-                            'alamat_instalasi'      => $request->alamat_instalasi,
-                            'provinsi_instalasi_id' => $request->provinsi_instalasi_id,
-                            'kabupaten_instalasi_id'=> $request->kabupaten_instalasi_id,
-                            'kecamatan_instalasi_id'=> $request->kecamatan_instalasi_id,
-                            'kelurahan_instalasi_id'=> $request->kelurahan_instalasi_id,
-                            'kodepos_instalasi'     => $request->kodepos_instalasi,
-                            'pekerjaan'             => $pekerjaan,
-                            'jenis_tempat_tinggal'  => $jenis_tempat_tinggal,
-                            'nomor_telepon'         => $request->nomor_telepon,
-                            'nomor_ponsel'          => $request->nomor_ponsel,
-                            'no_fax'                => $request->no_fax,
-                        ]
-                    );
-                } else {
-                    // Update pelanggan lama
-                    $pelanggan = $transaksi->pelanggan;
-                    $pelanggan->update([
-                        'nama_lengkap'          => $request->nama_lengkap,
-                        'tempat_lahir'          => $request->tempat_lahir,
-                        'tanggal_lahir'         => $request->tanggal_lahir,
-                        'jenis_kelamin'         => $request->jenis_kelamin,
-                        'status_pernikahan'     => $request->status_pernikahan,
-                        'alamat_ktp'            => $request->alamat_ktp,
-                        'provinsi_ktp_id'       => $request->provinsi_ktp_id,
-                        'kabupaten_ktp_id'      => $request->kabupaten_ktp_id,
-                        'kecamatan_ktp_id'      => $request->kecamatan_ktp_id,
-                        'kelurahan_ktp_id'      => $request->kelurahan_ktp_id,
-                        'kodepos_ktp'           => $request->kodepos_ktp,
-                        'alamat_instalasi'      => $request->alamat_instalasi,
-                        'provinsi_instalasi_id' => $request->provinsi_instalasi_id,
-                        'kabupaten_instalasi_id'=> $request->kabupaten_instalasi_id,
-                        'kecamatan_instalasi_id'=> $request->kecamatan_instalasi_id,
-                        'kelurahan_instalasi_id'=> $request->kelurahan_instalasi_id,
-                        'kodepos_instalasi'     => $request->kodepos_instalasi,
-                        'pekerjaan'             => $pekerjaan,
-                        'jenis_tempat_tinggal'  => $jenis_tempat_tinggal,
-                        'nomor_telepon'         => $request->nomor_telepon,
-                        'nomor_ponsel'          => $request->nomor_ponsel,
-                        'no_fax'                => $request->no_fax,
-                    ]);
-                }
+            // --- Pelanggan ---
+            $pelanggan = $transaksi->pelanggan;
+            $pelanggan->update(array_merge(
+                $request->only([
+                    'nama_lengkap','tempat_lahir','tanggal_lahir','jenis_kelamin',
+                    'status_pernikahan','alamat_ktp','provinsi_ktp_id','kabupaten_ktp_id',
+                    'kecamatan_ktp_id','kelurahan_ktp_id','kodepos_ktp','alamat_instalasi',
+                    'provinsi_instalasi_id','kabupaten_instalasi_id','kecamatan_instalasi_id',
+                    'kelurahan_instalasi_id','kodepos_instalasi','nomor_telepon','nomor_ponsel','no_fax'
+                ]),
+                ['pekerjaan' => $pekerjaan, 'jenis_tempat_tinggal' => $jenis_tempat_tinggal]
+            ));
 
-                // Bersihkan input rupiah
-                $biayaRegistrasi  = (float) preg_replace('/[^0-9]/', '', $request->biaya_registrasi);
-                $biayaPaket       = (float) preg_replace('/[^0-9]/', '', $request->biaya_paket_internet);
-                $biayaMaintenance = (float) preg_replace('/[^0-9]/', '', $request->biaya_maintenance);
+            // --- Bersihkan input ---
+            $biayaRegistrasi  = (float) preg_replace('/[^0-9]/', '', $request->biaya_registrasi);
+            $biayaMaintenance = (float) preg_replace('/[^0-9]/', '', $request->biaya_maintenance);
 
-                // Hitung PPN nominal & total
-                $ppnPersen = 10;
-                $ppnNominal = ($biayaPaket + $biayaMaintenance) * ($ppnPersen / 100);
-                $total = $biayaRegistrasi + $biayaPaket + $biayaMaintenance + $ppnNominal;
-
-                // Paket internet
-                if ($request->paket_internet_id !== 'Lainnya') {
-                    $paketInternetId = $request->paket_internet_id;
-                    $paketInternetCustom = null;
-                    $paketInternetHargaCustom = null;
-                } else {
-                    $paketInternetId = null;
-                    $paketInternetCustom = $request->paket_internet_custom;
-                    $paketInternetHargaCustom = (float) preg_replace('/[^0-9]/', '', $request->paket_internet_harga_custom);
-                }
-
-                // Bandwidth
-                $bandwidthId = $request->bandwidth_id !== 'Lainnya' ? $request->bandwidth_id : null;
-                $bandwidthManual = $request->bandwidth_id === 'Lainnya' ? $request->bandwidth_manual : null;
-
-                // Update transaksi
-                $transaksi->update([
-                    'no_id_pelanggan'              => $request->no_id_pelanggan,
-                    'tanggal_daftar'               => $request->tanggal_daftar,
-                    'pelanggan_id'                 => $pelanggan->id,
-                    'paket_internet_id'            => $paketInternetId,
-                    'paket_internet_custom'        => $paketInternetCustom,
-                    'paket_internet_harga_custom'  => $paketInternetHargaCustom,
-                    'promosi_id'                   => $request->promosi_id,
-                    'bandwidth_id'                 => $bandwidthId,
-                    'bandwidth_manual'             => $bandwidthManual,
-                    'metode_billing'               => $request->metode_billing,
-                    'alamat_penagihan'             => $request->alamat_penagihan,
-                    'email_penagihan'              => $request->email_penagihan,
-                    'metode_pembayaran'            => $request->metode_pembayaran,
-                    'nomor_kartu_kredit'           => $request->nomor_kartu_kredit,
-                    'masa_berlaku_kartu'           => $request->masa_berlaku_kartu,
-                    'biaya_registrasi'             => $biayaRegistrasi,
-                    'biaya_paket_internet'         => $biayaPaket,
-                    'biaya_maintenance'            => $biayaMaintenance,
-                    'ppn_persen'                   => $ppnPersen,
-                    'ppn_nominal'                  => $ppnNominal,
-                    'total_biaya_per_bulan'        => $total,
+            // --- Paket ---
+            if ($request->paket_internet_id === 'Lainnya') {
+                $paketBaru = PaketInternet::create([
+                    'nama_paket'    => $request->nama_paket,
+                    'harga_bulanan' => (float) preg_replace('/[^0-9]/', '', $request->harga_bulanan),
+                    'is_active'     => true,
                 ]);
-            });
+                $paketInternetId = $paketBaru->id;
+                $biayaPaket = $paketBaru->harga_bulanan;
+            } else {
+                $paket = PaketInternet::findOrFail($request->paket_internet_id);
+                $paketInternetId = $paket->id;
+                $biayaPaket = $paket->harga_bulanan;
+            }
 
-            return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil diupdate!');
-        } catch (\Throwable $th) {
-            return back()->withInput()->with('error', 'Gagal update transaksi: ' . $th->getMessage());
-        }
+            // --- Bandwidth ---
+            if ($request->bandwidth_id === 'Lainnya') {
+                $bandwidthBaru = Bandwidth::create([
+                    'nilai' => $request->nilai,
+                    'is_active' => true,
+                ]);
+                $bandwidthId = $bandwidthBaru->id;
+            } else {
+                $bandwidth = Bandwidth::findOrFail($request->bandwidth_id);
+                $bandwidthId = $bandwidth->id;
+            }
+
+            // --- Hitung PPN & Total ---
+            $ppnPersen = 10;
+            $ppnNominal = ($biayaRegistrasi + $biayaPaket + $biayaMaintenance) * ($ppnPersen / 100);
+            $total = $biayaRegistrasi + $biayaPaket + $biayaMaintenance + $ppnNominal;
+
+            // --- Update Transaksi ---
+            $transaksi->update(array_merge(
+                $request->only([
+                    'tanggal_daftar','promosi_id','metode_billing','alamat_penagihan',
+                    'email_penagihan','metode_pembayaran','nomor_kartu_kredit','masa_berlaku_kartu'
+                ]),
+                [
+                    'no_id_pelanggan'        => $transaksi->no_id_pelanggan, // tetap pakai ID lama
+                    'pelanggan_id'           => $pelanggan->id,
+                    'paket_internet_id'      => $paketInternetId,
+                    'bandwidth_id'           => $bandwidthId,
+                    'biaya_registrasi'       => $biayaRegistrasi,
+                    'biaya_paket_internet'   => $biayaPaket,
+                    'biaya_maintenance'      => $biayaMaintenance,
+                    'ppn_persen'             => $ppnPersen,
+                    'ppn_nominal'            => $ppnNominal,
+                    'total_biaya_per_bulan'  => $total,
+                ]
+            ));
+        });
+
+        return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil diupdate!');
+    } catch (\Throwable $th) {
+        return back()->withInput()->with('error', 'Gagal update transaksi: '.$th->getMessage());
     }
+}
 
-  public function destroy(Request $request, $id)
+
+    public function destroy(Request $request, $id)
     {
         try {
             $transaksi = Transaksi::findOrFail($id);
@@ -365,5 +318,4 @@ public function previewPdf($id)
             return back()->with('error', 'Gagal hapus transaksi: ' . $th->getMessage());
         }
     }
-
 }

@@ -9,6 +9,7 @@ class PaketInternet extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'nama_paket',
         'paket_internet',
         'harga_bulanan',
         'is_active',

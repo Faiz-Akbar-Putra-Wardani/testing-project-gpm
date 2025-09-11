@@ -33,6 +33,21 @@ class Transaksi extends Model
         'total_biaya_per_bulan',
     ];
 
+        public static function generatePelangganId()
+        {
+            $last = self::orderBy('id', 'desc')->first();
+
+            if ($last && $last->no_id_pelanggan) {
+                $lastNumber = (int) substr($last->no_id_pelanggan, 5);
+                $newNumber = $lastNumber + 1;
+            } else {
+                $newNumber = 1;
+            }
+
+            return 'IDGPM' . str_pad($newNumber, 5, '0', STR_PAD_LEFT);
+        }
+
+
     public function pelanggan()
     {
         return $this->belongsTo(Pelanggan::class, 'pelanggan_id');
