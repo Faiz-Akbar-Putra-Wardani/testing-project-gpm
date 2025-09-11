@@ -34,7 +34,8 @@ class TransaksiController extends Controller
                 ->addColumn('no_ktp', fn($row) => $row->pelanggan->no_ktp ?? '-')
                 ->addColumn('nama_lengkap', fn($row) => $row->pelanggan->nama_lengkap ?? '-')
                 ->addColumn('alamat_instalasi', fn($row) => $row->pelanggan->alamat_instalasi ?? '-')
-                ->addColumn('paket_internet', fn($row) => $row->paket?->nama_paket ?? '-')
+              ->addColumn('paket_internet', fn($row) => $row->paket?->paket_internet ?? $row->paket?->nama_paket ?? '-')
+
                 ->addColumn('actions', function ($row) {
                     $editUrl = route('transaksi.edit', $row->id);
                     $deleteUrl = route('transaksi.destroy', $row->id);
