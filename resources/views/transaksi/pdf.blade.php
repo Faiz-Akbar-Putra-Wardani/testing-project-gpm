@@ -56,11 +56,11 @@
         position: relative;
         background: white;
       }
-      
+
       input[type="checkbox"]:checked {
         background-color: white !important;
       }
-      
+
       input[type="checkbox"]:checked::before {
         content: '✓';
         position: absolute;
@@ -344,7 +344,7 @@
   <td class="no-border" style="width:25%; text-align:right;">
     <a href="javascript:window.print();" class="no-print">Print</a>
     <span class="date-box">
-      Tanggal Daftar: 
+      Tanggal Daftar:
       {{ $transaksi->tanggal_daftar ? \Carbon\Carbon::parse($transaksi->tanggal_daftar)->format('d/m/Y') : '_/_/20....' }}
     </span>
   </td>
@@ -483,11 +483,25 @@
       <div class="lainnya">Lainnya <span class="dots">{{ $transaksi->paket_internet_custom ?? '' }}</span></div>
     </div>
     <div class="line"></div>
-    <div class="section3">
-      <b>Pilihan Paket Internet</b>
-      &nbsp; Nama Paket : <span class="dots" style="width: 212px;">{{ $transaksi->paket_internet_id ? ($transaksi->paket->paket_internet ?? '') : ($transaksi->paket_internet_custom ?? '') }}</span>
-      &nbsp;&nbsp; Harga : Rp <span class="dots" style="width: 180px;">{{ number_format($transaksi->paket_internet_id ? ($transaksi->paket->harga ?? 0) : ($transaksi->paket_internet_harga_custom ?? 0), 0, ',', '.') }}</span>
-    </div>
+   <div class="section3">
+  <b>Pilihan Paket Internet</b>
+  &nbsp; Nama Paket :
+  <span class="dots" style="width: 212px;">
+    {{ $transaksi->paket_internet_id ? ($transaksi->paket->nama_paket ?? '') : ($transaksi->paket_internet ?? '') }}
+  </span>
+
+  &nbsp;&nbsp; Harga : Rp
+  <span class="dots" style="width: 180px;">
+    @if($transaksi->paket_internet_id && !in_array($transaksi->paket->paket_internet ?? '', ['Silver','Gold','Platinum']))
+      {{ number_format($transaksi->paket->harga_bulanan ?? 0, 0, ',', '.') }}
+    @else
+      {{ '' }}
+    @endif
+  </span>
+</div>
+
+
+
   </div>
 
   <div class="box3">
