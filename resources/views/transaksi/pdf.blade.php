@@ -12,7 +12,7 @@
         background: #f2f2f2;
       }
       .a4 {
-        width: 21cm;
+        width: 24cm;
         min-height: 29.7cm;
         margin: auto;
         background: #fff;
@@ -94,19 +94,22 @@
         flex: 1;
         padding: 6px;
         box-sizing: border-box;
+        min-width: 224px;
       }
-      .split > .right {
-        border-left: 2px solid #000;
-        padding: 6px;
-        min-width: 280px;
+      .split >   .right {
+        border-left: 1px solid #000;
+        margin-left: auto; /* atur sesuai kebutuhan */
+        padding: 2px;
+        min-width: 324px;
         display: flex;
         align-items: center;
         justify-content: flex-end;
         box-sizing: border-box;
       }
+
       .opts {
         display: flex;
-        gap: 12px;
+        gap: 1px;
         align-items: center;
         flex-wrap: wrap;
       }
@@ -166,17 +169,24 @@
       /* --- STYLE REVISI BANDWIDTH SAMPE METODE BILLING --- */
       .box {
         border: 1px solid #000;
-        padding: 10px 15px;
+        padding: 10px 5px;
         margin: 15px 0;
       }
+
+      .box3 {
+  border: 1px solid #000;
+  padding: 10px 15px; /* atas-bawah = 10px, kiri-kanan = 15px */
+  margin: 15px 0;
+}
+
       .section {
-        margin-bottom: 50px;
+        margin-bottom: 30px;
       }
       .section3 {
-        margin-bottom: 15px;
+        margin-bottom: 5px;
       }
       .section4 {
-        margin-bottom: 20px;
+        margin-bottom: 0px;
       }
       .section label {
         margin-right: 20px;
@@ -218,21 +228,23 @@
         width: 50%;
       }
       .payment-table {
-        margin-bottom: 8px;
+        margin-bottom: 10px;
       }
       .payment-table td {
         border: 2px solid #000;
         border-right: none;
-        padding: 8px;
+        padding: 10px;
       }
       .promotion-table {
-        margin-top: 0;
+        border-collapse: collapse;
+        width: 100%;
+        min-height: 136px
       }
       .promotion-table td {
         border: 2px solid #000;
         border-right: none;
-        padding: 8px;
-        padding-left: 3px;
+        padding: 5px;
+        padding-left: 10px;
       }
       .checkbox {
         display: inline-block;
@@ -260,22 +272,22 @@
       }
       .right-column-full {
         border: 2px solid #000;
-        padding: 17px;
-        height: 317px;
+        padding: 20px;
+        height: 269px;
         margin-left: -4px;
       }
       .total-section {
-        margin: 8px 0;
+        margin: 5px 0;
       }
       .total-line {
         display: flex;
         justify-content: space-between;
-        margin: 3px 0;
+        margin: 5px 0;
       }
 
       /* Footer styles */
       .footer-wrapper {
-        margin-top: 5px;
+        margin-top: -1px;
         width: 100%;
         display: flex;
       }
@@ -325,20 +337,19 @@
     <div class="a4">
       <!-- HEADER -->
       <table>
-        <tr>
-          <td class="no-border" style="width: 50%">
-            <strong style="font-size: 20px">GPM</strong>
-          </td>
-          <td class="no-border" style="width:25%; text-align:right;">
-  <span class="date-box">
-    Tanggal Daftar: 
-    {{ $transaksi->tanggal_daftar ? \Carbon\Carbon::parse($transaksi->tanggal_daftar)->format('d/m/Y') : '_/_/20....' }}
-  </span>
-</td>
+       <tr>
+  <td class="no-border" style="width: 50%">
+    <img src="{{ asset ('assets/images/gpm1.png') }}" alt="Logo" style="height:70px;">
+  </td>
+  <td class="no-border" style="width:25%; text-align:right;">
+    <a href="javascript:window.print();" class="no-print">Print</a>
+    <span class="date-box">
+      Tanggal Daftar: 
+      {{ $transaksi->tanggal_daftar ? \Carbon\Carbon::parse($transaksi->tanggal_daftar)->format('d/m/Y') : '_/_/20....' }}
+    </span>
+  </td>
+</tr>
 
-
-          <a href="javascript:window.print();" class="no-print">Print</a>
-        </tr>
         <tr>
           <td colspan="3" class="no-border title">FORMULIR BERLANGGANAN</td>
         </tr>
@@ -346,13 +357,13 @@
 
       <!-- DATA PELANGGAN -->
   <table>
-    <tr style="margin-bottom: 10px;">
-      <td class="no-border" style="width:70%; font-weight:bold; font-size:14px; padding:10px 0;">DATA PELANGGAN</td>
-      <td class="no-border" style="width:20%; font-weight:bold; text-align:right; padding:10px 5px 10px 0;">NO ID:</td>
-      <td style="width:20%; padding:6px;">
-        {{ $transaksi->no_id_pelanggan ?? '' }}
-      </td>
-    </tr>
+    <tr>
+    <td class="no-border" style="width:70%; font-weight:bold; font-size:14px; padding:10px 0;">DATA PELANGGAN</td>
+    <td class="no-border" style="width:44%; font-weight:bold; text-align:right; padding:10px 5px 10px 0;">NO ID:</td>
+    <td style="width:20%; padding:6px;">
+      {{ $transaksi->no_id_pelanggan ?? '' }}
+    </td>
+  </tr>
     <tr style="height: 10px;">
       <td class="no-border" colspan="3"></td>
     </tr>
@@ -376,27 +387,35 @@
       <td class="label">Alamat Instalasi</td>
       <td class="input-cell" colspan="2"><div style="padding:6px;">{{ $transaksi->pelanggan->alamat_instalasi ?? '' }}</div></td>
     </tr>
-    <tr>
-      <td class="label">Kota</td>
-      <td class="input-cell" colspan="2">
-        <div class="two-cols">
-          <div class="c1">{{ $transaksi->pelanggan->kabupatenInstalasi->name ?? '' }}</div>
-          <div class="c2">Propinsi: {{ $transaksi->pelanggan->provinsiInstalasi->name ?? '' }}</div>
-          <div class="c3">Kode Pos: {{ $transaksi->pelanggan->kodepos_instalasi ?? '' }}</div>
-        </div>
-      </td>
-    </tr>
-    <tr>
-      <td class="label">Nomor Telepon</td>
-      <td class="input-cell" colspan="2">
-        <div class="two-cols">
-          <div class="c1">{{ $transaksi->pelanggan->nomor_telepon ?? '' }}</div>
-          <div class="c2">No Fax: {{ $transaksi->pelanggan->no_fax ?? '' }}</div>
-          <div class="c3">No Ponsel: {{ $transaksi->pelanggan->nomor_ponsel ?? '' }}</div>
-        </div>
-      </td>
-    </tr>
-    <tr>
+   <tr>
+  <tr>
+  <td class="label">Kota</td>
+  <td colspan="2" style="padding:0;">
+    <table style="width:100%; border-collapse: collapse; border: none;">
+      <tr>
+        <td style="padding:6px; border:none; width:40%;">{{ $transaksi->pelanggan->kabupatenInstalasi->name ?? '' }}</td>
+        <td style="padding:6px; border:none; border-left:1px solid #000; width:30%;">Propinsi: {{ $transaksi->pelanggan->provinsiInstalasi->name ?? '' }}</td>
+        <td style="padding:6px; border:none; border-left:1px solid #000; width:30%;">Kode Pos: {{ $transaksi->pelanggan->kodepos_instalasi ?? '' }}</td>
+      </tr>
+    </table>
+  </td>
+</tr>
+
+<tr>
+  <td class="label">Nomor Telepon</td>
+  <td colspan="2" style="padding:0;">
+    <table style="width:100%; border-collapse: collapse; border: none;">
+      <tr>
+        <td style="padding:6px; border:none; width:40%;">{{ $transaksi->pelanggan->nomor_telepon ?? '' }}</td>
+        <td style="padding:6px; border:none; border-left:1px solid #000; width:30%;">No Fax: {{ $transaksi->pelanggan->no_fax ?? '' }}</td>
+        <td style="padding:6px; border:none; border-left:1px solid #000; width:30%;">No Ponsel: {{ $transaksi->pelanggan->nomor_ponsel ?? '' }}</td>
+      </tr>
+    </table>
+  </td>
+</tr>
+
+
+
       <td class="label">Nomor KTP</td>
       <td class="input-cell" colspan="2"><div style="padding:6px;">{{ $transaksi->pelanggan->no_ktp ?? '' }}</div></td>
     </tr>
@@ -410,12 +429,14 @@
     </tr>
     <tr>
       <td class="label">Kota</td>
-      <td class="input-cell" colspan="2">
-        <div class="two-cols">
-          <div class="c1">{{ $transaksi->pelanggan->kabupatenKtp->name ?? '' }}</div>
-          <div class="c2">Propinsi: {{ $transaksi->pelanggan->provinsiKtp->name ?? '' }}</div>
-          <div class="c3">Kode Pos: {{ $transaksi->pelanggan->kodepos_ktp ?? '' }}</div>
-        </div>
+      <td colspan="2" style="padding:0;">
+        <table style="width:100%; border-collapse: collapse; border: none;">
+          <tr>
+            <td style="padding:6px; border:none; width:40%;">{{ $transaksi->pelanggan->kabupatenKtp->name ?? '' }}</td>
+            <td style="padding:6px; border:none; border-left:1px solid #000; width:30%;">Propinsi: {{ $transaksi->pelanggan->provinsiKtp->name ?? '' }}</td>
+            <td style="padding:6px; border:none; border-left:1px solid #000; width:30%;">Kode Pos: {{ $transaksi->pelanggan->kodepos_ktp ?? '' }}</td>
+          </tr>
+        </table>
       </td>
     </tr>
     <tr>
@@ -442,12 +463,15 @@
   </table>
 
   <!-- REVISI: PAKET INTERNET + METODE BILLING -->
+   <h3 style="margin: 10px 0; font-size: 13px; text-align: left; margin-left: 8px;">
+  Mohon isi paket sesuai yang anda pilih
+</h3>
   <div class="box">
     <div class="section">
       <b>Kebutuhan Bandwidth</b>
-      <label><input type="checkbox" {{ ($transaksi->bandwidth->bandwidth ?? '') == '5 Mbps' ? 'checked' : '' }} disabled> 5 Mbps</label>
-      <label><input type="checkbox" {{ ($transaksi->bandwidth->bandwidth ?? '') == '10 Mbps' ? 'checked' : '' }} disabled> 10 Mbps</label>
-      <label><input type="checkbox" {{ ($transaksi->bandwidth->bandwidth ?? '') == '20 Mbps' ? 'checked' : '' }} disabled> 20 Mbps</label>
+      <label><input type="checkbox" {{ ($transaksi->bandwidth->nilai ?? '') == '5 Mbps' ? 'checked' : '' }} disabled> 5 Mbps</label>
+      <label><input type="checkbox" {{ ($transaksi->bandwidth->nilai ?? '') == '10 Mbps' ? 'checked' : '' }} disabled> 10 Mbps</label>
+      <label><input type="checkbox" {{ ($transaksi->bandwidth->nilai ?? '') == '20 Mbps' ? 'checked' : '' }} disabled> 20 Mbps</label>
       <div class="lainnya">Lainnya <span class="dots">{{ $transaksi->bandwidth_manual ?? '' }}</span></div>
     </div>
     <div class="line"></div>
@@ -466,7 +490,7 @@
     </div>
   </div>
 
-  <div class="box">
+  <div class="box3">
     <div class="section4"><b>Metode Billing:</b></div>
     <div class="section4 row">
       <div class="col"><label><input type="checkbox" {{ ($transaksi->metode_billing ?? '') == 'Cetak' ? 'checked' : '' }} disabled> Cetak</label></div>
@@ -486,10 +510,10 @@
       <table class="payment-table">
         <tr>
           <td>
-            <div style="font-weight: bold; margin-bottom: 8px;">Pilihan Cara Pembayaran:</div>
+            <div style="font-weight: bold; margin-bottom: 1px;">Pilihan Cara Pembayaran:</div>
 
             <!-- Baris pertama -->
-            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 1px;">
               <div>
                 <label><input type="checkbox" {{ ($transaksi->metode_pembayaran ?? '') == 'Transfer' ? 'checked' : '' }} disabled>Transfer</label>
               </div>
@@ -499,7 +523,7 @@
             </div>
 
             <!-- Baris kedua -->
-            <div style="margin-bottom: 5px;">
+            <div style="margin-bottom: 1px;">
               <label><input type="checkbox" {{ ($transaksi->metode_pembayaran ?? '') == 'Auto Debit Kartu Kredit' ? 'checked' : '' }} disabled>Auto Debit Kartu Kredit</label>
               <span style="margin-left: 63px;">
                 <label><input type="checkbox" {{ !in_array($transaksi->metode_pembayaran ?? '', ['Transfer', 'Auto Debit Kartu Kredit', 'BCA Card', 'Visa Card', 'Master Card']) && $transaksi->metode_pembayaran ? 'checked' : '' }} disabled>Lainnya</label>
@@ -507,7 +531,7 @@
             </div>
 
             <!-- Baris ketiga -->
-            <div style="margin-bottom: 5px; margin-left: 20px;">
+            <div style="margin-bottom: 1px; margin-left: 20px;">
               <label><input type="checkbox" {{ ($transaksi->metode_pembayaran ?? '') == 'BCA Card' ? 'checked' : '' }} disabled>BCA Card</label>
               <span style="margin-left: 30px;">*</span>
               <span style="margin-left: 12px;">
@@ -516,7 +540,7 @@
             </div>
 
             <!-- Baris keempat -->
-            <div style="margin-left: 20px; margin-bottom: 10px;">
+            <div style="margin-left: 20px; margin-bottom: 5px;">
               <label><input type="checkbox"{{ ($transaksi->metode_pembayaran ?? '') == 'Master Card' ? 'checked' : '' }} disabled>Master Card</label>
             </div>
 
@@ -524,13 +548,13 @@
             <div style="margin-bottom: 5px; display: flex; align-items: center;">
               <span>Nomor Kartu Kredit</span>
               <span style="margin-left: 15px;">:</span>
-              <span class="dashed-line" style="min-width: 210px;">{{ $transaksi->nomor_kartu_kredit ?? '' }}</span>
+              <span class="dashed-line" style="min-width: 240px;">{{ $transaksi->nomor_kartu_kredit ?? '' }}</span>
             </div>
 
-            <div style="margin-bottom: 5px; display: flex; align-items: center;">
+            <div style="margin-bottom: 1px; display: flex; align-items: center;">
               <span>Masa berlaku kartu</span>
               <span style="margin-left: 15px;">:</span>
-              <span class="dashed-line" style="min-width: 210px;">{{ $transaksi->masa_berlaku_kartu ?? '' }}</span>
+              <span class="dashed-line" style="min-width: 240px;">{{ $transaksi->masa_berlaku_kartu ?? '' }}</span>
             </div>
           </td>
         </tr>
@@ -540,26 +564,26 @@
       <table class="promotion-table">
         <tr>
           <td>
-            <div style="margin-bottom: 8px;">
+            <div style="margin-bottom: 5px;">
               <div><span style="font-weight: bold;">Kode Promosi</span><span style="margin-left: 28px; font-weight: bold;">:</span><span style="margin-left: 10px;">{{ $transaksi->promosi->kode_promosi ?? '' }}</span></div>
-              <span class="dotted-line" style="min-width: 340px;" ></span>
+              <span class="dotted-line" style="min-width: 370px;" ></span>
             </div>
 
-            <div style="margin-bottom: 8px;">
+            <div style="margin-bottom: 1px;">
               <div><span style="font-weight: bold;">Program Promosi</span><span style="margin-left: 9px; font-weight: bold;">:</span><span style="margin-left: 10px;">{{ $transaksi->promosi->nama_program_promosi ?? '' }}</span></div>
-              <span class="dotted-line" style="min-width: 340px;"></span>
+              <span class="dotted-line" style="min-width: 370px;"></span>
             </div>
 
-            <div style="margin-bottom: 8px;">
+            <div style="margin-bottom: 1px;">
               <div><span style="font-weight: bold;">Periode</span><span style="margin-left: 65px; font-weight: bold;">:</span><span style="margin-left: 10px;">{{ $transaksi->promosi ? (\Carbon\Carbon::parse($transaksi->promosi->periode_mulai)->format('d/m/Y') . ' s/d ' . \Carbon\Carbon::parse($transaksi->promosi->periode_selesai)->format('d/m/Y')) : '' }}</span></div>
-              <div style="margin-top: 3px; position: relative;">
-                <span class="dotted-line" style="min-width: 340px;"></span>
+              <div style="margin-top: 1px; position: relative;">
+                <span class="dotted-line" style="min-width: 370px;"></span>
               </div>
             </div>
 
-            <div style="margin-bottom: 5px;">
+            <div style="margin-bottom: 1px;">
               <div><span style="font-weight: bold;">Note</span><span style="margin-left: 83px; font-weight: bold;">:</span><span style="margin-left: 10px;">{{ $transaksi->promosi->note ?? '' }}</span></div>
-              <span class="dotted-line" style="min-width: 340px;"></span>
+              <span class="dotted-line" style="min-width: 370px;"></span>
             </div>
           </td>
         </tr>
@@ -569,7 +593,7 @@
     <!-- SECTION KANAN - TOTAL BIAYA -->
     <div class="right-section">
       <div class="right-column-full">
-        <div style="font-weight: bold; margin-top: 13px; margin-bottom: 10px;">Total Biaya Berlangganan Per Bulan: <span class="small-text" style="margin-left: -1px;">*Kosongkan jika tidak ada</span></div>
+        <div style="font-weight: bold; margin-top: 1px; margin-bottom: 10px;">Total Biaya Berlangganan Per Bulan: <span class="small-text" style="margin-left: -1px;">*Kosongkan jika tidak ada</span></div>
 
         <div class="total-section">
           <div class="total-line">
