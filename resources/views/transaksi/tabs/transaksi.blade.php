@@ -33,16 +33,27 @@
 </select>
 
     {{-- input custom hanya muncul kalau pilih Lainnya --}}
-<input type="text" class="form-control mt-2" id="nama_paket" name="nama_paket"
+<input type="text" class="form-control mt-2 @error('nama_paket') is-invalid @enderror" id="nama_paket" name="nama_paket"
     placeholder="Nama Paket Custom"
     value="{{ old('nama_paket') }}"
     style="display: none;" disabled>
 
-<input type="number" class="form-control mt-2" id="harga_bulanan" name="harga_bulanan"
+@error('nama_paket')
+    <div class="invalid-feedback">
+        {{ $message }}
+    </div>
+@enderror
+
+<input type="number" class="form-control mt-2 @error('harga_bulanan') is-invalid @enderror" id="harga_bulanan" name="harga_bulanan""
     placeholder="Harga Paket Custom"
     value="{{ old('harga_bulanan') }}"
     style="display: none;" disabled>
 
+@error('harga_bulanan')
+    <div class="invalid-feedback">
+        {{ $message }}
+    </div>
+@enderror
 
   </div>
 
@@ -101,11 +112,16 @@
         @endforeach
         <option value="Lainnya" {{ old('bandwidth_id', $transaksi->bandwidth_id ?? '') == 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
     </select>
-    <input type="text" class="form-control mt-2" id="nilai" name="nilai"
+    <input type="text" class="form-control mt-2 @error('nilai') is-invalid @enderror" id="nilai" name="nilai"
         placeholder="Isi bandwidth manual"
         value="{{ old('nilai', '') }}"
         style="{{ old('bandwidth_id') == 'Lainnya' ? '' : 'display:none;' }}"
         {{ old('bandwidth_id') == 'Lainnya' ? '' : 'disabled' }}>
+    @error('nilai')
+        <div class="invalid-feedback">
+            {{ $message }}
+        </div>
+    @enderror
 </div>
 
 

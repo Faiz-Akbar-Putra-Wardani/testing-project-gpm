@@ -12,7 +12,7 @@
         background: #f2f2f2;
       }
       .a4 {
-        width: 24cm;
+        width: 26cm;
         min-height: 29.7cm;
         margin: auto;
         background: #fff;
