@@ -446,7 +446,7 @@
           <label><input class="small-checkbox" type="checkbox" {{ ($transaksi->pelanggan->pekerjaan ?? '') == 'Wiraswasta' ? 'checked' : '' }} disabled> Wiraswasta</label>&nbsp;&nbsp;
           <label><input class="small-checkbox" type="checkbox" {{ ($transaksi->pelanggan->pekerjaan ?? '') == 'Karyawan' ? 'checked' : '' }} disabled> Karyawan</label>&nbsp;&nbsp;
           <label><input class="small-checkbox" type="checkbox" {{ ($transaksi->pelanggan->pekerjaan ?? '') == 'Ibu Rumah Tangga' ? 'checked' : '' }} disabled> Ibu Rumah Tangga</label>&nbsp;&nbsp;
-          <label><input class="small-checkbox" type="checkbox" {{ !in_array($transaksi->pelanggan->pekerjaan ?? '', ['Wiraswasta', 'Karyawan', 'Ibu Rumah Tangga']) && $transaksi->pelanggan->pekerjaan ? 'checked' : '' }} disabled> Lainnya {{ $transaksi->pelanggan->pekerjaan ?? '' }}</label>
+          <label><input class="small-checkbox" type="checkbox" {{ !in_array($transaksi->pelanggan->pekerjaan ?? '', ['Wiraswasta', 'Karyawan', 'Ibu Rumah Tangga']) && $transaksi->pelanggan->pekerjaan ? 'checked' : '' }} disabled> Lainnya <span class="dots">{{ $transaksi->pelanggan->pekerjaan ?? '' }}</span></label>
         </div>
       </td>
     </tr>
@@ -456,7 +456,7 @@
         <div style="padding:6px;">
           <label><input class="small-checkbox" type="checkbox" {{ ($transaksi->pelanggan->jenis_tempat_tinggal ?? '') == 'Rumah Tinggal' ? 'checked' : '' }} disabled> Rumah Tinggal</label>&nbsp;&nbsp;
           <label><input class="small-checkbox" type="checkbox" {{ ($transaksi->pelanggan->jenis_tempat_tinggal ?? '') == 'Apartemen' ? 'checked' : '' }} disabled> Apartemen</label>&nbsp;&nbsp;
-          <label><input class="small-checkbox" type="checkbox" {{ !in_array($transaksi->pelanggan->jenis_tempat_tinggal ?? '', ['Rumah Tinggal', 'Apartemen']) && $transaksi->pelanggan->jenis_tempat_tinggal ? 'checked' : '' }} disabled> Lainnya {{ $transaksi->pelanggan->jenis_tempat_tinggal ?? '' }}</label>
+          <label><input class="small-checkbox" type="checkbox" {{ !in_array($transaksi->pelanggan->jenis_tempat_tinggal ?? '', ['Rumah Tinggal', 'Apartemen']) && $transaksi->pelanggan->jenis_tempat_tinggal ? 'checked' : '' }} disabled> Lainnya <span class="dots">{{ $transaksi->pelanggan->jenis_tempat_tinggal ?? '' }}</span></label>
         </div>
       </td>
     </tr>
