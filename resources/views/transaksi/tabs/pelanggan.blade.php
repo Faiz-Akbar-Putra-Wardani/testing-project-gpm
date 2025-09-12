@@ -142,7 +142,7 @@
   </div>
 
   <div class="col-md-3 mb-3">
-    <label for="kodepos_ktp" class="form-label">Kode Pos KTP</label>
+    <label for="kodepos_ktp" class="form-label">Kode Pos KTP <span class="text-danger">*</span></label>
     <input type="text"
            class="form-control @error('kodepos_ktp') is-invalid @enderror"
            id="kodepos_ktp" name="kodepos_ktp"
@@ -242,7 +242,7 @@
   </div>
 
   <div class="col-md-3 mb-3">
-    <label for="kodepos_instalasi" class="form-label">Kode Pos Instalasi</label>
+    <label for="kodepos_instalasi" class="form-label">Kode Pos Instalasi <span class="text-danger">*</span></label>
     <input type="text"
            class="form-control @error('kodepos_instalasi') is-invalid @enderror"
            id="kodepos_instalasi" name="kodepos_instalasi"
