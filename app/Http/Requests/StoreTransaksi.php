@@ -27,14 +27,14 @@ class StoreTransaksi extends FormRequest
             'kabupaten_ktp_id'      => 'required|exists:kabupatens,id',
             'kecamatan_ktp_id'      => 'required|exists:kecamatans,id',
             'kelurahan_ktp_id'      => 'required|exists:kelurahans,id',
-            'kodepos_ktp'           => 'nullable|string|max:10',
+            'kodepos_ktp'           => 'required|string|max:10',
 
             'alamat_instalasi'      => 'required|string',
             'provinsi_instalasi_id' => 'required|exists:provinsis,id',
             'kabupaten_instalasi_id'=> 'required|exists:kabupatens,id',
             'kecamatan_instalasi_id'=> 'required|exists:kecamatans,id',
             'kelurahan_instalasi_id'=> 'required|exists:kelurahans,id',
-            'kodepos_instalasi'     => 'nullable|string|max:10',
+            'kodepos_instalasi'     => 'required|string|max:10',
 
             'pekerjaan'             => 'required|string|max:100',
             'pekerjaan_lainnya'     => 'required_if:pekerjaan,Lainnya|string|max:100',
@@ -96,12 +96,14 @@ class StoreTransaksi extends FormRequest
             'kabupaten_ktp_id.required'=> 'Kabupaten/Kota KTP wajib dipilih.',
             'kecamatan_ktp_id.required'=> 'Kecamatan KTP wajib dipilih.',
             'kelurahan_ktp_id.required'=> 'Kelurahan KTP wajib dipilih.',
+            'kodepos_ktp.required'     => 'Kode pos KTP wajib diisi.',
 
             'alamat_instalasi.required' => 'Alamat instalasi wajib diisi.',
             'provinsi_instalasi_id.required'=> 'Provinsi instalasi wajib dipilih.',
             'kabupaten_instalasi_id.required'=> 'Kabupaten/Kota instalasi wajib dipilih.',
             'kecamatan_instalasi_id.required'=> 'Kecamatan instalasi wajib dipilih.',
             'kelurahan_instalasi_id.required'=> 'Kelurahan instalasi wajib dipilih.',
+            'kodepos_instalasi.required' => 'Kode pos instalasi wajib diisi.',
 
             'pekerjaan.required'    => 'Pekerjaan wajib diisi.',
             'pekerjaan_lainnya.required_if' => 'Pekerjaan lainnya wajib diisi jika memilih Lainnya.',
