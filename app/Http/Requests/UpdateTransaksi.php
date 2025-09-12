@@ -36,14 +36,14 @@ class UpdateTransaksi extends FormRequest
             'kabupaten_ktp_id'       => 'sometimes|exists:kabupatens,id',
             'kecamatan_ktp_id'       => 'sometimes|exists:kecamatans,id',
             'kelurahan_ktp_id'       => 'sometimes|exists:kelurahans,id',
-            'kodepos_ktp'            => 'nullable|string|max:10',
+            'kodepos_ktp'            => 'sometimes|string|max:10',
 
             'alamat_instalasi'       => 'sometimes|string',
             'provinsi_instalasi_id'  => 'sometimes|exists:provinsis,id',
             'kabupaten_instalasi_id' => 'sometimes|exists:kabupatens,id',
             'kecamatan_instalasi_id' => 'sometimes|exists:kecamatans,id',
             'kelurahan_instalasi_id' => 'sometimes|exists:kelurahans,id',
-            'kodepos_instalasi'      => 'nullable|string|max:10',
+            'kodepos_instalasi'      => 'sometimes|string|max:10',
 
             'pekerjaan'              => 'sometimes|string|max:100',
             'pekerjaan_lainnya'      => 'required_if:pekerjaan,Lainnya|string|max:100',
@@ -109,6 +109,7 @@ class UpdateTransaksi extends FormRequest
         'kabupaten_ktp_id.exists'   => 'Kabupaten KTP yang dipilih tidak valid.',
         'kecamatan_ktp_id.exists'   => 'Kecamatan KTP yang dipilih tidak valid.',
         'kelurahan_ktp_id.exists'   => 'Kelurahan KTP yang dipilih tidak valid.',
+        'kodepos_ktp.required'      => 'Kode pos KTP wajib diisi.',
         'kodepos_ktp.max'           => 'Kode pos KTP maksimal 10 karakter.',
 
         'alamat_instalasi.required'       => 'Alamat instalasi wajib diisi.',
@@ -116,6 +117,7 @@ class UpdateTransaksi extends FormRequest
         'kabupaten_instalasi_id.exists'   => 'Kabupaten instalasi tidak valid.',
         'kecamatan_instalasi_id.exists'   => 'Kecamatan instalasi tidak valid.',
         'kelurahan_instalasi_id.exists'   => 'Kelurahan instalasi tidak valid.',
+        'kodepos_instalasi.required'      => 'Kode pos instalasi wajib diisi.',
         'kodepos_instalasi.max'           => 'Kode pos instalasi maksimal 10 karakter.',
 
         'pekerjaan.max'              => 'Pekerjaan maksimal 100 karakter.',
