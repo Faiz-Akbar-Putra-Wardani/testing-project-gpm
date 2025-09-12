@@ -30,10 +30,9 @@
                                 <h4> <span class="small text-muted"> {{ Auth::user()->name }}</span></h4>
                                 <hr>
                                 <div class="profile-notification-scroll position-relative" style="max-height: calc(100vh - 280px)">
-                                    <form action="{{ route('logout') }}" method="get">
+                                    <form action="{{ route('logout') }}" method="POST">
                                         @csrf
-                                        <button type="submit" class="dropdown-item"
-                                            onclick="return confirm('Apakah anda yakin ingin mengakhiri sesi ini?')">
+                                        <button type="submit" class="dropdown-item">
                                             <i class="ti ti-logout"></i>
                                             <span>Keluar</span>
                                         </button>

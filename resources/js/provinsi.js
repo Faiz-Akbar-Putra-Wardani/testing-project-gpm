@@ -192,7 +192,7 @@ $('#copy_ktp').click(function() {
     $('#alamat_instalasi').val($('#alamat_ktp').val());
 
     // Copy kode pos
-    $('#nkodepos_instalasi').val($('#nkodepos_ktp').val());
+    $('#kodepos_instalasi').val($('#kodepos_ktp').val());
 });
 
 
