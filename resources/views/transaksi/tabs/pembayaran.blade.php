@@ -39,7 +39,7 @@
   <div class="col-md-3 mb-3">
     <label for="biaya_registrasi" class="form-label">Biaya Registrasi <span class="text-danger">*</span></label>
     <input type="number" class="form-control @error('biaya_registrasi') is-invalid @enderror" id="biaya_registrasi" name="biaya_registrasi"
-      value="{{ old('biaya_registrasi', $transaksi->biaya_registrasi ?? 0) }}">
+      value="{{ old('biaya_registrasi', $transaksi->biaya_registrasi ?? 0) }}" required>
     @error('biaya_registrasi')
       <div class="invalid-feedback">{{ $message }}</div>
     @enderror
@@ -48,7 +48,7 @@
   <div class="col-md-3 mb-3">
     <label for="biaya_paket_internet" class="form-label">Biaya Paket Internet <span class="text-danger">*</span></label>
     <input type="number" class="form-control @error('biaya_paket_internet') is-invalid @enderror" id="biaya_paket_internet" name="biaya_paket_internet"
-      value="{{ old('biaya_paket_internet', $transaksi->biaya_paket_internet ?? 0) }}">
+      value="{{ old('biaya_paket_internet', $transaksi->biaya_paket_internet ?? 0) }}" required>
     @error('biaya_paket_internet')
       <div class="invalid-feedback">{{ $message }}</div>
     @enderror
@@ -57,7 +57,7 @@
   <div class="col-md-3 mb-3">
     <label for="biaya_maintenance" class="form-label">Biaya Maintenance <span class="text-danger">*</span></label>
     <input type="number" class="form-control @error('biaya_maintenance') is-invalid @enderror" id="biaya_maintenance" name="biaya_maintenance"
-      value="{{ old('biaya_maintenance', $transaksi->biaya_maintenance ?? 0) }}">
+      value="{{ old('biaya_maintenance', $transaksi->biaya_maintenance ?? 0) }}" required>
     @error('biaya_maintenance')
       <div class="invalid-feedback">{{ $message }}</div>
     @enderror
