@@ -119,9 +119,9 @@
 <h6 class="mb-3">Alamat Instalasi</h6>
 <div class="row">
 <div class="mb-3">
-    <button type="button" id="copy_ktp" class="btn btn-primary btn-sm d-flex align-items-center justify-content-center w-100 w-md-auto">
+    <button type="button" id="copy_ktp" class="btn btn-primary btn-sm d-flex align-items-center justify-content-center w-10 w-md-auto">
         <i class="ti ti-copy me-2"></i>
-        <span class="d-none d-md-inline">Sama seperti KTP</span>
+        <span class="d-none d-md-inline">Salin KTP</span>
         <span class="d-inline d-md-none">Salin KTP</span>
     </button>
     <small class="text-muted d-block mt-1">Klik jika alamat KTP dan alamat instalasi sama</small>
