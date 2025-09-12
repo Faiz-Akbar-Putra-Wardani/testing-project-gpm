@@ -45,13 +45,14 @@
                          data-bs-toggle="modal" data-bs-target="#editModal{{ $paket->id }}" title="Edit">
                         <i class="bi bi-pencil-square me-1"></i> Edit
                       </a>
-                      <form action="{{ route('paket_internet.destroy', $paket->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus?');">
+                      <form action="{{ route('paket_internet.destroy', $paket->id) }}" method="POST" class="d-inline delete-form">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-sm btn-danger rounded-pill d-flex align-items-center hover-scale" title="Delete">
-                          <i class="bi bi-trash me-1"></i> Delete
+                        <button type="submit" class="btn btn-sm btn-danger rounded-pill d-flex align-items-center hover-scale delete-btn" title="Delete">
+                            <i class="bi bi-trash me-1"></i> Delete
                         </button>
-                      </form>
+                    </form>
+
                     </div>
                   </td>
                 </tr>

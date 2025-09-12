@@ -34,6 +34,7 @@ $(function() {
 });
 
 import './alert.js';
+import './alert-data-master.js';
 import './transaksi-table.js';
 import './provinsi.js';
 import './transaksi.js';

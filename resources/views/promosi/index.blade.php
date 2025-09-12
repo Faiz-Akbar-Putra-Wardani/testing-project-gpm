@@ -48,7 +48,7 @@
                         <i class="bi bi-pencil-square me-1"></i> Edit
                       </a>
                       <form action="{{ route('promosi.destroy', $promosi->id) }}" method="POST"
-                            onsubmit="return confirm('Yakin ingin menghapus?');">
+                            class="d-inline delete-promosi-form">
                         @csrf
                         @method('DELETE')
                         <button type="submit"

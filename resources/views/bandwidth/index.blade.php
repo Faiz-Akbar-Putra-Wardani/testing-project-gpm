@@ -34,7 +34,7 @@
                       <button type="button" class="btn btn-sm btn-warning rounded-pill" data-bs-toggle="modal" data-bs-target="#editBandwidthModal{{ $bandwidth->id }}">
                         Edit
                       </button>
-                      <form action="{{ route('bandwidth.destroy', $bandwidth->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus?');">
+                      <form action="{{ route('bandwidth.destroy', $bandwidth->id) }}" method="POST" class="d-inline delete-bandwidth-form">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-sm btn-danger rounded-pill">Delete</button>

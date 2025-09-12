@@ -57,7 +57,7 @@
                       </button>
 
                       <form action="{{ route('data_user.destroy', $user->id) }}" method="POST"
-                            onsubmit="return confirm('Yakin ingin menghapus user ini?');">
+                            class="d-inline delete-user-form">
                         @csrf
                         @method('DELETE')
                         <button type="submit"
