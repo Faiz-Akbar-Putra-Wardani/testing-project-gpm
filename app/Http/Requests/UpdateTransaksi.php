@@ -75,7 +75,7 @@ class UpdateTransaksi extends FormRequest
 
             'metode_billing'        => 'sometimes|in:Cetak,E-Billing',
             'alamat_penagihan'      => 'sometimes|string',
-            'email_penagihan'       => 'sometimes|email|max:255',
+            'email_penagihan'       => 'sometimes|email:rfc|max:255',
 
             'metode_pembayaran'         => 'sometimes|string|max:100',
             'metode_pembayaran_lainnya' => 'nullable|string|max:100',

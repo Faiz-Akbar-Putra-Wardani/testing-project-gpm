@@ -62,7 +62,7 @@ class StoreTransaksi extends FormRequest
 
             'metode_billing'        => 'required|in:Cetak,E-Billing',
             'alamat_penagihan'      => 'required|string',
-            'email_penagihan'       => 'required|email|max:255',
+            'email_penagihan'       => 'required|email:rfc|max:255',
 
             'metode_pembayaran'         => 'required|string|max:100',
             'metode_pembayaran_lainnya' => 'nullable|string|max:100',
@@ -126,7 +126,7 @@ class StoreTransaksi extends FormRequest
             'metode_billing.required'   => 'Metode billing wajib dipilih.',
             'alamat_penagihan.required' => 'Alamat penagihan wajib diisi.',
             'email_penagihan.required'  => 'Email penagihan wajib diisi.',
-            'email_penagihan.email'     => 'Email penagihan harus valid.',
+            'email_penagihan.email'     => 'Email penagihan harus mengandung @.',
 
             'metode_pembayaran.required' => 'Metode pembayaran wajib dipilih.',
 
