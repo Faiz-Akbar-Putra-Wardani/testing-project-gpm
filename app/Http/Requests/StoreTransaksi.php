@@ -72,7 +72,7 @@ class StoreTransaksi extends FormRequest
 
             'biaya_registrasi'      => 'required|numeric|min:0',
             'biaya_paket_internet'  => 'required|numeric|min:0',
-            'biaya_maintenance'     => 'nullable|numeric|min:0',
+            'biaya_maintenance'     => 'required|numeric|min:0',
             'ppn_nominal'           => 'required|numeric|min:0',
             'total_biaya_per_bulan' => 'required|numeric|min:0',
         ];
@@ -132,6 +132,7 @@ class StoreTransaksi extends FormRequest
 
             'biaya_registrasi.required'     => 'Biaya registrasi wajib diisi.',
             'biaya_paket_internet.required' => 'Biaya paket internet wajib diisi.',
+            'biaya_maintenance.required'    => 'Biaya maintenance wajib diisi.',
             'biaya_maintenance.numeric'     => 'Biaya maintenance harus berupa angka.',
             'ppn_nominal.required'          => 'PPN wajib diisi.',
             'total_biaya_per_bulan.required'=> 'Total biaya per bulan wajib diisi.',
