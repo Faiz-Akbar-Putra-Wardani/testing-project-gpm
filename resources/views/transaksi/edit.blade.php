@@ -38,14 +38,23 @@
 
                 <div class="tab-pane fade show active" id="pelanggan" role="tabpanel">
                   @include('transaksi.tabs.pelanggan', ['transaksi' => $transaksi])
+                  <div class="text-end mt-3">
+                    <button type="button" class="btn btn-primary rounded-pill nextBtn" data-next="#transaksi">Next</button>
+                  </div>
                 </div>
 
                 <div class="tab-pane fade" id="transaksi" role="tabpanel">
                   @include('transaksi.tabs.transaksi', ['transaksi' => $transaksi])
+                 <div class="d-flex justify-content-between mt-3">
+                    <button type="button" class="btn btn-secondary rounded-pill prevBtn" data-prev="#pelanggan">Back</button>
+                    <button type="button" class="btn btn-primary rounded-pill nextBtn" data-next="#pembayaran">Next</button>
+                  </div>
                 </div>
 
                 <div class="tab-pane fade" id="pembayaran" role="tabpanel">
                   @include('transaksi.tabs.pembayaran', ['transaksi' => $transaksi])
+                   <div class="d-flex justify-content-between mt-3">
+                  </div>
                 </div>
               </div> <!-- end .tab-content -->
 
