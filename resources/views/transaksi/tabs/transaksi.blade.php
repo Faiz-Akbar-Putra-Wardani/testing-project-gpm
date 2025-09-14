@@ -86,7 +86,29 @@
   </div>
 </div>
 
-{{-- promosi detail tetap readonly jadi tidak perlu error validation --}}
+<div id="promosi_fields" style="display: none;">
+  <div class="row">
+    <div class="col-md-3 mb-3">
+      <label for="kode_promosi" class="form-label">Kode Promosi</label>
+      <input type="text" class="form-control" id="kode_promosi" name="kode_promosi"
+        value="{{ old('kode_promosi', $transaksi->kode_promosi ?? '') }}" readonly>
+    </div>
+    <div class="col-md-3 mb-3">
+      <label for="periode_mulai" class="form-label">Periode Mulai</label>
+      <input type="date" class="form-control" id="periode_mulai" name="periode_mulai"
+        value="{{ old('periode_mulai', $transaksi->periode_mulai ?? '') }}" readonly>
+    </div>
+    <div class="col-md-3 mb-3">
+      <label for="periode_selesai" class="form-label">Periode Selesai</label>
+      <input type="date" class="form-control" id="periode_selesai" name="periode_selesai"
+        value="{{ old('periode_selesai', $transaksi->periode_selesai ?? '') }}" readonly>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="note" class="form-label">Catatan</label>
+    <textarea class="form-control" id="note" name="note" rows="2" readonly>{{ old('note', $transaksi->note ?? '') }}</textarea>
+  </div>
+</div>
 
 <div class="row">
   <div class="col-md-3 mb-3">
