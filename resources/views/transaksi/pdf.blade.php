@@ -414,8 +414,6 @@
   </td>
 </tr>
 
-
-
       <td class="label">Nomor KTP</td>
       <td class="input-cell" colspan="2"><div style="padding:6px;">{{ $transaksi->pelanggan->no_ktp ?? '' }}</div></td>
     </tr>
@@ -472,7 +470,12 @@
       <label><input type="checkbox" {{ ($transaksi->bandwidth->nilai ?? '') == '5 Mbps' ? 'checked' : '' }} disabled> 5 Mbps</label>
       <label><input type="checkbox" {{ ($transaksi->bandwidth->nilai ?? '') == '10 Mbps' ? 'checked' : '' }} disabled> 10 Mbps</label>
       <label><input type="checkbox" {{ ($transaksi->bandwidth->nilai ?? '') == '20 Mbps' ? 'checked' : '' }} disabled> 20 Mbps</label>
-      <div class="lainnya">Lainnya <span class="dots">{{ $transaksi->bandwidth->nilai ?? '' }}</span></div>
+     <div class="lainnya">
+    Lainnya 
+    <span class="dots">
+      {{ in_array($transaksi->bandwidth->nilai ?? '', ['5 Mbps', '10 Mbps', '20 Mbps']) ? '' : ($transaksi->bandwidth->nilai ?? '') }}
+    </span>
+  </div>
     </div>
     <div class="line"></div>
     <div class="section paket-internet">
