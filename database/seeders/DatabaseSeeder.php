@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
         $this->call(FromJsonSeeder::class);
         $this->call(ToJsonSeeder::class);
         $this->call(OwnerSeeder::class);
+        $this->call(UserRoleSeeder::class);
         $this->call(RoleSeeder::class);
     }
 }
