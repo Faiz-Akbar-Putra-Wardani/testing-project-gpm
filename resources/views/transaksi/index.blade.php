@@ -13,7 +13,7 @@
             <a href="{{ route('transaksi.create') }}"
                class="btn text-white fw-bold rounded-pill px-4 d-flex align-items-center shadow-sm hover-scale"
                style="background: linear-gradient(135deg, #FF6EC7 0%, #7F00FF 100%);">
-              <i class="bi bi-plus-lg me-2"></i> Tambah Transaksi
+              <i class="bi bi-plus-lg me-2"></i> Tambah 
             </a>
           </div>
 

@@ -60,7 +60,7 @@
 
               <div class="mt-3 text-end" id="formActions" style="display: none;">
                 <a href="{{ route('transaksi.index') }}" class="btn btn-secondary rounded-pill">Batal</a>
-                <button type="submit" class="btn btn-primary rounded-pill" id="btnSubmit">Update</button>
+                <button type="submit" class="btn btn-primary rounded-pill" id="btnSubmit">Perbarui</button>
               </div>
             </form>
           </div>

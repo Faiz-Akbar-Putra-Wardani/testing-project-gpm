@@ -11,7 +11,7 @@
             <button type="button" class="btn text-white fw-bold rounded-pill px-4 d-flex align-items-center shadow-sm hover-scale"
                     data-bs-toggle="modal" data-bs-target="#createBandwidthModal"
                     style="background: linear-gradient(135deg, #FF6EC7 0%, #7F00FF 100%);">
-              <i class="bi bi-plus-lg me-2"></i> Add New
+              <i class="bi bi-plus-lg me-2"></i> Tambah
             </button>
           </div>
 
@@ -37,7 +37,7 @@
                       <form action="{{ route('bandwidth.destroy', $bandwidth->id) }}" method="POST" class="d-inline delete-bandwidth-form">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-sm btn-danger rounded-pill">Delete</button>
+                        <button type="submit" class="btn btn-sm btn-danger rounded-pill">Hapus</button>
                       </form>
                     </div>
                   </td>

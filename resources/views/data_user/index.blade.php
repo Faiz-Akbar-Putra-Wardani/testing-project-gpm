@@ -12,7 +12,7 @@
             <button type="button" class="btn text-white fw-bold rounded-pill px-4 d-flex align-items-center shadow-sm hover-scale"
                     data-bs-toggle="modal" data-bs-target="#createModal"
                     style="background: linear-gradient(135deg, #FF6EC7 0%, #7F00FF 100%);">
-              <i class="bi bi-plus-lg me-2"></i> Add New
+              <i class="bi bi-plus-lg me-2"></i> Tambah
             </button>
           </div>
 
@@ -63,7 +63,7 @@
                         <button type="submit"
                                 class="btn btn-sm btn-danger rounded-pill d-flex align-items-center hover-scale"
                                 title="Delete">
-                          <i class="bi bi-trash me-1"></i> Delete
+                          <i class="bi bi-trash me-1"></i> Hapus
                         </button>
                       </form>
                     </div>

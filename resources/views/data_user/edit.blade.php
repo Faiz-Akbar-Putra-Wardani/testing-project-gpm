@@ -31,7 +31,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">Batal</button>
-          <button type="submit" class="btn btn-primary rounded-pill text-white">Update</button>
+          <button type="submit" class="btn btn-primary rounded-pill text-white">Perbarui</button>
         </div>
       </div>
     </form>

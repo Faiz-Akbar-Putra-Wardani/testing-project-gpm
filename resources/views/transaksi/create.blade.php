@@ -36,15 +36,15 @@
                 <div class="tab-pane fade show active" id="pelanggan" role="tabpanel">
                   @include('transaksi.tabs.pelanggan')
                   <div class="text-end mt-3">
-                    <button type="button" class="btn btn-primary rounded-pill nextBtn" data-next="#transaksi">Next</button>
+                    <button type="button" class="btn btn-primary rounded-pill nextBtn" data-next="#transaksi">Selanjutnya</button>
                   </div>
                 </div>
 
                 <div class="tab-pane fade" id="transaksi" role="tabpanel">
                   @include('transaksi.tabs.transaksi')
                   <div class="d-flex justify-content-between mt-3">
-                    <button type="button" class="btn btn-secondary rounded-pill prevBtn" data-prev="#pelanggan">Back</button>
-                    <button type="button" class="btn btn-primary rounded-pill nextBtn" data-next="#pembayaran">Next</button>
+                    <button type="button" class="btn btn-secondary rounded-pill prevBtn" data-prev="#pelanggan">Kembali</button>
+                    <button type="button" class="btn btn-primary rounded-pill nextBtn" data-next="#pembayaran">Selanjutnya</button>
                   </div>
                 </div>
 
@@ -55,7 +55,7 @@
                 </div>
               </div> <!-- end .tab-content -->
               <div class="mt-3 text-end" id="formActions" style="display: none;">
-              <button type="button" class="btn btn-secondary rounded-pill prevBtn" data-prev="#transaksi">Back</button>
+              <button type="button" class="btn btn-secondary rounded-pill prevBtn" data-prev="#transaksi">Kembali</button>
               <button type="reset" class="btn btn-secondary rounded-pill">Reset</button>
               <button type="submit" class="btn btn-primary rounded-pill" id="btnSubmit">Simpan</button>
             </form>

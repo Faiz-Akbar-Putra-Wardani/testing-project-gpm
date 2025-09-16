@@ -54,7 +54,7 @@
 
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">Batal</button>
-          <button type="submit" class="btn btn-primary text-white rounded-pill">Update</button>
+          <button type="submit" class="btn btn-primary text-white rounded-pill">Perbarui</button>
         </div>
       </div>
     </form>
