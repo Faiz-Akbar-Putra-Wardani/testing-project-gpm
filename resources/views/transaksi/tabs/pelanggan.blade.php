@@ -94,12 +94,13 @@
     </select>
     @error('jenis_tempat_tinggal')<div class="invalid-feedback">{{ $message }}</div>@enderror
 
-    <input type="text"
-           class="form-control mt-2 @error('tempat_tinggal_lainnya') is-invalid @enderror"
-           id="jenis_tempat_tinggal_lainnya" name="jenis_tempat_tinggal_lainnya"
-           placeholder="Isi jika Lainnya"
-           value="{{ old('jenis_tempat_tinggal_lainnya', $transaksi->pelanggan->jenis_tempat_tinggal_lainnya ?? '') }}">
-    @error('tempat_tinggal_lainnya')<div class="invalid-feedback">{{ $message }}</div>@enderror
+   <input type="text"
+       class="form-control mt-2 @error('tempat_tinggal_lainnya') is-invalid @enderror"
+       id="tempat_tinggal_lainnya" name="tempat_tinggal_lainnya"
+       placeholder="Isi jika Lainnya"
+       value="{{ old('tempat_tinggal_lainnya', $transaksi->pelanggan->tempat_tinggal_lainnya ?? '') }}">
+      @error('tempat_tinggal_lainnya')<div class="invalid-feedback">{{ $message }}</div>@enderror
+
   </div>
 </div>
 
