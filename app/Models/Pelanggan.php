@@ -31,7 +31,9 @@ class Pelanggan extends Model
         'kelurahan_instalasi_id',
         'kodepos_instalasi',
         'pekerjaan',
+        'pekerjaan_lainnya',
         'jenis_tempat_tinggal',
+        'tempat_tinggal_lainnya',
         'nomor_telepon',
         'nomor_ponsel',
         'no_fax'
@@ -43,7 +45,6 @@ class Pelanggan extends Model
             'Wiraswasta' => 'Wiraswasta',
             'Karyawan' => 'Karyawan',
             'Ibu Rumah Tangga' => 'Ibu Rumah Tangga',
-            'Lainnya' => 'Lainnya',
         ];
     }
 
@@ -52,7 +53,6 @@ class Pelanggan extends Model
         return [
             'Apartemen' => 'Apartemen',
             'Rumah' => 'Rumah',
-            'Lainnya' => 'Lainnya',
         ];
     }
 

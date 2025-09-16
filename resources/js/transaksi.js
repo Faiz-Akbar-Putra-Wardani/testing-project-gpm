@@ -33,6 +33,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     input.style.display = "block";
                     input.removeAttribute("disabled");
                 });
+                 if (select.value !== "Lainnya") {
+                  select.value = "Lainnya"; 
+        }
             } else {
                 inputs.forEach(input => {
                     input.style.display = "none";

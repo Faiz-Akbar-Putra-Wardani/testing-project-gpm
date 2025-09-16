@@ -65,42 +65,56 @@
     <select class="form-select @error('pekerjaan') is-invalid @enderror"
             id="pekerjaan" name="pekerjaan">
       <option value="">-- Pilih --</option>
-      @foreach ($pekerjaanOptions as $pekerjaan)
-        <option value="{{ $pekerjaan }}" {{ old('pekerjaan', $transaksi->pelanggan->pekerjaan ?? '') == $pekerjaan ? 'selected' : '' }}>
-          {{ $pekerjaan }}
+      @foreach ($pekerjaanOptions as $option)
+        <option value="{{ $option }}"
+          {{ old('pekerjaan', $transaksi->pelanggan->pekerjaan ?? '') == $option ? 'selected' : '' }}>
+          {{ $option }}
         </option>
       @endforeach
+      <option value="Lainnya"
+        {{ old('pekerjaan',  $transaksi->pelanggan->pekerjaan ?? '') == 'Lainnya'
+        || $transaksi?->pelanggan?->pekerjaan_lainnya ? 'selected' : '' }}>
+        Lainnya
+      </option>
     </select>
-    @error('pekerjaan')<div class="invalid-feedback">{{ $message }}</div>@enderror
+  @error('pekerjaan')<div class="invalid-feedback">{{ $message }}</div>@enderror
 
-    <input type="text"
-           class="form-control mt-2 @error('pekerjaan_lainnya') is-invalid @enderror"
-           id="pekerjaan_lainnya" name="pekerjaan_lainnya"
-           placeholder="Isi jika Lainnya"
-           value="{{ old('pekerjaan_lainnya', $transaksi->pelanggan->pekerjaan_lainnya ?? '') }}">
-    @error('pekerjaan_lainnya')<div class="invalid-feedback">{{ $message }}</div>@enderror
+  <input type="text"
+         class="form-control mt-2 @error('pekerjaan_lainnya') is-invalid @enderror"
+         id="pekerjaan_lainnya" name="pekerjaan_lainnya"
+         placeholder="Isi jika Lainnya"
+         value="{{ old('pekerjaan_lainnya', $transaksi?->pelanggan?->pekerjaan_lainnya ?? '') }}"
+         style="display: none;">
+  @error('pekerjaan_lainnya')<div class="invalid-feedback">{{ $message }}</div>@enderror
+
   </div>
 
   <div class="col-md-3 mb-3">
-    <label for="jenis_tempat_tinggal" class="form-label">Jenis Tempat Tinggal <span class="text-danger">*</span></label>
-    <select class="form-select @error('jenis_tempat_tinggal') is-invalid @enderror"
+      <label for="jenis_tempat_tinggal" class="form-label">Jenis Tempat Tinggal <span class="text-danger">*</span></label>
+          <select class="form-select @error('jenis_tempat_tinggal') is-invalid @enderror"
             id="jenis_tempat_tinggal" name="jenis_tempat_tinggal">
       <option value="">-- Pilih --</option>
       @foreach ($tempatTinggalOptions as $tempatTinggal)
-        <option value="{{ $tempatTinggal }}" {{ old('jenis_tempat_tinggal', $transaksi->pelanggan->jenis_tempat_tinggal ?? '') == $tempatTinggal ? 'selected' : '' }}>
+        <option value="{{ $tempatTinggal }}"
+          {{ old('jenis_tempat_tinggal', $transaksi->pelanggan->jenis_tempat_tinggal ?? '') == $tempatTinggal ? 'selected' : '' }}>
           {{ $tempatTinggal }}
         </option>
       @endforeach
+      <option value="Lainnya"
+        {{ old('jenis_tempat_tinggal',  $transaksi->pelanggan->jenis_tempat_tinggal ?? '') == 'Lainnya'
+        || $transaksi?->pelanggan?->tempat_tinggal_lainnya ? 'selected' : '' }}>
+        Lainnya
+      </option>
     </select>
-    @error('jenis_tempat_tinggal')<div class="invalid-feedback">{{ $message }}</div>@enderror
+  @error('jenis_tempat_tinggal')<div class="invalid-feedback">{{ $message }}</div>@enderror
 
-   <input type="text"
-       class="form-control mt-2 @error('tempat_tinggal_lainnya') is-invalid @enderror"
-       id="tempat_tinggal_lainnya" name="tempat_tinggal_lainnya"
-       placeholder="Isi jika Lainnya"
-       value="{{ old('tempat_tinggal_lainnya', $transaksi->pelanggan->tempat_tinggal_lainnya ?? '') }}">
-      @error('tempat_tinggal_lainnya')<div class="invalid-feedback">{{ $message }}</div>@enderror
-
+  <input type="text"
+         class="form-control mt-2 @error('tempat_tinggal_lainnya') is-invalid @enderror"
+         id="tempat_tinggal_lainnya" name="tempat_tinggal_lainnya"
+         placeholder="Isi jika Lainnya"
+         value="{{ old('tempat_tinggal_lainnya', $transaksi?->pelanggan?->tempat_tinggal_lainnya ?? '') }}"
+         style="display: none;">
+  @error('tempat_tinggal_lainnya')<div class="invalid-feedback">{{ $message }}</div>@enderror
   </div>
 </div>
 

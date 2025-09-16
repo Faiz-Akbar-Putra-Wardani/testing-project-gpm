@@ -457,14 +457,19 @@
       </label>&nbsp;&nbsp;
 
       <label>
-        <input class="small-checkbox" type="checkbox"
-          {{ !in_array($transaksi->pelanggan->pekerjaan ?? '', ['Wiraswasta','Karyawan','Ibu Rumah Tangga']) && $transaksi->pelanggan->pekerjaan ? 'checked' : '' }}
-          disabled>
-        Lainnya
-        <span class="dots">
-          {{ in_array($transaksi->pelanggan->pekerjaan ?? '', ['Wiraswasta','Karyawan','Ibu Rumah Tangga']) ? '' : ($transaksi->pelanggan->pekerjaan ?? '') }}
-        </span>
-      </label>
+      <input class="small-checkbox" type="checkbox"
+        {{ ($transaksi->pelanggan->pekerjaan ?? '') == 'Lainnya' || $transaksi->pelanggan->pekerjaan_lainnya ? 'checked' : '' }}
+        disabled>
+      Lainnya
+      <span class="dots">
+        @if(($transaksi->pelanggan->pekerjaan ?? '') === 'Lainnya')
+          {{ $transaksi->pelanggan->pekerjaan_lainnya }}
+        @elseif(!in_array($transaksi->pelanggan->pekerjaan, ['Wiraswasta','Karyawan','Ibu Rumah Tangga','Lainnya']))
+          {{ $transaksi->pelanggan->pekerjaan }}
+        @endif
+      </span>
+    </label>
+
     </div>
   </td>
 </tr>
@@ -485,11 +490,15 @@
 
       <label>
         <input class="small-checkbox" type="checkbox"
-          {{ !in_array($transaksi->pelanggan->jenis_tempat_tinggal ?? '', ['Rumah Tinggal','Apartemen']) && $transaksi->pelanggan->jenis_tempat_tinggal ? 'checked' : '' }}
+          {{ ($transaksi->pelanggan->jenis_tempat_tinggal ?? '') == 'Lainnya' || $transaksi->pelanggan->tempat_tinggal_lainnya ? 'checked' : '' }}
           disabled>
         Lainnya
         <span class="dots">
-          {{ in_array($transaksi->pelanggan->jenis_tempat_tinggal ?? '', ['Rumah Tinggal','Apartemen']) ? '' : ($transaksi->pelanggan->jenis_tempat_tinggal ?? '') }}
+          @if(($transaksi->pelanggan->jenis_tempat_tinggal ?? '') === 'Lainnya')
+            {{ $transaksi->pelanggan->tempat_tinggal_lainnya }}
+          @elseif(!in_array($transaksi->pelanggan->jenis_tempat_tinggal, ['Rumah Tinggal','Apartemen','Lainnya']))
+            {{ $transaksi->pelanggan->jenis_tempat_tinggal }}
+          @endif
         </span>
       </label>
     </div>

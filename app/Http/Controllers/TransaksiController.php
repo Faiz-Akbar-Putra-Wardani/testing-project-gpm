@@ -98,10 +98,11 @@ class TransaksiController extends Controller
         $tempatTinggalOptions = Pelanggan::tempatTinggalOptions();
         $methodPembayaranOptions = Transaksi::metodePembayaranOptions();
         $generatedId = Transaksi::generatePelangganId();
+        $transaksi = null; 
 
         return view('transaksi.create', compact(
             'provinsi', 'kabupaten', 'kecamatan', 'kelurahan',
-            'paketInternet', 'promosi', 'bandwidths', 'pekerjaanOptions', 'tempatTinggalOptions', 'methodPembayaranOptions', 'generatedId'
+            'paketInternet', 'promosi', 'bandwidths', 'pekerjaanOptions', 'tempatTinggalOptions', 'methodPembayaranOptions', 'generatedId', 'transaksi'
         ));
     }
 
@@ -109,10 +110,23 @@ class TransaksiController extends Controller
     {
         try {
             DB::transaction(function () use ($request) {
-                // --- Pekerjaan & tempat tinggal ---
-                $pekerjaan = $request->pekerjaan === 'Lainnya' ? $request->pekerjaan_lainnya : $request->pekerjaan;
-                $jenis_tempat_tinggal = $request->jenis_tempat_tinggal === 'Lainnya' ? $request->jenis_tempat_tinggal_lainnya : $request->jenis_tempat_tinggal;
+              // --- Tentukan pekerjaan ---
+                    $pekerjaan = $request->pekerjaan;
+                    $pekerjaanLainnya = $request->pekerjaan_lainnya;
 
+                    if ($pekerjaan === 'Lainnya' && $pekerjaanLainnya) {
+                        $pekerjaan = $pekerjaanLainnya; // override pekerjaan dengan input custom
+                    }
+
+                    // --- Tentukan tempat tinggal ---
+                    $tempatTinggal = $request->jenis_tempat_tinggal;
+                    $tempatTinggalLainnya = $request->tempat_tinggal_lainnya;
+
+                    if ($tempatTinggal === 'Lainnya' && $tempatTinggalLainnya) {
+                        $tempatTinggal = $tempatTinggalLainnya; // override tempat tinggal dengan input custom
+                    }
+
+              
                 // --- Pelanggan ---
                 $pelanggan = Pelanggan::firstOrCreate(
                     ['no_ktp' => $request->no_ktp],
@@ -122,10 +136,14 @@ class TransaksiController extends Controller
                             'status_pernikahan','alamat_ktp','provinsi_ktp_id','kabupaten_ktp_id',
                             'kecamatan_ktp_id','kelurahan_ktp_id','kodepos_ktp','alamat_instalasi',
                             'provinsi_instalasi_id','kabupaten_instalasi_id','kecamatan_instalasi_id',
-                            'kelurahan_instalasi_id','kodepos_instalasi','nomor_telepon','nomor_ponsel','no_fax'
+                            'kelurahan_instalasi_id','kodepos_instalasi','nomor_telepon','nomor_ponsel','no_fax',
                         ]),
-                        ['pekerjaan' => $pekerjaan, 'jenis_tempat_tinggal' => $jenis_tempat_tinggal]
-                    )
+                         [ 'pekerjaan'              => $pekerjaan,
+                            'pekerjaan_lainnya'      => $pekerjaanLainnya,
+                            'jenis_tempat_tinggal'   => $tempatTinggal,
+                            'tempat_tinggal_lainnya' => $tempatTinggalLainnya,
+                          ],
+                        )
                 );
 
                 // --- Bersihkan input ---
@@ -212,10 +230,21 @@ class TransaksiController extends Controller
     try {
         DB::transaction(function () use ($request, $id) {
             $transaksi = Transaksi::findOrFail($id);
+                        // --- Tentukan pekerjaan ---
+            $pekerjaan = $request->pekerjaan;
+            $pekerjaanLainnya = $request->pekerjaan_lainnya;
 
-            // --- Pekerjaan & tempat tinggal ---
-            $pekerjaan = $request->pekerjaan === 'Lainnya' ? $request->pekerjaan_lainnya : $request->pekerjaan;
-            $jenis_tempat_tinggal = $request->jenis_tempat_tinggal === 'Lainnya' ? $request->tempat_tinggal_lainnya : $request->jenis_tempat_tinggal;
+            if ($pekerjaan === 'Lainnya' && $pekerjaanLainnya) {
+                $pekerjaan = $pekerjaanLainnya; // override pekerjaan dengan input custom
+            }
+
+            // --- Tentukan tempat tinggal ---
+            $tempatTinggal = $request->jenis_tempat_tinggal;
+            $tempatTinggalLainnya = $request->tempat_tinggal_lainnya;
+
+            if ($tempatTinggal === 'Lainnya' && $tempatTinggalLainnya) {
+                $tempatTinggal = $tempatTinggalLainnya; // override tempat tinggal dengan input custom
+            }
 
             // --- Pelanggan ---
             $pelanggan = $transaksi->pelanggan;
@@ -227,7 +256,12 @@ class TransaksiController extends Controller
                     'provinsi_instalasi_id','kabupaten_instalasi_id','kecamatan_instalasi_id',
                     'kelurahan_instalasi_id','kodepos_instalasi','nomor_telepon','nomor_ponsel','no_fax'
                 ]),
-                ['pekerjaan' => $pekerjaan, 'jenis_tempat_tinggal' => $jenis_tempat_tinggal]
+                 [
+                    'pekerjaan'              => $pekerjaan,
+                    'pekerjaan_lainnya'      => $pekerjaanLainnya,
+                    'jenis_tempat_tinggal'   => $tempatTinggal,
+                    'tempat_tinggal_lainnya' => $tempatTinggalLainnya,
+                ]
             ));
 
             // --- Bersihkan input ---

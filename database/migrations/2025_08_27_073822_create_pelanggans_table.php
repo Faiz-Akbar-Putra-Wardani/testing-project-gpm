@@ -35,7 +35,10 @@ return new class extends Migration
         $table->string('kodepos_instalasi', 10);
 
         $table->string('pekerjaan', 100);
+         $table->string('pekerjaan_lainnya', 100)->nullable();
+
         $table->string('jenis_tempat_tinggal', 100);
+        $table->string('tempat_tinggal_lainnya', 100)->nullable();
         $table->string('nomor_telepon', 20)->nullable();
         $table->string('nomor_ponsel', 20);
         $table->string('no_fax', 20)->nullable();
