@@ -21,14 +21,26 @@ class UpdatePaketInternet extends FormRequest
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
-        {
-            return [
-                'nama_paket' => ['sometimes', 'string', 'max:150'],
-                'paket_internet' => ['sometimes', 'string', 'in:' . implode(',', PaketInternet::Paket_Internet)],
-                'harga_bulanan' => ['sometimes',  'numeric', 'min:0'],
-                'is_active' => ['sometimes', 'boolean'],
-            ];
-        }
+{
+    return [
+        'paket_internet' => [
+            'nullable',
+            'string',
+            'in:' . implode(',', PaketInternet::Paket_Internet),
+            'required_without:nama_paket',
+        ],
+        'nama_paket' => [
+            'nullable',
+            'string',
+            'max:150',
+            'required_without:paket_internet',
+        ],
+        'harga_bulanan' => ['sometimes', 'numeric', 'min:0'],
+        'is_active' => ['sometimes', 'boolean'],
+    ];
+}
+
+
 
 
     public function messages(): array
@@ -36,6 +48,7 @@ class UpdatePaketInternet extends FormRequest
         return [
 
             'paket_internet.in' => 'Paket internet tidak valid.',
+            'paket_internet.required' => 'Paket internet harus dipilih.',
 
             'harga_bulanan.numeric' => 'Harga bulanan harus berupa angka.',
             'harga_bulanan.min' => 'Harga bulanan tidak boleh kurang dari 0.',
