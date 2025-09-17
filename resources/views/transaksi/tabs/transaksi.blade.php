@@ -163,7 +163,7 @@
 
   <div class="col-md-3 mb-3">
     <label for="email_penagihan" class="form-label">Email Penagihan <span class="text-danger">*</span></label>
-    <input type="email" class="form-control @error('email_penagihan') is-invalid @enderror"
+    <input type="text" class="form-control @error('email_penagihan') is-invalid @enderror"
       id="email_penagihan" name="email_penagihan"
       value="{{ old('email_penagihan', $transaksi->email_penagihan ?? '') }}">
     @error('email_penagihan')
