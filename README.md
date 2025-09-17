@@ -7,6 +7,27 @@ Memiliki role **Owner**, **Marketing**, dan **Teknisi** dengan fitur CRUD sesuai
 
 1. **Clone Repository**
    ```bash
-   git clone https://github.com/username/testing-project-gpm.git
+   https://github.com/Faiz-Akbar-Putra-Wardani/testing-project-gpm.git
    cd testing-gpm-project
+   
+   **Install Dependency PHP**
+   composer install
+   
+   **Install Dependency Frontend**
+   npm install
+
+   **Buat file .env**
+   cp .env.example .env
+   
+   **Generate Key Aplikasi**
+   php artisan key:generate
+
+   **Migrasi & Seeder Database**
+     php artisan migrate --seed
+
+   **Build Asset Frontend**
+      npm run dev
+   **Jalankan server Laravel**
+      php artisan serve
+
 
