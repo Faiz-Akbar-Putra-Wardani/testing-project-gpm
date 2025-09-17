@@ -23,11 +23,12 @@ Memiliki role **Owner**, **Marketing**, dan **Teknisi** dengan fitur CRUD sesuai
    php artisan key:generate
 
    **Migrasi & Seeder Database**
-     php artisan migrate --seed
+   php artisan migrate --seed
 
    **Build Asset Frontend**
-      npm run dev
+   npm run dev
+   
    **Jalankan server Laravel**
-      php artisan serve
+   php artisan serve
 
 
