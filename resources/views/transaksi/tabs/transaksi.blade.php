@@ -25,7 +25,7 @@
   <div class="col-md-3 mb-3">
     <label for="paket_internet_id" class="form-label">Paket Internet <span class="text-danger">*</span></label>
     <select class="form-select @error('paket_internet_id') is-invalid @enderror"
-      id="paket_internet_id" name="paket_internet_id" required>
+      id="paket_internet_id" name="paket_internet_id">
       <option value="">-- Pilih Paket --</option>
       @foreach($paketInternet as $paket)
         <option value="{{ $paket->id }}"
@@ -114,7 +114,7 @@
   <div class="col-md-3 mb-3">
     <label for="bandwidth_id" class="form-label">Bandwidth <span class="text-danger">*</span></label>
     <select class="form-select @error('bandwidth_id') is-invalid @enderror"
-      id="bandwidth_id" name="bandwidth_id" required>
+      id="bandwidth_id" name="bandwidth_id">
       <option value="">-- Pilih Bandwidth --</option>
       @foreach($bandwidths as $bw)
         <option value="{{ $bw->id }}"

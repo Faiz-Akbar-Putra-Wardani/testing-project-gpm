@@ -67,8 +67,8 @@ class StoreTransaksi extends FormRequest
             'metode_pembayaran'         => 'required|string|max:100',
             'metode_pembayaran_lainnya' => 'nullable|string|max:100',
 
-            'nomor_kartu_kredit'    => 'nullable|string|max:50',
-            'masa_berlaku_kartu'    => 'nullable|string|max:10',
+            'nomor_kartu_kredit'    => 'required|string|max:50',
+            'masa_berlaku_kartu'    => 'required|string|max:10',
 
             'biaya_registrasi'      => 'required|numeric|min:0',
             'biaya_paket_internet'  => 'required|numeric|min:0',
@@ -129,6 +129,9 @@ class StoreTransaksi extends FormRequest
             'email_penagihan.email'     => 'Email penagihan harus mengandung @.',
 
             'metode_pembayaran.required' => 'Metode pembayaran wajib dipilih.',
+
+            'nomor_kartu_kredit.required' => 'Nomor kartu kredit wajib diisi.',
+            'masa_berlaku_kartu.required' => 'Masa berlaku kartu kredit wajib diisi.',
 
             'biaya_registrasi.required'     => 'Biaya registrasi wajib diisi.',
             'biaya_paket_internet.required' => 'Biaya paket internet wajib diisi.',

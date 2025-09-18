@@ -80,12 +80,12 @@ class UpdateTransaksi extends FormRequest
             'metode_pembayaran'         => 'sometimes|string|max:100',
             'metode_pembayaran_lainnya' => 'nullable|string|max:100',
 
-            'nomor_kartu_kredit'    => 'nullable|string|max:50',
-            'masa_berlaku_kartu'    => 'nullable|string|max:10',
+            'nomor_kartu_kredit'    => 'sometimes|string|max:50',
+            'masa_berlaku_kartu'    => 'sometimes|string|max:10',
 
             'biaya_registrasi'      => 'sometimes|numeric|min:0',
             'biaya_paket_internet'  => 'sometimes|numeric|min:0',
-            'biaya_maintenance'     => 'nullable|numeric|min:0',
+            'biaya_maintenance'     => 'sometimes|numeric|min:0',
             'ppn_nominal'           => 'sometimes|numeric|min:0',
             'total_biaya_per_bulan' => 'sometimes|numeric|min:0',
         ];
